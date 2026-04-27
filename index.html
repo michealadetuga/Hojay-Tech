@@ -1,0 +1,1867 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hojay Tech Gadget | The Best Market Price</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400&family=Poppins:wght@600;700;800;900&display=swap"
+        rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary: #FF8C00;
+            --primary-hover: #e07b00;
+            --bg-dark: #1A3A2A;
+            --bg-secondary: #0F2318;
+            --accent: #8B6F47;
+            --surface: #FFFFFF;
+            --bg-light: #F5F5F5;
+            --text-dark: #F0EDE8;
+            --success: #22C55E;
+            --warning: #F59E0B;
+
+            --font-display: 'Poppins', sans-serif;
+            --font-body: 'DM Sans', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-dark);
+            background-image:
+                radial-gradient(circle at 10% 20%, rgba(255, 140, 0, 0.07), transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(139, 111, 71, 0.07), transparent 40%),
+                radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 20px 20px;
+            background-attachment: fixed;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: var(--font-display);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        button {
+            font-family: var(--font-display);
+            cursor: pointer;
+            border: none;
+            outline: none;
+        }
+
+        /* Utility */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section-padding {
+            padding: 80px 0;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .text-orange {
+            color: var(--primary);
+        }
+
+        .d-flex {
+            display: flex;
+        }
+
+        .grid {
+            display: grid;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Backgrounds */
+        .bg-dark {
+            background-color: var(--bg-dark);
+            position: relative;
+        }
+
+        .bg-secondary {
+            background-color: var(--bg-secondary);
+        }
+
+        .bg-light {
+            background-color: var(--bg-light);
+            color: #111;
+        }
+
+        /* Texture */
+        .texture-dot {
+            background-image: radial-gradient(rgba(255, 140, 0, 0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        .btn-green {
+            background: var(--success);
+            color: #fff;
+        }
+
+        /* PRELOADER */
+        #preloader {
+            position: fixed;
+            inset: 0;
+            background: var(--bg-dark);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s ease;
+        }
+
+        .preloader-logo {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+        }
+
+        .preloader-logo span {
+            color: var(--primary);
+        }
+
+        .loading-bar {
+            width: 200px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .loading-progress {
+            width: 0%;
+            height: 100%;
+            background: var(--primary);
+            animation: load 1.5s ease forwards;
+        }
+
+        @keyframes load {
+            to {
+                width: 100%;
+            }
+        }
+
+        /* NAV */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            padding: 20px 0;
+        }
+
+        header.scrolled {
+            background: rgba(26, 58, 42, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 12px 0;
+            border-bottom: 1px solid var(--accent);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: #fff;
+        }
+
+        .logo .tech {
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .nav-link {
+            font-weight: 600;
+            font-family: var(--font-display);
+            transition: color 0.3s;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--primary);
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--primary);
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .hamburger {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* PAGES */
+        .page {
+            display: none;
+            padding-top: 80px;
+            min-height: 100vh;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* HERO */
+        .hero {
+            min-height: calc(100vh - 80px);
+            display: flex;
+            align-items: center;
+            padding-top: 40px;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            background: rgba(255, 140, 0, 0.1);
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            border-radius: 20px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .hero-title {
+            font-size: 4.5rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: #ccc;
+            margin-bottom: 30px;
+        }
+
+        .trust-chips {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .chip {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .hero-img-wrapper {
+            position: relative;
+            display: flex;
+            justify-content: center;
+        }
+
+        .hero-img-wrapper::before {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: var(--primary);
+            filter: blur(100px);
+            opacity: 0.3;
+            border-radius: 50%;
+            z-index: -1;
+        }
+
+        .hero-img {
+            max-width: 100%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        /* TICKER */
+        .ticker-wrap {
+            width: 100%;
+            overflow: hidden;
+            background: var(--primary);
+            color: #fff;
+            padding: 12px 0;
+        }
+
+        .ticker {
+            display: flex;
+            white-space: nowrap;
+            animation: ticker 20s linear infinite;
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .ticker-item {
+            padding: 0 2rem;
+        }
+
+        @keyframes ticker {
+            0% {
+                transform: translate3d(0, 0, 0);
+            }
+
+            100% {
+                transform: translate3d(-50%, 0, 0);
+            }
+        }
+
+        /* SERVICES BAR */
+        .services-bar {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-top: -40px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .service-card {
+            background: var(--surface);
+            color: #111;
+            padding: 30px 20px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s;
+            border-bottom: 4px solid transparent;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            border-bottom-color: var(--primary);
+        }
+
+        .service-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        /* SECTION TITLES */
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--primary);
+        }
+
+        /* PRODUCTS GRID */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background: var(--surface);
+            color: #111;
+            border-radius: 16px;
+            overflow: hidden;
+            position: relative;
+            transition: all 0.3s;
+            border-bottom: 4px solid var(--accent);
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            border-bottom-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .product-card:hover::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 30%;
+            background: linear-gradient(transparent, rgba(255, 140, 0, 0.1));
+            pointer-events: none;
+        }
+
+        .card-img-wrap {
+            height: 250px;
+            background: var(--bg-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .card-img-wrap img {
+            max-height: 80%;
+            object-fit: contain;
+        }
+
+        .badge-cond {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            font-family: var(--font-display);
+        }
+
+        .badge-new {
+            background: var(--success);
+            color: #fff;
+        }
+
+        .badge-used {
+            background: var(--warning);
+            color: #fff;
+        }
+
+        .badge-imei {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .product-name {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+            height: 50px;
+        }
+
+        .storage-chips {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .storage-chip {
+            padding: 4px 8px;
+            background: #eee;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: 1px solid #ddd;
+        }
+
+        .storage-chip.active {
+            background: rgba(255, 140, 0, 0.1);
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .battery-health {
+            font-size: 0.9rem;
+            color: #555;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-family: var(--font-display);
+        }
+
+        .card-actions {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 10px;
+        }
+
+        .compare-cb {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            border: 1px solid var(--primary);
+            border-radius: 8px;
+            color: var(--primary);
+            cursor: pointer;
+        }
+
+        /* FLASH DEAL */
+        .flash-banner {
+            background: linear-gradient(135deg, var(--primary), var(--bg-dark));
+            padding: 60px 0;
+            border-radius: 20px;
+            margin: 60px 0;
+        }
+
+        .flash-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            color: #fff;
+        }
+
+        .timer {
+            display: flex;
+            gap: 15px;
+        }
+
+        .timer-box {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+
+        .flash-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        /* BRANDS */
+        .brand-strip {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            padding-bottom: 20px;
+            scrollbar-width: none;
+        }
+
+        .brand-card {
+            background: var(--surface);
+            padding: 20px 40px;
+            border-radius: 12px;
+            color: #111;
+            font-weight: 700;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            flex-shrink: 0;
+            min-width: 150px;
+            text-align: center;
+            border-bottom: 3px solid transparent;
+        }
+
+        .brand-card:hover {
+            transform: scale(1.05);
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        /* FILTER TABS */
+        .filter-tabs {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+
+        .filter-tab {
+            padding: 10px 24px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: var(--font-display);
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .filter-tab.active,
+        .filter-tab:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+
+        /* BUNDLES */
+        .bundle-card {
+            background: var(--bg-secondary);
+            border: 1px dashed var(--accent);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .bundle-card:hover {
+            background: rgba(255, 140, 0, 0.05);
+            border-color: var(--primary);
+        }
+
+        .bundle-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .bundle-items {
+            color: #ccc;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .bundle-price {
+            font-size: 2rem;
+            color: var(--primary);
+            font-weight: 900;
+            margin-bottom: 5px;
+        }
+
+        .bundle-save {
+            color: var(--success);
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        /* WHATSAPP FLOAT */
+        .wa-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: #25D366;
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            box-shadow: 0 10px 20px rgba(37, 211, 102, 0.3);
+            z-index: 1000;
+            animation: pulse 2s infinite;
+            cursor: pointer;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.5);
+            }
+
+            70% {
+                box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+            }
+        }
+
+        /* FOOTER */
+        footer {
+            background: #0b1a11;
+            padding: 80px 0 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .footer-col h3 {
+            margin-bottom: 20px;
+            color: #fff;
+            position: relative;
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 30px;
+            height: 2px;
+            background: var(--primary);
+        }
+
+        .footer-col ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-col a {
+            color: #aaa;
+            transition: color 0.3s;
+        }
+
+        .footer-col a:hover {
+            color: var(--primary);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icons a {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            color: #fff;
+            transition: background 0.3s;
+        }
+
+        .social-icons a:hover {
+            background: var(--primary);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            .hero-title {
+                font-size: 3.5rem;
+            }
+
+            .services-bar {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+
+            .flash-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 100%;
+                height: 100vh;
+                background: var(--bg-dark);
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                transition: right 0.3s;
+                z-index: 1001;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .hamburger {
+                display: block;
+                z-index: 1002;
+                position: relative;
+            }
+
+            .nav-right .btn-green {
+                display: none;
+            }
+
+            .hero-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-img-wrapper {
+                order: -1;
+            }
+
+            .trust-chips {
+                justify-content: center;
+            }
+
+            .flash-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .flash-header {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+
+        /* Trade In Tool */
+        .trade-in-tool {
+            background: var(--bg-secondary);
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid var(--accent);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-family: var(--font-display);
+            font-weight: 600;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: #fff;
+            font-family: var(--font-body);
+            outline: none;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+        }
+
+        .val-result {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(255, 140, 0, 0.1);
+            border: 1px dashed var(--primary);
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        /* Compare Table */
+        .compare-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 30px;
+            background: var(--surface);
+            color: #111;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .compare-table th,
+        .compare-table td {
+            padding: 15px;
+            border: 1px solid #eee;
+            text-align: center;
+        }
+
+        .compare-table th {
+            background: var(--bg-light);
+            font-family: var(--font-display);
+        }
+
+        .highlight-cell {
+            background: rgba(255, 140, 0, 0.1);
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* ANIMATIONS & TRANSITIONS */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .card-img-wrap img {
+            max-height: 80%;
+            object-fit: contain;
+            transition: transform 0.5s ease;
+        }
+
+        .product-card:hover .card-img-wrap img {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- PRELOADER -->
+    <div id="preloader">
+        <img src="logo.png" alt="Hojay Tech Logo"
+            style="height: 100px; margin-bottom: 20px; animation: pulse 2s infinite;">
+        <div class="loading-bar">
+            <div class="loading-progress"></div>
+        </div>
+    </div>
+
+    <!-- WHATSAPP FLOAT -->
+    <a href="https://wa.me/2347068620019" target="_blank" class="wa-float">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- HEADER -->
+    <header id="header">
+        <div class="container nav-container">
+            <a href="#" class="logo-link"><img src="assets/logo.png" alt="Hojay Tech Logo" style="height: 50px;"></a>
+            <ul class="nav-links" id="nav-links">
+                <li class="nav-link active" onclick="nav('home')">Home</li>
+                <li class="nav-link" onclick="nav('shop')">Shop</li>
+                <li class="nav-link" onclick="nav('brands')">Brands</li>
+                <li class="nav-link" onclick="nav('deals')">Deals</li>
+                <li class="nav-link" onclick="nav('tradein')">Trade-In</li>
+                <li class="nav-link" onclick="nav('compare')">Compare</li>
+                <li class="nav-link" onclick="nav('contact')">Contact</li>
+            </ul>
+            <div class="nav-right">
+                <div style="font-weight:700;"><i class="fas fa-phone-alt text-orange"></i> 07068620019</div>
+                <a href="https://wa.me/2347068620019" target="_blank" class="btn btn-green"><i
+                        class="fab fa-whatsapp"></i> Chat on WhatsApp</a>
+                <div class="hamburger" id="hamburger"><i class="fas fa-bars"></i></div>
+            </div>
+        </div>
+    </header>
+
+    <main id="app">
+        <!-- ================= PAGE 1: HOMEPAGE ================= -->
+        <div id="page-home" class="page active texture-dot">
+            <!-- Hero -->
+            <section class="hero container">
+                <div class="hero-grid">
+                    <div>
+                        <div class="hero-badge">🟠 Computer Village, Ikeja Lagos</div>
+                        <h1 class="hero-title">Lagos' #1 Gadget Store</h1>
+                        <p class="hero-subtitle">The best place to get the best gadgets at the best market price. Buy,
+                            sell, swap, and pay small small.</p>
+                        <div class="trust-chips">
+                            <div class="chip">✅ 100% Original</div>
+                            <div class="chip">🔒 Warranty Guaranteed</div>
+                            <div class="chip">💰 Best Prices</div>
+                        </div>
+                        <div class="d-flex" style="gap:15px; flex-wrap:wrap;">
+                            <button class="btn btn-primary" onclick="nav('shop')">Shop Now <i
+                                    class="fas fa-arrow-right"></i></button>
+                            <button class="btn btn-outline" onclick="nav('tradein')">Swap Your Phone</button>
+                        </div>
+                    </div>
+                    <div class="hero-img-wrapper">
+                        <!-- Placeholder rendering logic for iPhone -->
+                        <div
+                            style="width: 300px; height: 500px; background: linear-gradient(135deg, #333, #111); border-radius: 40px; border: 8px solid #555; position: relative; box-shadow: 0 30px 60px rgba(0,0,0,0.5), 0 0 40px rgba(255,140,0,0.3);">
+                            <div
+                                style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 120px; height: 30px; background: #000; border-bottom-left-radius: 15px; border-bottom-right-radius: 15px;">
+                            </div>
+                            <div
+                                style="display:flex; align-items:center; justify-content:center; height:100%; color:var(--primary); font-family:var(--font-display); font-size:2rem; font-weight:900;">
+                                HOJAY<br>TECH</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Ticker -->
+            <div class="ticker-wrap">
+                <div class="ticker">
+                    <div class="ticker-item">FREE DELIVERY IN LAGOS</div>
+                    <div class="ticker-item">•</div>
+                    <div class="ticker-item">ORIGINAL DEVICES ONLY</div>
+                    <div class="ticker-item">•</div>
+                    <div class="ticker-item">WARRANTY GUARANTEED</div>
+                    <div class="ticker-item">•</div>
+                    <div class="ticker-item">TRADE-IN AVAILABLE</div>
+                    <div class="ticker-item">•</div>
+                    <div class="ticker-item">PAY SMALL SMALL</div>
+                    <div class="ticker-item">•</div>
+                    <div class="ticker-item">SWAP & UPGRADE</div>
+                    <div class="ticker-item">•</div>
+                    <div class="ticker-item">FREE DELIVERY IN LAGOS</div>
+                    <div class="ticker-item">•</div>
+                    <div class="ticker-item">ORIGINAL DEVICES ONLY</div>
+                </div>
+            </div>
+
+            <!-- Services Bar -->
+            <div class="container" style="padding-top: 40px;">
+                <div class="services-bar">
+                    <div class="service-card">
+                        <i class="fas fa-money-bill-wave service-icon"></i>
+                        <h3>WE BUY</h3>
+                        <p>Top cash for your devices</p>
+                    </div>
+                    <div class="service-card">
+                        <i class="fas fa-shopping-bag service-icon"></i>
+                        <h3>WE SELL</h3>
+                        <p>Quality gadgets at best prices</p>
+                    </div>
+                    <div class="service-card">
+                        <i class="fas fa-sync-alt service-icon"></i>
+                        <h3>WE SWAP</h3>
+                        <p>Upgrade easily & conveniently</p>
+                    </div>
+                    <div class="service-card">
+                        <i class="fas fa-hand-holding-usd service-icon"></i>
+                        <h3>PAY SMALL SMALL</h3>
+                        <p>Upgrade now, pay later</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Best Sellers (Dynamic) -->
+            <section class="section-padding container">
+                <h2 class="section-title">Best Sellers</h2>
+                <div class="filter-tabs">
+                    <div class="filter-tab active">All</div>
+                    <div class="filter-tab">iPhones</div>
+                    <div class="filter-tab">Samsung</div>
+                    <div class="filter-tab">Tecno</div>
+                    <div class="filter-tab">Infinix</div>
+                    <div class="filter-tab">Xiaomi</div>
+                </div>
+                <!-- Dynamic Grid injected by JS -->
+                <div class="product-grid" id="home-best-sellers"></div>
+                <div class="text-center" style="margin-top: 40px;">
+                    <button class="btn btn-outline" onclick="nav('shop')">View All Products <i
+                            class="fas fa-arrow-right"></i></button>
+                </div>
+            </section>
+
+            <!-- Flash Deals Section -->
+            <section class="container">
+                <div class="flash-banner">
+                    <div class="container">
+                        <div class="flash-header">
+                            <h2><i class="fas fa-bolt text-orange"></i> DEAL OF THE DAY</h2>
+                            <div class="timer">
+                                <div class="timer-box"><span id="hours">12</span><br><span
+                                        style="font-size:0.8rem; font-weight:400;">HRS</span></div>
+                                <div class="timer-box"><span id="minutes">45</span><br><span
+                                        style="font-size:0.8rem; font-weight:400;">MIN</span></div>
+                                <div class="timer-box"><span id="seconds">30</span><br><span
+                                        style="font-size:0.8rem; font-weight:400;">SEC</span></div>
+                            </div>
+                        </div>
+                        <div class="flash-grid" id="flash-deals-container">
+                            <!-- Injected JS -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ================= PAGE 2: SHOP ================= -->
+        <div id="page-shop" class="page bg-light">
+            <div class="container section-padding">
+                <h2 class="section-title" style="color:var(--bg-dark)">Full Catalog</h2>
+                <div style="display:grid; grid-template-columns: 250px 1fr; gap:40px;">
+                    <!-- Sidebar -->
+                    <div class="filters"
+                        style="background:#fff; padding:20px; border-radius:12px; height:fit-content; border:1px solid #ddd;">
+                        <h3 style="color:var(--bg-dark); margin-bottom:20px;">Filters</h3>
+
+                        <div class="form-group">
+                            <label style="color:#333">Brand</label>
+                            <select class="form-control" style="background:#f9f9f9; color:#333; border:1px solid #ccc"
+                                id="filter-brand" onchange="renderShop()">
+                                <option value="All">All Brands</option>
+                                <option value="Apple">Apple</option>
+                                <option value="Samsung">Samsung</option>
+                                <option value="Tecno">Tecno</option>
+                                <option value="Infinix">Infinix</option>
+                                <option value="Xiaomi">Xiaomi</option>
+                                <option value="Google Pixel">Google Pixel</option>
+                                <option value="Oppo">Oppo</option>
+                                <option value="Huawei">Huawei</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label style="color:#333">Condition</label>
+                            <select class="form-control" style="background:#f9f9f9; color:#333; border:1px solid #ccc"
+                                id="filter-cond" onchange="renderShop()">
+                                <option value="All">All</option>
+                                <option value="Brand New">Brand New</option>
+                                <option value="UK Used">UK Used</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Grid -->
+                    <div>
+                        <div style="display:flex; justify-content:space-between; margin-bottom:20px; color:#333;">
+                            <div id="shop-count">Showing 0 products</div>
+                            <select style="padding:5px; border-radius:4px; border:1px solid #ccc;" id="sort-select"
+                                onchange="renderShop()">
+                                <option value="new">Newest First</option>
+                                <option value="price-low">Price: Low to High</option>
+                                <option value="price-high">Price: High to Low</option>
+                            </select>
+                        </div>
+                        <div class="product-grid" id="full-shop-grid"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= PAGE: BRANDS ================= -->
+        <div id="page-brands" class="page texture-dot">
+            <div class="container section-padding" id="brands-full-container">
+                <!-- JS Injected dynamically -->
+            </div>
+        </div>
+
+        <!-- ================= PAGE: DEALS ================= -->
+        <div id="page-deals" class="page bg-dark">
+            <div class="container section-padding">
+                <h2 class="section-title">Deals & Offers</h2>
+                <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap:30px;"
+                    id="bundles-grid">
+                    <!-- Bundles injected -->
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= PAGE: TRADE IN ================= -->
+        <div id="page-tradein" class="page bg-dark texture-dot">
+            <div class="container section-padding">
+                <div class="text-center" style="margin-bottom: 60px;">
+                    <h1 class="hero-title" style="font-size:3rem">Turn Your Old Phone Into Cash</h1>
+                    <p class="hero-subtitle">Get the best trade-in value in Computer Village — fast, fair, transparent.
+                    </p>
+                </div>
+
+                <div class="grid" style="grid-template-columns: 1fr 1fr; gap:60px; align-items:start;">
+                    <div class="trade-in-tool">
+                        <h3 class="text-orange" style="font-size:1.8rem; margin-bottom:20px;"><i
+                                class="fas fa-calculator"></i> Value Calculator</h3>
+                        <div class="form-group">
+                            <label>Brand</label>
+                            <select class="form-control">
+                                <option>Apple</option>
+                                <option>Samsung</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Model</label>
+                            <select class="form-control">
+                                <option>iPhone 13</option>
+                                <option>iPhone 12</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Storage</label>
+                            <select class="form-control">
+                                <option>128GB</option>
+                                <option>256GB</option>
+                            </select>
+                        </div>
+                        <div class="val-result">
+                            <p style="font-weight:600; margin-bottom:10px;">Estimated Value:</p>
+                            <h2 style="font-size:2.5rem; color:#fff; font-family:var(--font-display);">₦280,000 -
+                                ₦300,000</h2>
+                        </div>
+                        <button class="btn btn-primary" style="width:100%; margin-top:20px;">Confirm on
+                            WhatsApp</button>
+                    </div>
+
+                    <div>
+                        <h3 style="font-size:1.8rem; margin-bottom:30px;">How It Works</h3>
+                        <div style="display:flex; flex-direction:column; gap:20px;">
+                            <div class="d-flex"
+                                style="gap:20px; align-items:center; background:rgba(255,255,255,0.05); padding:20px; border-radius:12px;">
+                                <div
+                                    style="width:50px; height:50px; background:var(--primary); display:flex; align-items:center; justify-content:center; border-radius:50%; font-size:1.5rem; font-weight:900;">
+                                    1</div>
+                                <div>
+                                    <h4 style="font-size:1.2rem; margin-bottom:5px;">Submit Details</h4>
+                                    <p style="color:#aaa;">Use calculator or WhatsApp us</p>
+                                </div>
+                            </div>
+                            <div class="d-flex"
+                                style="gap:20px; align-items:center; background:rgba(255,255,255,0.05); padding:20px; border-radius:12px;">
+                                <div
+                                    style="width:50px; height:50px; background:var(--primary); display:flex; align-items:center; justify-content:center; border-radius:50%; font-size:1.5rem; font-weight:900;">
+                                    2</div>
+                                <div>
+                                    <h4 style="font-size:1.2rem; margin-bottom:5px;">Get Quote</h4>
+                                    <p style="color:#aaa;">Within 30 minutes</p>
+                                </div>
+                            </div>
+                            <div class="d-flex"
+                                style="gap:20px; align-items:center; background:rgba(255,255,255,0.05); padding:20px; border-radius:12px;">
+                                <div
+                                    style="width:50px; height:50px; background:var(--primary); display:flex; align-items:center; justify-content:center; border-radius:50%; font-size:1.5rem; font-weight:900;">
+                                    3</div>
+                                <div>
+                                    <h4 style="font-size:1.2rem; margin-bottom:5px;">Bring Device</h4>
+                                    <p style="color:#aaa;">Visit store in Ikeja</p>
+                                </div>
+                            </div>
+                            <div class="d-flex"
+                                style="gap:20px; align-items:center; background:rgba(255,255,255,0.05); padding:20px; border-radius:12px;">
+                                <div
+                                    style="width:50px; height:50px; background:var(--success); color:#fff; display:flex; align-items:center; justify-content:center; border-radius:50%; font-size:1.5rem; font-weight:900;">
+                                    4</div>
+                                <div>
+                                    <h4 style="font-size:1.2rem; margin-bottom:5px;">Get Paid</h4>
+                                    <p style="color:#aaa;">Cash or Upgrade instantly</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= PAGE: COMPARE ================= -->
+        <div id="page-compare" class="page bg-light">
+            <div class="container section-padding">
+                <h2 class="section-title" style="color:var(--bg-dark)">Compare Phones</h2>
+                <div style="overflow-x:auto;">
+                    <table class="compare-table">
+                        <thead>
+                            <tr>
+                                <th>Feature</th>
+                                <th>iPhone 16 Pro Max</th>
+                                <th>Samsung S24 Ultra</th>
+                                <th>iPhone 13</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Condition</td>
+                                <td>Brand New</td>
+                                <td>UK Used</td>
+                                <td>UK Used</td>
+                            </tr>
+                            <tr>
+                                <td>Storage</td>
+                                <td>256GB</td>
+                                <td>256GB</td>
+                                <td>128GB</td>
+                            </tr>
+                            <tr>
+                                <td>Price</td>
+                                <td class="highlight-cell">₦2,500,000</td>
+                                <td>₦1,450,000</td>
+                                <td class="highlight-cell">₦500,000</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><button class="btn btn-primary" style="width:100%">Buy Now</button></td>
+                                <td><button class="btn btn-primary" style="width:100%">Buy Now</button></td>
+                                <td><button class="btn btn-primary" style="width:100%">Buy Now</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= PAGE: CONTACT ================= -->
+        <div id="page-contact" class="page bg-dark texture-dot">
+            <div class="container section-padding">
+                <h2 class="section-title">Contact Us</h2>
+                <div class="grid" style="grid-template-columns: 1fr 1fr; gap:40px;">
+                    <div>
+                        <div class="service-card"
+                            style="background:var(--bg-secondary); color:#fff; text-align:left; border:1px solid rgba(255,255,255,0.1); margin-bottom:20px;">
+                            <h3 class="text-orange" style="margin-bottom:10px;"><i class="fas fa-map-marker-alt"></i>
+                                Store Location</h3>
+                            <p>3-9 Olu Kolesho Street,<br>Computer Village, Ikeja, Lagos</p>
+                        </div>
+                        <div class="service-card"
+                            style="background:var(--bg-secondary); color:#fff; text-align:left; border:1px solid rgba(255,255,255,0.1); margin-bottom:20px;">
+                            <h3 class="text-orange" style="margin-bottom:10px;"><i class="fas fa-clock"></i> Working
+                                Hours</h3>
+                            <p>Mon–Sat: 9am–7pm<br>Sunday: 11am–5pm</p>
+                        </div>
+                        <div class="service-card"
+                            style="background:var(--bg-secondary); color:#fff; text-align:left; border:1px solid rgba(255,255,255,0.1);">
+                            <h3 class="text-orange" style="margin-bottom:10px;"><i class="fas fa-phone"></i> Contact
+                                Details</h3>
+                            <p>Phone: 07068620019<br>Email: hojaytech1@gmail.com<br>Instagram: @HOJAY_TECH<br>TikTok:
+                                @HO.JAYTCH</p>
+                        </div>
+                    </div>
+                    <div style="background:var(--surface); padding:40px; border-radius:12px; color:#111;">
+                        <h3 style="font-size:1.8rem; margin-bottom:20px;">Send a Message</h3>
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input type="text" class="form-control"
+                                style="background:#f9f9f9; color:#111; border:1px solid #ccc">
+                        </div>
+                        <div class="form-group">
+                            <label>Subject</label>
+                            <select class="form-control" style="background:#f9f9f9; color:#111; border:1px solid #ccc">
+                                <option>Buy a Phone</option>
+                                <option>Trade-In</option>
+                                <option>Support</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Message</label>
+                            <textarea class="form-control" rows="4"
+                                style="background:#f9f9f9; color:#111; border:1px solid #ccc"></textarea>
+                        </div>
+                        <button class="btn btn-primary" style="width:100%"
+                            onclick="window.open('https://wa.me/2347068620019', '_blank')">Send via WhatsApp</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <img src="assets/logo.png" alt="Hojay Tech Logo" style="height: 60px; margin-bottom: 15px;">
+                    <p style="color:#aaa; line-height:1.6;">Lagos' most trusted gadget store — original phones, best
+                        prices, warranty guaranteed.</p>
+                    <div class="social-icons">
+                        <a href="https://instagram.com/HOJAY_TECH" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://tiktok.com/@HO.JAYTCH" target="_blank"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#" onclick="nav('home')">Home</a></li>
+                        <li><a href="#" onclick="nav('shop')">Shop All</a></li>
+                        <li><a href="#" onclick="nav('tradein')">Trade-In</a></li>
+                        <li><a href="#" onclick="nav('compare')">Compare</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Our Services</h3>
+                    <ul>
+                        <li><a href="#">We Buy</a></li>
+                        <li><a href="#">We Sell</a></li>
+                        <li><a href="#">We Swap</a></li>
+                        <li><a href="#">Pay Small Small</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Contact</h3>
+                    <ul style="color:#aaa;">
+                        <li style="display:flex; gap:10px;"><i class="fas fa-map-marker-alt text-orange"
+                                style="margin-top:5px;"></i> 3-9 Olu Kolesho St, Computer Village, Ikeja</li>
+                        <li style="display:flex; gap:10px;"><i class="fas fa-phone-alt text-orange"
+                                style="margin-top:5px;"></i> 07068620019</li>
+                        <li style="display:flex; gap:10px;"><i class="fas fa-envelope text-orange"
+                                style="margin-top:5px;"></i> hojaytech1@gmail.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div
+                style="border-top:1px solid rgba(255,255,255,0.05); padding-top:20px; display:flex; justify-content:space-between; color:#777; font-size:0.9rem; flex-wrap:wrap; gap:10px;">
+                <div>&copy; 2025 Hojay Tech Gadget. All rights reserved.</div>
+                <div>Made with ❤️ in Lagos</div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        // DATA CATALOG
+        const products = [
+            { id: 1, brand: 'Apple', model: 'iPhone 17 Pro Max', cond: 'Brand New', storage: ['256GB'], price: 3800000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-17-pro-max.jpg' },
+            { id: 2, brand: 'Apple', model: 'iPhone 17 Pro', cond: 'Brand New', storage: ['256GB'], price: 3400000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-17-pro.jpg' },
+            { id: 3, brand: 'Apple', model: 'iPhone 17 Plus', cond: 'Brand New', storage: ['256GB'], price: 2800000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-17-plus.jpg' },
+            { id: 4, brand: 'Apple', model: 'iPhone 17', cond: 'Brand New', storage: ['128GB'], price: 2400000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-17.jpg' },
+            { id: 5, brand: 'Apple', model: 'iPhone 16 Pro Max', cond: 'UK Used', storage: ['256GB'], price: 2500000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-16-pro-max.jpg' },
+            { id: 6, brand: 'Apple', model: 'iPhone 16 Pro', cond: 'UK Used', storage: ['128GB'], price: 2100000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-16-pro.jpg' },
+            { id: 7, brand: 'Apple', model: 'iPhone 16 Plus', cond: 'UK Used', storage: ['128GB'], price: 1800000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-16-plus.jpg' },
+            { id: 8, brand: 'Apple', model: 'iPhone 16', cond: 'UK Used', storage: ['128GB'], price: 1500000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-16.jpg' },
+            { id: 9, brand: 'Apple', model: 'iPhone 15 Pro Max', cond: 'UK Used', storage: ['256GB'], price: 1450000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-15-pro-max.jpg' },
+            { id: 10, brand: 'Apple', model: 'iPhone 15 Pro', cond: 'UK Used', storage: ['128GB'], price: 1250000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-15-pro.jpg' },
+            { id: 11, brand: 'Apple', model: 'iPhone 15 Plus', cond: 'UK Used', storage: ['128GB'], price: 1000000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-15-plus.jpg' },
+            { id: 12, brand: 'Apple', model: 'iPhone 15', cond: 'UK Used', storage: ['128GB'], price: 900000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-15.jpg' },
+            { id: 13, brand: 'Apple', model: 'iPhone 14 Pro Max', cond: 'UK Used', storage: ['256GB'], price: 1100000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-14-pro-max.jpg' },
+            { id: 14, brand: 'Apple', model: 'iPhone 14 Pro', cond: 'UK Used', storage: ['128GB'], price: 900000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-14-pro.jpg' },
+            { id: 15, brand: 'Apple', model: 'iPhone 13', cond: 'UK Used', storage: ['128GB'], price: 500000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-13.jpg' },
+            { id: 16, brand: 'Samsung', model: 'Galaxy S26 Ultra', cond: 'Brand New', storage: ['256GB'], price: 3400000, img: 'https://fdn2.gsmarena.com/vv/bigpic/samsung-galaxy-s26-ultra.jpg' },
+            { id: 17, brand: 'Samsung', model: 'Galaxy S26+', cond: 'Brand New', storage: ['256GB'], price: 2800000, img: 'https://fdn2.gsmarena.com/vv/bigpic/samsung-galaxy-s26-plus.jpg' },
+            { id: 18, brand: 'Samsung', model: 'Galaxy S26', cond: 'Brand New', storage: ['128GB'], price: 2100000, img: 'https://fdn2.gsmarena.com/vv/bigpic/samsung-galaxy-s26.jpg' },
+            { id: 19, brand: 'Samsung', model: 'Galaxy Z Fold 7', cond: 'Brand New', storage: ['512GB'], price: 3600000, img: 'https://fdn2.gsmarena.com/vv/bigpic/samsung-galaxy-z-fold7.jpg' },
+            { id: 20, brand: 'Samsung', model: 'Galaxy Z Flip 7', cond: 'Brand New', storage: ['256GB'], price: 2400000, img: 'https://fdn2.gsmarena.com/vv/bigpic/samsung-galaxy-z-flip7.jpg' },
+            { id: 21, brand: 'Samsung', model: 'Galaxy S25 Ultra', cond: 'UK Used', storage: ['256GB'], price: 2200000, img: 'https://fdn2.gsmarena.com/vv/bigpic/samsung-galaxy-s25-ultra.jpg' },
+            { id: 22, brand: 'Samsung', model: 'Galaxy S25+', cond: 'UK Used', storage: ['256GB'], price: 1700000, img: 'https://fdn2.gsmarena.com/vv/bigpic/samsung-galaxy-s25-plus.jpg' },
+            { id: 23, brand: 'Samsung', model: 'Galaxy S25', cond: 'UK Used', storage: ['128GB'], price: 1300000, img: 'https://fdn2.gsmarena.com/vv/bigpic/samsung-galaxy-s25.jpg' },
+            { id: 24, brand: 'Samsung', model: 'Galaxy A56 5G', cond: 'Brand New', storage: ['128GB'], price: 700000, img: 'https://fdn2.gsmarena.com/vv/bigpic/samsung-galaxy-a56.jpg' },
+            { id: 25, brand: 'Samsung', model: 'Galaxy A36 5G', cond: 'Brand New', storage: ['128GB'], price: 550000, img: 'https://fdn2.gsmarena.com/vv/bigpic/samsung-galaxy-a36.jpg' },
+            { id: 26, brand: 'Samsung', model: 'Galaxy S24 Ultra', cond: 'UK Used', storage: ['256GB'], price: 1450000, img: 'https://fdn2.gsmarena.com/vv/bigpic/samsung-galaxy-s23-ultra-5g.jpg' },
+            { id: 27, brand: 'Samsung', model: 'Galaxy S24', cond: 'UK Used', storage: ['128GB'], price: 1100000, img: 'https://fdn2.gsmarena.com/vv/bigpic/samsung-galaxy-s24.jpg' },
+            { id: 28, brand: 'Samsung', model: 'Galaxy A55 5G', cond: 'Brand New', storage: ['128GB'], price: 580000, img: 'https://fdn2.gsmarena.com/vv/bigpic/samsung-galaxy-a55.jpg' },
+            { id: 29, brand: 'Samsung', model: 'Galaxy A35 5G', cond: 'Brand New', storage: ['128GB'], price: 480000, img: 'https://fdn2.gsmarena.com/vv/bigpic/samsung-galaxy-a35.jpg' },
+            { id: 30, brand: 'Samsung', model: 'Galaxy A15', cond: 'Brand New', storage: ['128GB'], price: 215000, img: 'https://fdn2.gsmarena.com/vv/bigpic/samsung-galaxy-a15.jpg' },
+            { id: 31, brand: 'Tecno', model: 'Phantom Ultimate 2', cond: 'Brand New', storage: ['512GB'], price: 1800000, img: 'https://fdn2.gsmarena.com/vv/bigpic/tecno-phantom-ultimate.jpg' },
+            { id: 32, brand: 'Tecno', model: 'Phantom V Fold 3', cond: 'Brand New', storage: ['512GB'], price: 1600000, img: 'https://fdn2.gsmarena.com/vv/bigpic/tecno-phantom-v-fold2.jpg' },
+            { id: 33, brand: 'Tecno', model: 'Camon 40 Premier', cond: 'Brand New', storage: ['512GB'], price: 1100000, img: 'https://fdn2.gsmarena.com/vv/bigpic/tecno-camon-40-premier.jpg' },
+            { id: 34, brand: 'Tecno', model: 'Camon 40 Pro', cond: 'Brand New', storage: ['256GB'], price: 800000, img: 'https://fdn2.gsmarena.com/vv/bigpic/tecno-camon-40-pro.jpg' },
+            { id: 35, brand: 'Tecno', model: 'Camon 40', cond: 'Brand New', storage: ['256GB'], price: 600000, img: 'https://fdn2.gsmarena.com/vv/bigpic/tecno-camon-40.jpg' },
+            { id: 36, brand: 'Tecno', model: 'Spark 40 Pro', cond: 'Brand New', storage: ['256GB'], price: 350000, img: 'https://fdn2.gsmarena.com/vv/bigpic/tecno-spark-40-pro.jpg' },
+            { id: 37, brand: 'Tecno', model: 'Spark 40', cond: 'Brand New', storage: ['128GB'], price: 250000, img: 'https://fdn2.gsmarena.com/vv/bigpic/tecno-spark-40.jpg' },
+            { id: 38, brand: 'Tecno', model: 'Pova 7 Pro', cond: 'Brand New', storage: ['256GB'], price: 450000, img: 'https://fdn2.gsmarena.com/vv/bigpic/tecno-pova-7-pro.jpg' },
+            { id: 39, brand: 'Tecno', model: 'Phantom X2 Pro', cond: 'Brand New', storage: ['256GB'], price: 750000, img: 'https://fdn2.gsmarena.com/vv/bigpic/tecno-phantom-x2-pro.jpg' },
+            { id: 40, brand: 'Tecno', model: 'Camon 30 Premier', cond: 'Brand New', storage: ['512GB'], price: 615000, img: 'https://fdn2.gsmarena.com/vv/bigpic/tecno-camon-30-premier.jpg' },
+            { id: 41, brand: 'Tecno', model: 'Camon 30 Pro', cond: 'Brand New', storage: ['256GB'], price: 480000, img: 'https://fdn2.gsmarena.com/vv/bigpic/tecno-camon-30-pro.jpg' },
+            { id: 42, brand: 'Tecno', model: 'Spark 30 Pro', cond: 'Brand New', storage: ['256GB'], price: 280000, img: 'https://fdn2.gsmarena.com/vv/bigpic/tecno-spark-30-pro.jpg' },
+            { id: 43, brand: 'Tecno', model: 'Spark 30C', cond: 'Brand New', storage: ['128GB'], price: 145000, img: 'https://fdn2.gsmarena.com/vv/bigpic/tecno-spark-20c.jpg' },
+            { id: 44, brand: 'Tecno', model: 'Pova 6 Pro', cond: 'Brand New', storage: ['256GB'], price: 320000, img: 'https://fdn2.gsmarena.com/vv/bigpic/tecno-pova-6-pro.jpg' },
+            { id: 45, brand: 'Tecno', model: 'Pop 12', cond: 'Brand New', storage: ['64GB'], price: 120000, img: 'https://fdn2.gsmarena.com/vv/bigpic/tecno-pop-11.jpg' },
+            { id: 46, brand: 'Infinix', model: 'Zero 50 Ultra', cond: 'Brand New', storage: ['512GB'], price: 1300000, img: 'https://fdn2.gsmarena.com/vv/bigpic/infinix-zero-50-ultra.jpg' },
+            { id: 47, brand: 'Infinix', model: 'Zero 50 Pro', cond: 'Brand New', storage: ['256GB'], price: 900000, img: 'https://fdn2.gsmarena.com/vv/bigpic/infinix-zero-50-pro.jpg' },
+            { id: 48, brand: 'Infinix', model: 'Note 60 Pro+', cond: 'Brand New', storage: ['256GB'], price: 650000, img: 'https://fdn2.gsmarena.com/vv/bigpic/infinix-note-60-pro-plus.jpg' },
+            { id: 49, brand: 'Infinix', model: 'Note 60 Pro', cond: 'Brand New', storage: ['256GB'], price: 500000, img: 'https://fdn2.gsmarena.com/vv/bigpic/infinix-note-60-pro.jpg' },
+            { id: 50, brand: 'Infinix', model: 'Note 60', cond: 'Brand New', storage: ['256GB'], price: 400000, img: 'https://fdn2.gsmarena.com/vv/bigpic/infinix-note-60.jpg' },
+            { id: 51, brand: 'Infinix', model: 'Hot 60 Pro', cond: 'Brand New', storage: ['256GB'], price: 300000, img: 'https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-60-pro.jpg' },
+            { id: 52, brand: 'Infinix', model: 'Hot 60', cond: 'Brand New', storage: ['128GB'], price: 220000, img: 'https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-60.jpg' },
+            { id: 53, brand: 'Infinix', model: 'Smart 10', cond: 'Brand New', storage: ['128GB'], price: 150000, img: 'https://fdn2.gsmarena.com/vv/bigpic/infinix-smart-10.jpg' },
+            { id: 54, brand: 'Infinix', model: 'Zero 40 Pro', cond: 'Brand New', storage: ['256GB'], price: 600000, img: 'https://fdn2.gsmarena.com/vv/bigpic/infinix-zero-40-pro.jpg' },
+            { id: 55, brand: 'Infinix', model: 'Note 50 Pro+', cond: 'Brand New', storage: ['256GB'], price: 520000, img: 'https://fdn2.gsmarena.com/vv/bigpic/infinix-note-40-pro-plus.jpg' },
+            { id: 56, brand: 'Infinix', model: 'Note 50 Pro', cond: 'Brand New', storage: ['256GB'], price: 380000, img: 'https://fdn2.gsmarena.com/vv/bigpic/infinix-note-30-pro.jpg' },
+            { id: 57, brand: 'Infinix', model: 'Note 50', cond: 'Brand New', storage: ['128GB'], price: 280000, img: 'https://fdn2.gsmarena.com/vv/bigpic/infinix-note-40.jpg' },
+            { id: 58, brand: 'Infinix', model: 'Hot 50 Pro', cond: 'Brand New', storage: ['128GB'], price: 230000, img: 'https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-50-pro.jpg' },
+            { id: 59, brand: 'Infinix', model: 'Hot 50', cond: 'Brand New', storage: ['128GB'], price: 180000, img: 'https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-50.jpg' },
+            { id: 60, brand: 'Infinix', model: 'Smart 8', cond: 'Brand New', storage: ['64GB'], price: 118000, img: 'https://fdn2.gsmarena.com/vv/bigpic/infinix-smart-8.jpg' },
+            { id: 61, brand: 'Xiaomi', model: 'Xiaomi 16 Ultra', cond: 'Brand New', storage: ['512GB'], price: 2100000, img: 'https://fdn2.gsmarena.com/vv/bigpic/xiaomi-16-ultra.jpg' },
+            { id: 62, brand: 'Xiaomi', model: 'Xiaomi 16 Pro', cond: 'Brand New', storage: ['256GB'], price: 1600000, img: 'https://fdn2.gsmarena.com/vv/bigpic/xiaomi-16-pro.jpg' },
+            { id: 63, brand: 'Xiaomi', model: 'Xiaomi 16', cond: 'Brand New', storage: ['256GB'], price: 1200000, img: 'https://fdn2.gsmarena.com/vv/bigpic/xiaomi-16.jpg' },
+            { id: 64, brand: 'Xiaomi', model: 'Redmi Note 15 Pro+', cond: 'Brand New', storage: ['256GB'], price: 550000, img: 'https://fdn2.gsmarena.com/vv/bigpic/xiaomi-redmi-note-15-pro-plus.jpg' },
+            { id: 65, brand: 'Xiaomi', model: 'Redmi Note 15 Pro', cond: 'Brand New', storage: ['256GB'], price: 450000, img: 'https://fdn2.gsmarena.com/vv/bigpic/xiaomi-redmi-note-15-pro.jpg' },
+            { id: 66, brand: 'Xiaomi', model: 'Redmi Note 15', cond: 'Brand New', storage: ['128GB'], price: 300000, img: 'https://fdn2.gsmarena.com/vv/bigpic/xiaomi-redmi-note-15.jpg' },
+            { id: 67, brand: 'Xiaomi', model: 'Poco F7 Pro', cond: 'Brand New', storage: ['512GB'], price: 800000, img: 'https://fdn2.gsmarena.com/vv/bigpic/xiaomi-poco-f7-pro.jpg' },
+            { id: 68, brand: 'Xiaomi', model: 'Poco F7', cond: 'Brand New', storage: ['256GB'], price: 600000, img: 'https://fdn2.gsmarena.com/vv/bigpic/xiaomi-poco-f7.jpg' },
+            { id: 69, brand: 'Xiaomi', model: 'Poco X7 Pro', cond: 'Brand New', storage: ['256GB'], price: 450000, img: 'https://fdn2.gsmarena.com/vv/bigpic/xiaomi-poco-x7-pro.jpg' },
+            { id: 70, brand: 'Xiaomi', model: 'Xiaomi 15 Ultra', cond: 'UK Used', storage: ['512GB'], price: 1400000, img: 'https://fdn2.gsmarena.com/vv/bigpic/xiaomi-15-ultra.jpg' },
+            { id: 71, brand: 'Xiaomi', model: 'Xiaomi 15 Pro', cond: 'UK Used', storage: ['256GB'], price: 1100000, img: 'https://fdn2.gsmarena.com/vv/bigpic/xiaomi-15-pro.jpg' },
+            { id: 72, brand: 'Xiaomi', model: 'Xiaomi 15', cond: 'UK Used', storage: ['256GB'], price: 900000, img: 'https://fdn2.gsmarena.com/vv/bigpic/xiaomi-15.jpg' },
+            { id: 73, brand: 'Xiaomi', model: 'Redmi Note 13 Pro', cond: 'Brand New', storage: ['256GB'], price: 350000, img: 'https://fdn2.gsmarena.com/vv/bigpic/xiaomi-redmi-note-13-pro-4g.jpg' },
+            { id: 74, brand: 'Xiaomi', model: 'Redmi 14C', cond: 'Brand New', storage: ['128GB'], price: 160000, img: 'https://fdn2.gsmarena.com/vv/bigpic/xiaomi-redmi-14c.jpg' },
+            { id: 75, brand: 'Xiaomi', model: 'Redmi 13C', cond: 'Brand New', storage: ['128GB'], price: 155000, img: 'https://fdn2.gsmarena.com/vv/bigpic/xiaomi-redmi-13c.jpg' },
+            { id: 76, brand: 'Google Pixel', model: 'Pixel 10 Pro XL', cond: 'Brand New', storage: ['512GB'], price: 2500000, img: 'https://fdn2.gsmarena.com/vv/bigpic/google-pixel-10-pro-xl.jpg' },
+            { id: 77, brand: 'Google Pixel', model: 'Pixel 10 Pro', cond: 'Brand New', storage: ['256GB'], price: 2100000, img: 'https://fdn2.gsmarena.com/vv/bigpic/google-pixel-10-pro.jpg' },
+            { id: 78, brand: 'Google Pixel', model: 'Pixel 10', cond: 'Brand New', storage: ['128GB'], price: 1600000, img: 'https://fdn2.gsmarena.com/vv/bigpic/google-pixel-10.jpg' },
+            { id: 79, brand: 'Google Pixel', model: 'Pixel 10a', cond: 'Brand New', storage: ['128GB'], price: 900000, img: 'https://fdn2.gsmarena.com/vv/bigpic/google-pixel-10a.jpg' },
+            { id: 80, brand: 'Google Pixel', model: 'Pixel 9 Pro Fold', cond: 'Brand New', storage: ['512GB'], price: 3200000, img: 'https://fdn2.gsmarena.com/vv/bigpic/google-pixel-9-pro-fold.jpg' },
+            { id: 81, brand: 'Google Pixel', model: 'Pixel 9 Pro XL', cond: 'UK Used', storage: ['256GB'], price: 1600000, img: 'https://fdn2.gsmarena.com/vv/bigpic/google-pixel-9-pro-xl.jpg' },
+            { id: 82, brand: 'Google Pixel', model: 'Pixel 9 Pro', cond: 'UK Used', storage: ['256GB'], price: 1300000, img: 'https://fdn2.gsmarena.com/vv/bigpic/google-pixel-9-pro.jpg' },
+            { id: 83, brand: 'Google Pixel', model: 'Pixel 9', cond: 'UK Used', storage: ['128GB'], price: 1000000, img: 'https://fdn2.gsmarena.com/vv/bigpic/google-pixel-9.jpg' },
+            { id: 84, brand: 'Google Pixel', model: 'Pixel 8a', cond: 'Brand New', storage: ['128GB'], price: 600000, img: 'https://fdn2.gsmarena.com/vv/bigpic/google-pixel-8a.jpg' },
+            { id: 85, brand: 'Google Pixel', model: 'Pixel 8 Pro', cond: 'UK Used', storage: ['256GB'], price: 850000, img: 'https://fdn2.gsmarena.com/vv/bigpic/google-pixel-8-pro.jpg' },
+            { id: 86, brand: 'Google Pixel', model: 'Pixel 8', cond: 'UK Used', storage: ['128GB'], price: 650000, img: 'https://fdn2.gsmarena.com/vv/bigpic/google-pixel-8.jpg' },
+            { id: 87, brand: 'Google Pixel', model: 'Pixel Fold 2', cond: 'UK Used', storage: ['256GB'], price: 1500000, img: 'https://fdn2.gsmarena.com/vv/bigpic/google-pixel-fold-2.jpg' },
+            { id: 88, brand: 'Google Pixel', model: 'Pixel 7 Pro', cond: 'UK Used', storage: ['128GB'], price: 500000, img: 'https://fdn2.gsmarena.com/vv/bigpic/google-pixel-7-pro.jpg' },
+            { id: 89, brand: 'Google Pixel', model: 'Pixel 7', cond: 'UK Used', storage: ['128GB'], price: 400000, img: 'https://fdn2.gsmarena.com/vv/bigpic/google-pixel-7.jpg' },
+            { id: 90, brand: 'Google Pixel', model: 'Pixel 7a', cond: 'UK Used', storage: ['128GB'], price: 320000, img: 'https://fdn2.gsmarena.com/vv/bigpic/google-pixel-7a.jpg' },
+            { id: 91, brand: 'Oppo', model: 'Find X8 Ultra', cond: 'Brand New', storage: ['512GB'], price: 2200000, img: 'https://fdn2.gsmarena.com/vv/bigpic/oppo-find-x8-ultra.jpg' },
+            { id: 92, brand: 'Oppo', model: 'Find X8 Pro', cond: 'Brand New', storage: ['256GB'], price: 1700000, img: 'https://fdn2.gsmarena.com/vv/bigpic/oppo-find-x8-pro.jpg' },
+            { id: 93, brand: 'Oppo', model: 'Find X8', cond: 'Brand New', storage: ['256GB'], price: 1300000, img: 'https://fdn2.gsmarena.com/vv/bigpic/oppo-find-x8.jpg' },
+            { id: 94, brand: 'Oppo', model: 'Reno 13 Pro+', cond: 'Brand New', storage: ['256GB'], price: 900000, img: 'https://fdn2.gsmarena.com/vv/bigpic/oppo-reno13-pro-plus.jpg' },
+            { id: 95, brand: 'Oppo', model: 'Reno 13 Pro', cond: 'Brand New', storage: ['256GB'], price: 700000, img: 'https://fdn2.gsmarena.com/vv/bigpic/oppo-reno13-pro.jpg' },
+            { id: 96, brand: 'Oppo', model: 'Reno 13', cond: 'Brand New', storage: ['256GB'], price: 500000, img: 'https://fdn2.gsmarena.com/vv/bigpic/oppo-reno13.jpg' },
+            { id: 97, brand: 'Oppo', model: 'Find N4 Fold', cond: 'Brand New', storage: ['512GB'], price: 2400000, img: 'https://fdn2.gsmarena.com/vv/bigpic/oppo-find-n4.jpg' },
+            { id: 98, brand: 'Oppo', model: 'Find N4 Flip', cond: 'Brand New', storage: ['256GB'], price: 1400000, img: 'https://fdn2.gsmarena.com/vv/bigpic/oppo-find-n4-flip.jpg' },
+            { id: 99, brand: 'Oppo', model: 'Find X7 Ultra', cond: 'UK Used', storage: ['256GB'], price: 1400000, img: 'https://fdn2.gsmarena.com/vv/bigpic/oppo-find-x7-ultra.jpg' },
+            { id: 100, brand: 'Oppo', model: 'Find X7', cond: 'UK Used', storage: ['256GB'], price: 900000, img: 'https://fdn2.gsmarena.com/vv/bigpic/oppo-find-x7.jpg' },
+            { id: 101, brand: 'Oppo', model: 'Reno 12 Pro', cond: 'Brand New', storage: ['256GB'], price: 600000, img: 'https://fdn2.gsmarena.com/vv/bigpic/oppo-reno12-pro.jpg' },
+            { id: 102, brand: 'Oppo', model: 'Reno 12', cond: 'Brand New', storage: ['256GB'], price: 400000, img: 'https://fdn2.gsmarena.com/vv/bigpic/oppo-reno12.jpg' },
+            { id: 103, brand: 'Oppo', model: 'Reno 11', cond: 'UK Used', storage: ['256GB'], price: 300000, img: 'https://fdn2.gsmarena.com/vv/bigpic/oppo-reno11.jpg' },
+            { id: 104, brand: 'Oppo', model: 'Find X5 Pro', cond: 'UK Used', storage: ['256GB'], price: 550000, img: 'https://fdn2.gsmarena.com/vv/bigpic/oppo-find-x5-pro.jpg' },
+            { id: 105, brand: 'Oppo', model: 'A79', cond: 'Brand New', storage: ['128GB'], price: 280000, img: 'https://fdn2.gsmarena.com/vv/bigpic/oppo-a79.jpg' },
+            { id: 106, brand: 'Huawei', model: 'Mate 70 Pro+', cond: 'Brand New', storage: ['512GB'], price: 2600000, img: 'https://fdn2.gsmarena.com/vv/bigpic/huawei-mate-70-pro-plus.jpg' },
+            { id: 107, brand: 'Huawei', model: 'Mate 70 Pro', cond: 'Brand New', storage: ['256GB'], price: 2000000, img: 'https://fdn2.gsmarena.com/vv/bigpic/huawei-mate-70-pro.jpg' },
+            { id: 108, brand: 'Huawei', model: 'Mate 70', cond: 'Brand New', storage: ['256GB'], price: 1500000, img: 'https://fdn2.gsmarena.com/vv/bigpic/huawei-mate-70.jpg' },
+            { id: 109, brand: 'Huawei', model: 'Pura 80 Ultra', cond: 'Brand New', storage: ['512GB'], price: 2700000, img: 'https://fdn2.gsmarena.com/vv/bigpic/huawei-pura-80-ultra.jpg' },
+            { id: 110, brand: 'Huawei', model: 'Pura 80 Pro', cond: 'Brand New', storage: ['256GB'], price: 2100000, img: 'https://fdn2.gsmarena.com/vv/bigpic/huawei-pura-80-pro.jpg' },
+            { id: 111, brand: 'Huawei', model: 'Pura 80', cond: 'Brand New', storage: ['256GB'], price: 1600000, img: 'https://fdn2.gsmarena.com/vv/bigpic/huawei-pura-80.jpg' },
+            { id: 112, brand: 'Huawei', model: 'Nova 13 Pro', cond: 'Brand New', storage: ['256GB'], price: 800000, img: 'https://fdn2.gsmarena.com/vv/bigpic/huawei-nova-13-pro.jpg' },
+            { id: 113, brand: 'Huawei', model: 'Nova 13', cond: 'Brand New', storage: ['128GB'], price: 500000, img: 'https://fdn2.gsmarena.com/vv/bigpic/huawei-nova-13.jpg' },
+            { id: 114, brand: 'Huawei', model: 'Mate X4 Fold', cond: 'Brand New', storage: ['1TB'], price: 3800000, img: 'https://fdn2.gsmarena.com/vv/bigpic/huawei-mate-x4.jpg' },
+            { id: 115, brand: 'Huawei', model: 'Mate 60 Pro', cond: 'UK Used', storage: ['256GB'], price: 1300000, img: 'https://fdn2.gsmarena.com/vv/bigpic/huawei-mate-60-pro.jpg' },
+            { id: 116, brand: 'Huawei', model: 'Pura 70 Ultra', cond: 'UK Used', storage: ['512GB'], price: 1600000, img: 'https://fdn2.gsmarena.com/vv/bigpic/huawei-pura-70-ultra.jpg' },
+            { id: 117, brand: 'Huawei', model: 'Pura 70 Pro', cond: 'UK Used', storage: ['256GB'], price: 1200000, img: 'https://fdn2.gsmarena.com/vv/bigpic/huawei-pura-70-pro.jpg' },
+            { id: 118, brand: 'Huawei', model: 'Nova 12 Pro', cond: 'Brand New', storage: ['256GB'], price: 600000, img: 'https://fdn2.gsmarena.com/vv/bigpic/huawei-nova-12-pro.jpg' },
+            { id: 119, brand: 'Huawei', model: 'Nova 12', cond: 'Brand New', storage: ['128GB'], price: 400000, img: 'https://fdn2.gsmarena.com/vv/bigpic/huawei-nova-12.jpg' },
+            { id: 120, brand: 'Huawei', model: 'Mate 50 Pro', cond: 'Brand New', storage: ['256GB'], price: 820000, img: 'https://fdn2.gsmarena.com/vv/bigpic/huawei-mate-50-pro.jpg' }
+        ];
+
+        const bundles = [
+            { title: "iPhone 11 Bundle", items: "iPhone 11 + Case + Glass", price: "₦215,000", save: "₦15,000" },
+            { title: "Samsung A15 Bundle", items: "A15 + Oraimo Earbuds + Case", price: "₦230,000", save: "₦12,000" },
+            { title: "Infinix Smart 9HD Bundle", items: "Smart 9HD + Charger + Glass", price: "₦150,000", save: "₦8,000" }
+        ];
+
+        // Format Currency
+        const fmtMoney = (amount) => '₦' + amount.toLocaleString();
+
+        // Render Product Card
+        const renderCard = (p) => {
+            const storages = p.storage.map((s, i) => `<div class="storage-chip ${i === 0 ? 'active' : ''}">${s}</div>`).join('');
+            const badgeClass = p.cond === 'Brand New' ? 'badge-new' : 'badge-used';
+            const imeiBadge = p.cond === 'UK Used' ? '<div class="badge-imei">IMEI ✓</div>' : '';
+            const battery = p.battery ? `<div class="battery-health">🔋 Battery: ${p.battery}</div>` : '';
+
+            return `
+                <div class="product-card reveal">
+                    <div class="card-img-wrap">
+                        <div class="badge-cond ${badgeClass}">${p.cond}</div>
+                        ${imeiBadge}
+                        <img src="${p.img}" alt="${p.model}" onerror="this.onerror=null; this.src='https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-14-pro-max.jpg'; this.style.transform='scale(0.8)'; this.style.filter='grayscale(100%)'; this.style.opacity='0.5';" style="max-height: 80%; object-fit: contain;">
+                    </div>
+                    <div class="card-body">
+                        <div class="product-name">${p.model}</div>
+                        <div class="storage-chips">${storages}</div>
+                        ${battery}
+                        <div class="product-price">${fmtMoney(p.price)}</div>
+                        <div class="card-actions">
+                            <button class="btn btn-green" onclick="window.open('https://wa.me/2347068620019', '_blank')"><i class="fab fa-whatsapp"></i> Buy</button>
+                            <div class="compare-cb" title="Compare"><i class="fas fa-balance-scale"></i></div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        };
+
+        // Render Home Grids
+        const renderHomeBestSellers = (filterBrand = 'All') => {
+            const bestSellerIds = [5, 7, 11, 10, 13, 15, 20, 21]; // Nigerian Market Best Sellers Mix
+            let bestProducts = products.filter(p => bestSellerIds.includes(p.id));
+            if (filterBrand !== 'All') {
+                bestProducts = bestProducts.filter(p => p.brand === filterBrand);
+            }
+            document.getElementById('home-best-sellers').innerHTML = bestProducts.map(renderCard).join('');
+        };
+        renderHomeBestSellers();
+
+        // Home Page Tab Logic
+        document.querySelectorAll('.filter-tab').forEach(tab => {
+            tab.addEventListener('click', (e) => {
+                document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+                e.target.classList.add('active');
+
+                let brand = e.target.innerText;
+                if (brand === 'iPhones') brand = 'Apple';
+                renderHomeBestSellers(brand);
+            });
+        });
+
+        // Render Flash
+        document.getElementById('flash-deals-container').innerHTML = [products[3], Object.assign({}, products[5], { price: 480000 }), products[7]].map(renderCard).join('');
+
+        // Render Shop
+        const renderShop = () => {
+            let filtered = [...products];
+            const brandFilter = document.getElementById('filter-brand').value;
+            const condFilter = document.getElementById('filter-cond').value;
+            const sort = document.getElementById('sort-select').value;
+
+            if (brandFilter !== 'All') filtered = filtered.filter(p => p.brand === brandFilter);
+            if (condFilter !== 'All') filtered = filtered.filter(p => p.cond === condFilter);
+
+            if (sort === 'price-low') filtered.sort((a, b) => a.price - b.price);
+            if (sort === 'price-high') filtered.sort((a, b) => b.price - a.price);
+
+            document.getElementById('shop-count').innerText = `Showing ${filtered.length} products`;
+            document.getElementById('full-shop-grid').innerHTML = filtered.map(renderCard).join('');
+        };
+        renderShop();
+
+        // Render Brands
+        const renderBrandsPage = () => {
+            const brandsRendered = [...new Set(products.map(p => p.brand))];
+            let html = '<h2 class="section-title">Shop by Brand</h2>';
+            brandsRendered.forEach(b => {
+                const brandProducts = products.filter(p => p.brand === b);
+                html += `
+                    <div style="margin-bottom: 80px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px; border-bottom: 1px solid rgba(255,140,0,0.3); padding-bottom:10px;">
+                            <h2 style="font-size: 2rem; font-family:var(--font-display); color:var(--primary);"><i class="fas fa-mobile-alt"></i> ${b} Electronics</h2>
+                            <button class="btn btn-outline" style="padding: 6px 12px; font-size: 0.9rem;" onclick="document.getElementById('filter-brand').value='${b}'; nav('shop'); renderShop();">View All</button>
+                        </div>
+                        <div style="display:flex; overflow-x:auto; gap:20px; padding-bottom:15px; scrollbar-width:none;">
+                            ${brandProducts.map(p => `
+                                <div style="min-width: 320px; flex-shrink: 0;">${renderCard(p)}</div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+            document.getElementById('brands-full-container').innerHTML = html;
+        };
+        renderBrandsPage();
+
+        // Render Bundles
+        document.getElementById('bundles-grid').innerHTML = bundles.map(b => `
+            <div class="bundle-card">
+                <div class="bundle-title">${b.title}</div>
+                <div class="bundle-items">${b.items}</div>
+                <div class="bundle-price">${b.price}</div>
+                <div class="bundle-save">Save ${b.save}</div>
+                <button class="btn btn-outline" style="width:100%" onclick="window.open('https://wa.me/2347068620019', '_blank')">Claim Bundle</button>
+            </div>
+        `).join('');
+
+        // Preloader Logic
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const preloader = document.getElementById('preloader');
+                preloader.style.opacity = '0';
+                setTimeout(() => preloader.style.display = 'none', 500);
+            }, 1000); // reduced for demo sanity
+        });
+
+        // Sticky Header & Nav Active logic
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) header.classList.add('scrolled');
+            else header.classList.remove('scrolled');
+        });
+
+        // Mobile Nav
+        const hamburger = document.getElementById('hamburger');
+        const navLinksEle = document.getElementById('nav-links');
+        hamburger.addEventListener('click', () => {
+            navLinksEle.classList.toggle('active');
+            hamburger.innerHTML = navLinksEle.classList.contains('active') ? '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        });
+
+        // Navigation Router / Tabs Toggle
+        function nav(pageId) {
+            // hide all pages
+            document.querySelectorAll('.page').forEach(el => el.classList.remove('active'));
+            // remove active from navs
+            document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active'));
+            // show targeted
+            document.getElementById('page-' + pageId).classList.add('active');
+
+            // set nav link active based on text
+            const textMap = { 'home': 'Home', 'shop': 'Shop', 'brands': 'Brands', 'deals': 'Deals', 'tradein': 'Trade-In', 'compare': 'Compare', 'contact': 'Contact' };
+            const nodes = document.querySelectorAll('.nav-link');
+            for (let i = 0; i < nodes.length; i++) {
+                if (nodes[i].innerText === textMap[pageId]) nodes[i].classList.add('active');
+            }
+
+            // close mobile menu if opened
+            navLinksEle.classList.remove('active');
+            hamburger.innerHTML = '<i class="fas fa-bars"></i>';
+            window.scrollTo(0, 0);
+        }
+
+        // Countdown Timer Logic
+        setInterval(() => {
+            let s = parseInt(document.getElementById('seconds').innerText);
+            let m = parseInt(document.getElementById('minutes').innerText);
+            let h = parseInt(document.getElementById('hours').innerText);
+
+            if (s > 0) s--;
+            else {
+                s = 59;
+                if (m > 0) m--;
+                else {
+                    m = 59;
+                    if (h > 0) h--;
+                    else { h = 23; m = 59; s = 59; }
+                }
+            }
+
+            document.getElementById('seconds').innerText = s < 10 ? '0' + s : s;
+            document.getElementById('minutes').innerText = m < 10 ? '0' + m : m;
+            document.getElementById('hours').innerText = h < 10 ? '0' + h : h;
+        }, 1000);
+
+        // Scroll Animations & Reveal Transitions
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        const attachReveal = () => {
+            setTimeout(() => {
+                document.querySelectorAll('.reveal:not(.active)').forEach(el => observer.observe(el));
+            }, 100);
+        };
+
+        // Watch for dynamically rendered products to attach reveal observer
+        const mObserver = new MutationObserver(() => attachReveal());
+        mObserver.observe(document.getElementById('app'), { childList: true, subtree: true });
+
+        attachReveal(); // initial trigger
+
+    </script>
+</body>
+
+</html>
