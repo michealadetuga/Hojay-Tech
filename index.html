@@ -107,6 +107,24 @@
             display: grid;
         }
 
+        .shop-layout {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 40px;
+        }
+
+        .two-column-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .deals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
         .hidden {
             display: none !important;
         }
@@ -890,6 +908,10 @@
             .footer-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
+            
+            .shop-layout {
+                grid-template-columns: 200px 1fr;
+            }
         }
 
         @media (max-width: 768px) {
@@ -905,6 +927,11 @@
                 justify-content: center;
                 transition: right 0.3s;
                 z-index: 1001;
+                gap: 30px;
+            }
+
+            .nav-link {
+                font-size: 1.5rem;
             }
 
             .nav-links.active {
@@ -915,26 +942,42 @@
                 display: block;
                 z-index: 1002;
                 position: relative;
+                color: #fff;
             }
 
             .nav-right .btn-green {
                 display: none;
             }
 
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
             .hero-grid {
                 grid-template-columns: 1fr;
                 text-align: center;
+                padding-top: 20px;
             }
 
             .hero-img-wrapper {
                 order: -1;
+            }
+            
+            .hero-img-wrapper > div {
+                transform: scale(0.8);
+                transform-origin: top center;
+                margin-bottom: -100px;
             }
 
             .trust-chips {
                 justify-content: center;
             }
 
-            .flash-grid {
+            .flash-grid, .shop-layout, .two-column-grid, .deals-grid {
                 grid-template-columns: 1fr;
             }
 
@@ -946,12 +989,37 @@
 
             .footer-grid {
                 grid-template-columns: 1fr;
+                gap: 20px;
             }
 
             .section-title {
-                font-size: 2rem;
+                font-size: 1.8rem;
+            }
+            
+            .services-bar {
+                grid-template-columns: 1fr 1fr;
+                gap: 15px;
+                margin-top: 0;
+            }
+            
+            .trade-in-tool {
+                padding: 20px;
             }
         }
+        
+        @media (max-width: 480px) {
+            .services-bar {
+                grid-template-columns: 1fr;
+            }
+            .timer-box {
+                font-size: 1.2rem;
+                padding: 8px 12px;
+            }
+            .val-result h2 {
+                font-size: 1.8rem !important;
+            }
+        }
+
 
         /* Trade In Tool */
         .trade-in-tool {
@@ -1001,8 +1069,8 @@
             width: 100%;
             border-collapse: collapse;
             margin-top: 30px;
-            background: var(--surface);
-            color: #111;
+            background: var(--bg-secondary);
+            color: #fff;
             border-radius: 12px;
             overflow: hidden;
         }
@@ -1010,12 +1078,12 @@
         .compare-table th,
         .compare-table td {
             padding: 15px;
-            border: 1px solid #eee;
+            border: 1px solid rgba(255, 255, 255, 0.1);
             text-align: center;
         }
 
         .compare-table th {
-            background: var(--bg-light);
+            background: rgba(0, 0, 0, 0.2);
             font-family: var(--font-display);
         }
 
@@ -1214,19 +1282,18 @@
         </div>
 
         <!-- ================= PAGE 2: SHOP ================= -->
-        <div id="page-shop" class="page bg-light">
+        <div id="page-shop" class="page bg-dark texture-dot">
             <div class="container section-padding">
-                <h2 class="section-title" style="color:var(--bg-dark)">Full Catalog</h2>
-                <div style="display:grid; grid-template-columns: 250px 1fr; gap:40px;">
+                <h2 class="section-title">Full Catalog</h2>
+                <div class="shop-layout">
                     <!-- Sidebar -->
                     <div class="filters"
-                        style="background:#fff; padding:20px; border-radius:12px; height:fit-content; border:1px solid #ddd;">
-                        <h3 style="color:var(--bg-dark); margin-bottom:20px;">Filters</h3>
+                        style="background:var(--bg-secondary); padding:20px; border-radius:12px; height:fit-content; border:1px solid rgba(255,255,255,0.1);">
+                        <h3 style="margin-bottom:20px;">Filters</h3>
 
                         <div class="form-group">
-                            <label style="color:#333">Brand</label>
-                            <select class="form-control" style="background:#f9f9f9; color:#333; border:1px solid #ccc"
-                                id="filter-brand" onchange="renderShop()">
+                            <label>Brand</label>
+                            <select class="form-control" id="filter-brand" onchange="renderShop()">
                                 <option value="All">All Brands</option>
                                 <option value="Apple">Apple</option>
                                 <option value="Samsung">Samsung</option>
@@ -1240,9 +1307,8 @@
                         </div>
 
                         <div class="form-group">
-                            <label style="color:#333">Condition</label>
-                            <select class="form-control" style="background:#f9f9f9; color:#333; border:1px solid #ccc"
-                                id="filter-cond" onchange="renderShop()">
+                            <label>Condition</label>
+                            <select class="form-control" id="filter-cond" onchange="renderShop()">
                                 <option value="All">All</option>
                                 <option value="Brand New">Brand New</option>
                                 <option value="UK Used">UK Used</option>
@@ -1252,9 +1318,9 @@
 
                     <!-- Grid -->
                     <div>
-                        <div style="display:flex; justify-content:space-between; margin-bottom:20px; color:#333;">
+                        <div style="display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px; margin-bottom:20px;">
                             <div id="shop-count">Showing 0 products</div>
-                            <select style="padding:5px; border-radius:4px; border:1px solid #ccc;" id="sort-select"
+                            <select class="form-control" style="padding:10px; border-radius:8px; max-width: 200px;" id="sort-select"
                                 onchange="renderShop()">
                                 <option value="new">Newest First</option>
                                 <option value="price-low">Price: Low to High</option>
@@ -1278,8 +1344,7 @@
         <div id="page-deals" class="page bg-dark">
             <div class="container section-padding">
                 <h2 class="section-title">Deals & Offers</h2>
-                <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap:30px;"
-                    id="bundles-grid">
+                <div class="deals-grid" id="bundles-grid">
                     <!-- Bundles injected -->
                 </div>
             </div>
@@ -1294,7 +1359,7 @@
                     </p>
                 </div>
 
-                <div class="grid" style="grid-template-columns: 1fr 1fr; gap:60px; align-items:start;">
+                <div class="two-column-grid" style="align-items:start;">
                     <div class="trade-in-tool">
                         <h3 class="text-orange" style="font-size:1.8rem; margin-bottom:20px;"><i
                                 class="fas fa-calculator"></i> Value Calculator</h3>
@@ -1378,9 +1443,9 @@
         </div>
 
         <!-- ================= PAGE: COMPARE ================= -->
-        <div id="page-compare" class="page bg-light">
+        <div id="page-compare" class="page bg-dark texture-dot">
             <div class="container section-padding">
-                <h2 class="section-title" style="color:var(--bg-dark)">Compare Phones</h2>
+                <h2 class="section-title">Compare Phones</h2>
                 <div style="overflow-x:auto;">
                     <table class="compare-table">
                         <thead>
@@ -1426,7 +1491,7 @@
         <div id="page-contact" class="page bg-dark texture-dot">
             <div class="container section-padding">
                 <h2 class="section-title">Contact Us</h2>
-                <div class="grid" style="grid-template-columns: 1fr 1fr; gap:40px;">
+                <div class="two-column-grid">
                     <div>
                         <div class="service-card"
                             style="background:var(--bg-secondary); color:#fff; text-align:left; border:1px solid rgba(255,255,255,0.1); margin-bottom:20px;">
@@ -1533,21 +1598,21 @@
     <script>
         // DATA CATALOG
         const products = [
-            { id: 1, brand: 'Apple', model: 'iPhone 17 Pro Max', cond: 'Brand New', storage: ['256GB'], price: 3800000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-17-pro-max.jpg' },
-            { id: 2, brand: 'Apple', model: 'iPhone 17 Pro', cond: 'Brand New', storage: ['256GB'], price: 3400000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-17-pro.jpg' },
-            { id: 3, brand: 'Apple', model: 'iPhone 17 Plus', cond: 'Brand New', storage: ['256GB'], price: 2800000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-17-plus.jpg' },
-            { id: 4, brand: 'Apple', model: 'iPhone 17', cond: 'Brand New', storage: ['128GB'], price: 2400000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-17.jpg' },
-            { id: 5, brand: 'Apple', model: 'iPhone 16 Pro Max', cond: 'UK Used', storage: ['256GB'], price: 2500000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-16-pro-max.jpg' },
-            { id: 6, brand: 'Apple', model: 'iPhone 16 Pro', cond: 'UK Used', storage: ['128GB'], price: 2100000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-16-pro.jpg' },
-            { id: 7, brand: 'Apple', model: 'iPhone 16 Plus', cond: 'UK Used', storage: ['128GB'], price: 1800000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-16-plus.jpg' },
-            { id: 8, brand: 'Apple', model: 'iPhone 16', cond: 'UK Used', storage: ['128GB'], price: 1500000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-16.jpg' },
-            { id: 9, brand: 'Apple', model: 'iPhone 15 Pro Max', cond: 'UK Used', storage: ['256GB'], price: 1450000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-15-pro-max.jpg' },
-            { id: 10, brand: 'Apple', model: 'iPhone 15 Pro', cond: 'UK Used', storage: ['128GB'], price: 1250000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-15-pro.jpg' },
-            { id: 11, brand: 'Apple', model: 'iPhone 15 Plus', cond: 'UK Used', storage: ['128GB'], price: 1000000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-15-plus.jpg' },
-            { id: 12, brand: 'Apple', model: 'iPhone 15', cond: 'UK Used', storage: ['128GB'], price: 900000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-15.jpg' },
-            { id: 13, brand: 'Apple', model: 'iPhone 14 Pro Max', cond: 'UK Used', storage: ['256GB'], price: 1100000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-14-pro-max.jpg' },
-            { id: 14, brand: 'Apple', model: 'iPhone 14 Pro', cond: 'UK Used', storage: ['128GB'], price: 900000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-14-pro.jpg' },
-            { id: 15, brand: 'Apple', model: 'iPhone 13', cond: 'UK Used', storage: ['128GB'], price: 500000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-13.jpg' },
+            { id: 1, brand: 'Apple', model: 'iPhone 17 Pro Max', cond: 'Brand New', storage: ['256GB'], price: 1850000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-17-pro-max.jpg' },
+            { id: 2, brand: 'Apple', model: 'iPhone 17 Pro', cond: 'Brand New', storage: ['256GB'], price: 1650000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-17-pro.jpg' },
+            { id: 3, brand: 'Apple', model: 'iPhone 17 Plus', cond: 'Brand New', storage: ['256GB'], price: 1350000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-17-plus.jpg' },
+            { id: 4, brand: 'Apple', model: 'iPhone 17', cond: 'Brand New', storage: ['128GB'], price: 1150000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-17.jpg' },
+            { id: 5, brand: 'Apple', model: 'iPhone 16 Pro Max', cond: 'UK Used', storage: ['256GB'], price: 1250000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-16-pro-max.jpg' },
+            { id: 6, brand: 'Apple', model: 'iPhone 16 Pro', cond: 'UK Used', storage: ['128GB'], price: 1050000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-16-pro.jpg' },
+            { id: 7, brand: 'Apple', model: 'iPhone 16 Plus', cond: 'UK Used', storage: ['128GB'], price: 980000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-16-plus.jpg' },
+            { id: 8, brand: 'Apple', model: 'iPhone 16', cond: 'UK Used', storage: ['128GB'], price: 850000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-16.jpg' },
+            { id: 9, brand: 'Apple', model: 'iPhone 15 Pro Max', cond: 'UK Used', storage: ['256GB'], price: 950000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-15-pro-max.jpg' },
+            { id: 10, brand: 'Apple', model: 'iPhone 15 Pro', cond: 'UK Used', storage: ['128GB'], price: 820000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-15-pro.jpg' },
+            { id: 11, brand: 'Apple', model: 'iPhone 15 Plus', cond: 'UK Used', storage: ['128GB'], price: 720000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-15-plus.jpg' },
+            { id: 12, brand: 'Apple', model: 'iPhone 15', cond: 'UK Used', storage: ['128GB'], price: 600000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-15.jpg' },
+            { id: 13, brand: 'Apple', model: 'iPhone 14 Pro Max', cond: 'UK Used', storage: ['256GB'], price: 780000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-14-pro-max.jpg' },
+            { id: 14, brand: 'Apple', model: 'iPhone 14 Pro', cond: 'UK Used', storage: ['128GB'], price: 650000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-14-pro.jpg' },
+            { id: 15, brand: 'Apple', model: 'iPhone 13', cond: 'UK Used', storage: ['128GB'], price: 420000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-13.jpg' },
             { id: 16, brand: 'Samsung', model: 'Galaxy S26 Ultra', cond: 'Brand New', storage: ['256GB'], price: 3400000, img: 'https://fdn2.gsmarena.com/vv/bigpic/samsung-galaxy-s26-ultra.jpg' },
             { id: 17, brand: 'Samsung', model: 'Galaxy S26+', cond: 'Brand New', storage: ['256GB'], price: 2800000, img: 'https://fdn2.gsmarena.com/vv/bigpic/samsung-galaxy-s26-plus.jpg' },
             { id: 18, brand: 'Samsung', model: 'Galaxy S26', cond: 'Brand New', storage: ['128GB'], price: 2100000, img: 'https://fdn2.gsmarena.com/vv/bigpic/samsung-galaxy-s26.jpg' },
@@ -1652,7 +1717,13 @@
             { id: 117, brand: 'Huawei', model: 'Pura 70 Pro', cond: 'UK Used', storage: ['256GB'], price: 1200000, img: 'https://fdn2.gsmarena.com/vv/bigpic/huawei-pura-70-pro.jpg' },
             { id: 118, brand: 'Huawei', model: 'Nova 12 Pro', cond: 'Brand New', storage: ['256GB'], price: 600000, img: 'https://fdn2.gsmarena.com/vv/bigpic/huawei-nova-12-pro.jpg' },
             { id: 119, brand: 'Huawei', model: 'Nova 12', cond: 'Brand New', storage: ['128GB'], price: 400000, img: 'https://fdn2.gsmarena.com/vv/bigpic/huawei-nova-12.jpg' },
-            { id: 120, brand: 'Huawei', model: 'Mate 50 Pro', cond: 'Brand New', storage: ['256GB'], price: 820000, img: 'https://fdn2.gsmarena.com/vv/bigpic/huawei-mate-50-pro.jpg' }
+            { id: 120, brand: 'Huawei', model: 'Mate 50 Pro', cond: 'Brand New', storage: ['256GB'], price: 820000, img: 'https://fdn2.gsmarena.com/vv/bigpic/huawei-mate-50-pro.jpg' },
+            { id: 201, brand: 'Apple', model: 'iPhone 17 Pro (Locked)', cond: 'Brand New', storage: ['256GB'], price: 1190000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-17-pro.jpg' },
+            { id: 202, brand: 'Apple', model: 'iPhone 16 Plus (eSIM)', cond: 'UK Used', storage: ['128GB'], price: 930000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-16-plus.jpg' },
+            { id: 203, brand: 'Apple', model: 'iPhone 15 (eSIM FU)', cond: 'UK Used', storage: ['256GB'], price: 660000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-15.jpg' },
+            { id: 204, brand: 'Apple', model: 'iPhone 17 Pro Max (eSIM Locked)', cond: 'Brand New', storage: ['256GB'], price: 1230000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-17-pro-max.jpg' },
+            { id: 205, brand: 'Apple', model: 'iPhone 16 Pro (eSIM)', cond: 'UK Used', storage: ['256GB'], price: 950000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-16-pro.jpg' },
+            { id: 206, brand: 'Apple', model: 'iPhone 15 Pro Max (eSIM)', cond: 'UK Used', storage: ['256GB'], battery: 'Good', price: 870000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-15-pro-max.jpg' }
         ];
 
         const bundles = [
@@ -1694,7 +1765,7 @@
 
         // Render Home Grids
         const renderHomeBestSellers = (filterBrand = 'All') => {
-            const bestSellerIds = [5, 7, 11, 10, 13, 15, 20, 21]; // Nigerian Market Best Sellers Mix
+            const bestSellerIds = [201, 204, 205, 202, 206, 203, 5, 7, 11, 10, 13, 15, 20, 21]; // Nigerian Market Best Sellers Mix
             let bestProducts = products.filter(p => bestSellerIds.includes(p.id));
             if (filterBrand !== 'All') {
                 bestProducts = bestProducts.filter(p => p.brand === filterBrand);
