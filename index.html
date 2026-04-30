@@ -23,9 +23,12 @@
             --accent: #8B6F47;
             --surface: #FFFFFF;
             --bg-light: #F5F5F5;
+            --text-main: #FFFFFF;
             --text-dark: #F0EDE8;
+            --text-low: #AAAAAA;
             --success: #22C55E;
-            --warning: #F59E0B;
+            --danger: #EF4444;
+            --border: rgba(255, 255, 255, 0.1);
             --font-display: 'Poppins', sans-serif;
             --font-body: 'DM Sans', sans-serif;
         }
@@ -1152,6 +1155,101 @@
         .product-card:hover .card-img-wrap img {
             transform: scale(1.1);
         }
+        /* CART SIDEBAR */
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 350px;
+            height: 100vh;
+            background: var(--bg-dark);
+            z-index: 2000;
+            transition: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            border-left: 1px solid var(--accent);
+        }
+
+        .cart-sidebar.active {
+            right: 0;
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 15px;
+        }
+
+        .cart-items {
+            flex: 1;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .cart-item img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .cart-item-info h4 {
+            font-size: 0.95rem;
+            margin-bottom: 4px;
+        }
+
+        .cart-item-info p {
+            font-size: 0.85rem;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .cart-footer {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 20px;
+        }
+
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .cart-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1999;
+            display: none;
+        }
+
+        .cart-overlay.active {
+            display: block;
+        }
+
+        @media (max-width: 480px) {
+            .cart-sidebar {
+                width: 100%;
+            }
+        }
     </style>
 </head>
 
@@ -1172,6 +1270,35 @@
     </a>
 
     <!-- HEADER -->
+    <div class="cart-overlay" id="cart-overlay" onclick="toggleCart()"></div>
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h2 style="font-family: var(--font-display); font-size: 1.5rem;">Your Order</h2>
+            <i class="fas fa-times" onclick="toggleCart()" style="cursor: pointer; font-size: 1.2rem;"></i>
+        </div>
+        <div class="cart-items" id="cart-items-container">
+            <!-- Items injected -->
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cart-total-value">₦0</span>
+            </div>
+            <button class="btn btn-primary" style="width: 100%;" onclick="checkoutWhatsApp()">
+                <i class="fab fa-whatsapp"></i> Order on WhatsApp
+            </button>
+        </div>
+    </div>
+
+    <!-- QUICK VIEW MODAL -->
+    <div class="cart-overlay" id="modal-overlay" onclick="closeModal()"></div>
+    <div id="product-modal" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9); width: 90%; max-width: 800px; background: var(--bg-secondary); z-index: 2100; border-radius: 24px; padding: 40px; display: none; transition: 0.3s; border: 1px solid var(--border); box-shadow: 0 30px 60px rgba(0,0,0,0.5); color: var(--text-main);">
+        <i class="fas fa-times" onclick="closeModal()" style="position: absolute; top: 25px; right: 25px; cursor: pointer; font-size: 1.5rem; opacity: 0.5;"></i>
+        <div id="modal-content" style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+            <!-- Injected by JS -->
+        </div>
+    </div>
+
     <header id="header">
         <div class="container nav-container">
             <a href="#" class="logo-link"><img src="logo.png" alt="Hojay Tech Logo" style="height: 50px;"></a>
@@ -1189,12 +1316,13 @@
                 </li>
             </ul>
             <div class="nav-right">
-                <a href="admin.html" class="admin-link-top" title="Admin Panel">
-                    <i class="fas fa-lock"></i>
-                </a>
-                <div style="font-weight:700;"><i class="fas fa-phone-alt text-orange"></i> 07068620019</div>
-                <a href="https://wa.me/2347068620019" target="_blank" class="btn btn-green"><i
-                        class="fab fa-whatsapp"></i> Chat on WhatsApp</a>
+                <div class="cart-trigger" onclick="toggleCart()" style="position: relative; margin-right: 20px; cursor: pointer; color: #fff; font-size: 1.4rem;">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span id="cart-badge" style="position: absolute; top: -10px; right: -10px; background: var(--primary); color: #fff; font-size: 0.7rem; padding: 2px 6px; border-radius: 50%; display: none;">0</span>
+                </div>
+                <button class="btn btn-green" onclick="window.open('https://wa.me/2347068620019', '_blank')">
+                    <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+                </button>
                 <div class="hamburger" id="hamburger"><i class="fas fa-bars"></i></div>
             </div>
         </div>
@@ -1250,6 +1378,11 @@
                 </div>
             </div>
 
+            <!-- Dynamic Spotlight Deal -->
+            <section class="container" id="spotlight-container" style="margin-bottom: 80px;">
+                <!-- Injected via JS -->
+            </section>
+
             <!-- Services Bar -->
             <div class="container" style="padding-top: 40px;">
                 <div class="services-bar">
@@ -1299,6 +1432,9 @@
             <section class="container">
                 <div class="flash-banner">
                     <div class="container">
+                        <button class="btn-icon" title="Notify Me on Price Drop" onclick="notifyMe(${p.id})">
+                            <i class="fas fa-bell"></i>
+                        </button>
                         <div class="flash-header">
                             <h2><i class="fas fa-bolt text-orange"></i> DEAL OF THE DAY</h2>
                             <div class="timer">
@@ -1632,6 +1768,40 @@
             refreshUI();
         };
 
+        const renderSpotlight = () => {
+            const container = document.getElementById('spotlight-container');
+            if (!container || products.length === 0) return;
+
+            // Date-based selection (Day of year)
+            const now = new Date();
+            const dayOfYear = Math.floor((now - new Date(now.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
+            const index = dayOfYear % products.length;
+            const p = products[index];
+            
+            const oldPrice = Math.floor(p.price * 1.15); // Show a fake "previous" price 15% higher
+
+            container.innerHTML = `
+                <div class="spotlight-card" style="background: linear-gradient(135deg, #1a3a2a 0%, #0a0c0b 100%); border-radius: 30px; padding: 60px; border: 2px solid var(--primary); position: relative; overflow: hidden; box-shadow: 0 0 50px rgba(255,140,0,0.2);">
+                    <div style="position: absolute; top: -50px; right: -50px; width: 300px; height: 300px; background: radial-gradient(circle, rgba(255,140,0,0.2) 0%, transparent 70%);"></div>
+                    <div class="row align-items-center" style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                        <div>
+                            <span style="background: var(--primary); color: #fff; padding: 6px 15px; border-radius: 50px; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; display: inline-block;">🔥 Daily Deal</span>
+                            <h2 style="font-size: 3.5rem; font-family: var(--font-display); line-height: 1.1; margin-bottom: 20px;">${p.model} <br><span class="text-orange">Special Offer</span></h2>
+                            <p style="font-size: 1.1rem; color: var(--text-low); margin-bottom: 30px;">Get this premium gadget at an unbeatable price today only. ${p.obs || 'Authenticity & Quality Guaranteed.'}</p>
+                            <div style="display: flex; gap: 20px; align-items: center; margin-bottom: 40px;">
+                                <div style="font-size: 2.5rem; font-weight: 900; color: #fff;">₦${p.price.toLocaleString()}</div>
+                                <div style="text-decoration: line-through; color: var(--text-low); font-size: 1.2rem;">₦${oldPrice.toLocaleString()}</div>
+                            </div>
+                            <button class="btn btn-primary btn-lg" onclick="openQuickView(${p.id})" style="padding: 15px 40px; font-size: 1.1rem;">Claim Deal Now</button>
+                        </div>
+                        <div style="text-align: center; position: relative;">
+                            <img src="${p.img}" style="width: 100%; max-width: 350px; filter: drop-shadow(0 20px 40px rgba(0,0,0,0.5)); transition: transform 0.5s;" onmouseover="this.style.transform='translateY(-20px)'" onmouseout="this.style.transform='translateY(0)'" onerror="this.src='https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-16-pro-max.jpg'">
+                        </div>
+                    </div>
+                </div>
+            `;
+        };
+
         const refreshUI = () => {
             renderHomeBestSellers();
             renderShop();
@@ -1639,6 +1809,7 @@
             renderFlash();
             populateTradeIn();
             renderCompare();
+            renderSpotlight();
         };
 
         // TRADE-IN LOGIC
@@ -1768,19 +1939,177 @@
                         <img src="${p.img}" alt="${p.model}" onerror="this.onerror=null; this.src='https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-14-pro-max.jpg'; this.style.transform='scale(0.8)'; this.style.filter='grayscale(100%)'; this.style.opacity='0.5';" style="max-height: 80%; object-fit: contain;">
                     </div>
                     <div class="card-body">
+                        <div class="product-badge">${p.cond}</div>
+                        ${p.obs ? `<div class="obs-badge" style="position:absolute; top:40px; left:10px; background:rgba(255,140,0,0.9); color:#fff; font-size:0.65rem; padding:2px 8px; border-radius:4px; font-weight:700; z-index:10; text-transform:uppercase;">${p.obs}</div>` : ''}
                         <div class="product-name">${p.model}</div>
                         <div class="storage-chips">${storages}</div>
                         ${battery}
                         <div class="product-price">${fmtMoney(p.price)}</div>
-                        <div class="card-actions">
-                            <button class="btn btn-green" onclick="window.open('https://wa.me/2347068620019', '_blank')"><i class="fab fa-whatsapp"></i> Buy</button>
-                            <div class="compare-cb ${compareList.includes(p.id) ? 'active' : ''}" title="Compare" onclick="toggleCompare(${p.id})">
-                                <i class="fas fa-balance-scale"></i>
+                        <div class="card-actions" style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 15px;">
+                            <button class="btn btn-green" style="flex: 1; padding: 8px;" onclick="window.open('https://wa.me/2347068620019?text=I want to buy ${p.model}', '_blank')">
+                                <i class="fab fa-whatsapp"></i> Buy
+                            </button>
+                            <div style="display: flex; gap: 5px;">
+                                <button class="btn-icon" title="Add to Cart" onclick="addToCart(event, ${p.id})">
+                                    <i class="fas fa-shopping-bag"></i>
+                                </button>
+                                <button class="btn-icon" title="Quick View" onclick="openQuickView(${p.id})">
+                                    <i class="fas fa-expand"></i>
+                                </button>
+                                <button class="btn-icon ${compareList.includes(p.id) ? 'active' : ''}" title="Compare" onclick="toggleCompare(${p.id})">
+                                    <i class="fas fa-balance-scale"></i>
+                                </button>
+                                <button class="btn-icon" title="Price Drop Alert" onclick="notifyMe(${p.id})">
+                                    <i class="fas fa-bell"></i>
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
             `;
+        };
+
+        // QUICK VIEW LOGIC
+        window.openQuickView = (id) => {
+            const p = products.find(prod => prod.id == id);
+            const modal = document.getElementById('product-modal');
+            const overlay = document.getElementById('modal-overlay');
+            const content = document.getElementById('modal-content');
+
+            content.innerHTML = `
+                <div style="background: rgba(255,255,255,0.03); border-radius: 20px; padding: 20px; display: flex; align-items: center; justify-content: center;">
+                    <img src="${p.img}" style="width: 100%; max-height: 400px; object-fit: contain;" onerror="this.src='https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-14-pro-max.jpg'">
+                </div>
+                <div>
+                    <span class="badge ${p.cond === 'Brand New' ? 'badge-new' : 'badge-used'}" style="margin-bottom: 15px;">${p.cond}</span>
+                    <h2 style="font-size: 2.5rem; font-family: var(--font-display); margin-bottom: 10px;">${p.model}</h2>
+                    <div style="font-size: 1.5rem; color: var(--primary); font-weight: 800; margin-bottom: 25px;">₦${p.price.toLocaleString()}</div>
+                    
+                    <div style="margin-bottom: 30px;">
+                        <h4 style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-low); margin-bottom: 10px;">Specifications</h4>
+                        <ul style="list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                            <li style="font-size: 0.9rem;"><i class="fas fa-microchip" style="color: var(--primary); width: 20px;"></i> ${p.brand} Chipset</li>
+                            <li style="font-size: 0.9rem;"><i class="fas fa-hdd" style="color: var(--primary); width: 20px;"></i> ${p.storage[0]} Available</li>
+                            <li style="font-size: 0.9rem;"><i class="fas fa-check-circle" style="color: var(--primary); width: 20px;"></i> 100% Original</li>
+                            <li style="font-size: 0.9rem;"><i class="fas fa-shield-alt" style="color: var(--primary); width: 20px;"></i> Warranty Inc.</li>
+                        </ul>
+                    </div>
+
+                    ${p.obs ? `
+                    <div style="background: rgba(255,140,0,0.1); border-left: 4px solid var(--primary); padding: 15px; border-radius: 8px; margin-bottom: 30px;">
+                        <h4 style="font-size: 0.8rem; text-transform: uppercase; margin-bottom: 5px;">Observations</h4>
+                        <p style="font-size: 0.95rem; font-weight: 500;">${p.obs}</p>
+                    </div>` : ''}
+
+                    <div style="display: flex; gap: 15px;">
+                        <button class="btn btn-primary" style="flex: 1;" onclick="addToCart(event, ${p.id}); closeModal();">Add to Cart</button>
+                        <button class="btn btn-outline" style="flex: 1;" onclick="window.open('https://wa.me/2347068620019?text=I am interested in the ${p.model} [${p.cond}]', '_blank')">Inquire</button>
+                    </div>
+                </div>
+            `;
+
+            modal.style.display = 'block';
+            overlay.style.display = 'block';
+            setTimeout(() => modal.style.transform = 'translate(-50%, -50%) scale(1)', 10);
+        };
+
+        window.closeModal = () => {
+            const modal = document.getElementById('product-modal');
+            const overlay = document.getElementById('modal-overlay');
+            modal.style.transform = 'translate(-50%, -50%) scale(0.9)';
+            setTimeout(() => {
+                modal.style.display = 'none';
+                overlay.style.display = 'none';
+            }, 300);
+        };
+
+        // CART LOGIC
+        let cart = [];
+
+        window.toggleCart = () => {
+            document.getElementById('cart-sidebar').classList.toggle('active');
+            document.getElementById('cart-overlay').classList.toggle('active');
+        };
+
+        window.addToCart = (e, id) => {
+            const product = products.find(p => p.id == id);
+            if (!product) return;
+            
+            cart.push(product);
+            updateCartUI();
+            
+            // Show feedback
+            const btn = e.currentTarget;
+            const originalIcon = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-check"></i>';
+            btn.style.color = '#4CAF50';
+            setTimeout(() => {
+                btn.innerHTML = originalIcon;
+                btn.style.color = '';
+            }, 2000);
+
+            // Open cart on first add
+            if (cart.length === 1) toggleCart();
+        };
+
+        window.removeFromCart = (index) => {
+            cart.splice(index, 1);
+            updateCartUI();
+        };
+
+        const updateCartUI = () => {
+            const container = document.getElementById('cart-items-container');
+            const badge = document.getElementById('cart-badge');
+            const totalDisplay = document.getElementById('cart-total-value');
+            
+            if (cart.length === 0) {
+                container.innerHTML = '<div style="text-align:center; padding:40px; color:#aaa;"><i class="fas fa-shopping-basket" style="font-size:3rem; margin-bottom:15px; opacity:0.3;"></i><p>Your order is empty</p></div>';
+                badge.style.display = 'none';
+                totalDisplay.innerText = '₦0';
+            } else {
+                badge.style.display = 'block';
+                badge.innerText = cart.length;
+                
+                container.innerHTML = cart.map((item, index) => `
+                    <div class="cart-item">
+                        <img src="${item.img}" alt="${item.model}" onerror="this.src='https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-14-pro-max.jpg'">
+                        <div class="cart-item-info" style="flex:1;">
+                            <h4>${item.model}</h4>
+                            <p>₦${item.price.toLocaleString()}</p>
+                            <span style="font-size:0.7rem; color:#888;">${item.cond} • ${item.storage[0]}</span>
+                        </div>
+                        <i class="fas fa-trash-alt" onclick="removeFromCart(${index})" style="color:var(--danger); cursor:pointer; font-size:0.8rem; margin-top:5px;"></i>
+                    </div>
+                `).join('');
+                
+                const total = cart.reduce((sum, item) => sum + item.price, 0);
+                totalDisplay.innerText = `₦${total.toLocaleString()}`;
+            }
+        };
+
+        window.checkoutWhatsApp = () => {
+            if (cart.length === 0) return alert('Your order is empty!');
+            
+            let message = "Hello Hojay Tech! I want to order the following items:\n\n";
+            cart.forEach((item, index) => {
+                const obsStr = item.obs ? ` [${item.obs}]` : '';
+                message += `${index + 1}. *${item.model}* (${item.cond})${obsStr} - ₦${item.price.toLocaleString()}\n`;
+            });
+            
+            const total = cart.reduce((sum, item) => sum + item.price, 0);
+            message += `\n*TOTAL: ₦${total.toLocaleString()}*`;
+            message += `\n\nIs this available?`;
+            
+            window.open(`https://wa.me/2347068620019?text=${encodeURIComponent(message)}`, '_blank');
+        };
+
+        window.notifyMe = (id) => {
+            const p = products.find(prod => prod.id == id);
+            const email = prompt(`Get notified when the price of ${p.model} drops! Enter your email or phone number:`);
+            if (email) {
+                alert(`Great! We will notify you at ${email} as soon as the price drops.`);
+                // In a real app, you'd send this to a backend
+            }
         };
 
         // Render Home Grids
