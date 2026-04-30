@@ -757,7 +757,7 @@
                                 <th class="checkbox-cell"><input type="checkbox" class="custom-checkbox" id="select-all" onclick="toggleSelectAll(this)"></th>
                                 <th>Product Details</th>
                                 <th class="hide-mobile">Category</th>
-                                <th class="hide-mobile">Condition</th>
+                                <th class="hide-mobile">Condition & Notes</th>
                                 <th>Price</th>
                                 <th style="text-align: right;">Actions</th>
                             </tr>
@@ -980,6 +980,7 @@
                         <span class="badge ${p.cond === 'Brand New' ? 'badge-success' : 'badge-warning'}">
                             ${p.cond}
                         </span>
+                        <div style="font-size: 0.7rem; color: var(--text-low); margin-top: 4px;">${p.obs || ''}</div>
                     </td>
                     <td><div class="price-text">₦${p.price.toLocaleString()}</div></td>
                     <td style="text-align: right;">
@@ -1104,6 +1105,7 @@
                 const p = inventory.find(i => i.id === id);
                 if (p) {
                     document.getElementById('edit-id').value = p.id;
+                    document.getElementById('p-obs').value = p.obs || '';
                     document.getElementById('p-brand').value = p.brand;
                     document.getElementById('p-model').value = p.model;
                     document.getElementById('p-cond').value = p.cond;
@@ -1128,6 +1130,7 @@
             const id = document.getElementById('edit-id').value;
             const entry = {
                 id: id ? parseInt(id) : Date.now(),
+                obs: document.getElementById('p-obs').value,
                 brand: document.getElementById('p-brand').value,
                 model: document.getElementById('p-model').value,
                 cond: document.getElementById('p-cond').value,

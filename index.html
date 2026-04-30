@@ -1946,7 +1946,7 @@
                         ${battery}
                         <div class="product-price">${fmtMoney(p.price)}</div>
                         <div class="card-actions" style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 15px;">
-                            <button class="btn btn-green" style="flex: 1; padding: 8px;" onclick="window.open('https://wa.me/2347068620019?text=I want to buy ${p.model}', '_blank')">
+                            <button class="btn btn-green" style="flex: 1; padding: 8px;" onclick="window.open('https://wa.me/2347068620019?text=' + encodeURIComponent('Hello Hojay Tech! I want to buy the ' + '${p.model}'), '_blank')">
                                 <i class="fab fa-whatsapp"></i> Buy
                             </button>
                             <div style="display: flex; gap: 5px;">
@@ -2003,7 +2003,7 @@
 
                     <div style="display: flex; gap: 15px;">
                         <button class="btn btn-primary" style="flex: 1;" onclick="addToCart(event, ${p.id}); closeModal();">Add to Cart</button>
-                        <button class="btn btn-outline" style="flex: 1;" onclick="window.open('https://wa.me/2347068620019?text=I am interested in the ${p.model} [${p.cond}]', '_blank')">Inquire</button>
+                        <button class="btn btn-outline" style="flex: 1;" onclick="window.open('https://wa.me/2347068620019?text=' + encodeURIComponent('Hello Hojay Tech! I am interested in the ' + '${p.model}' + ' [' + '${p.cond}' + ']'), '_blank')">Inquire</button>
                     </div>
                 </div>
             `;
@@ -2306,7 +2306,10 @@
 
         // Watch for dynamically rendered products to attach reveal observer
         const mObserver = new MutationObserver(() => attachReveal());
-        mObserver.observe(document.getElementById('app'), { childList: true, subtree: true });
+        const appContainer = document.getElementById('app');
+        if (appContainer) {
+            mObserver.observe(appContainer, { childList: true, subtree: true });
+        }
 
         attachReveal(); // initial trigger
 
