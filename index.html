@@ -26,9 +26,29 @@
             --text-dark: #F0EDE8;
             --success: #22C55E;
             --warning: #F59E0B;
-
             --font-display: 'Poppins', sans-serif;
             --font-body: 'DM Sans', sans-serif;
+        }
+
+        .admin-link-top {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 38px;
+            height: 38px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            color: var(--text-dark);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .admin-link-top:hover {
+            background: var(--primary);
+            color: #fff;
+            transform: translateY(-2px);
+            border-color: var(--primary);
         }
 
         * {
@@ -953,6 +973,11 @@
             }
 
             .nav-right .btn-green {
+                display: flex;
+                padding: 8px 12px;
+                font-size: 0.8rem;
+            }
+            .admin-link-top {
                 display: none;
             }
 
@@ -972,12 +997,12 @@
 
             .hero-img-wrapper {
                 order: -1;
+                margin-bottom: 20px;
             }
 
-            .hero-img-wrapper>div {
-                transform: scale(0.8);
-                transform-origin: top center;
-                margin-bottom: -100px;
+            .hero-img {
+                transform: scale(0.9);
+                max-width: 100%;
             }
 
             .trust-chips {
@@ -1157,8 +1182,14 @@
                 <li class="nav-link" onclick="nav('tradein')">Trade-In</li>
                 <li class="nav-link" onclick="nav('compare')">Compare</li>
                 <li class="nav-link" onclick="nav('contact')">Contact</li>
+                <li class="nav-link" onclick="location.href='admin.html'" style="color:var(--primary); margin-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; width: 100%; text-align: center;">
+                    <i class="fas fa-lock"></i> Admin Panel
+                </li>
             </ul>
             <div class="nav-right">
+                <a href="admin.html" class="admin-link-top" title="Admin Panel">
+                    <i class="fas fa-lock"></i>
+                </a>
                 <div style="font-weight:700;"><i class="fas fa-phone-alt text-orange"></i> 07068620019</div>
                 <a href="https://wa.me/2347068620019" target="_blank" class="btn btn-green"><i
                         class="fab fa-whatsapp"></i> Chat on WhatsApp</a>
@@ -1325,9 +1356,9 @@
                         <div
                             style="display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px; margin-bottom:20px;">
                             <div id="shop-count">Showing 0 products</div>
-                            <select class="form-control" style="padding:10px; border-radius:8px; max-width: 200px;"
+                            <select class="form-control" style="padding:10px; border-radius:8px; max-width: 200px; background: white; color: black;"
                                 id="sort-select" onchange="renderShop()">
-                                <option value="new">Newest First</option>
+                                <option value="newest" selected>Newest First</option>
                                 <option value="price-low">Price: Low to High</option>
                                 <option value="price-high">Price: High to Low</option>
                             </select>
@@ -1568,156 +1599,27 @@
             </div>
             <div
                 style="border-top:1px solid rgba(255,255,255,0.05); padding-top:20px; display:flex; justify-content:space-between; color:#777; font-size:0.9rem; flex-wrap:wrap; gap:10px;">
-                <div>&copy; 2025 Hojay Tech Gadget. All rights reserved. | <a href="admin.html" style="color: inherit; opacity: 0.5;">Admin</a></div>
+                <div>&copy; 2025 Hojay Tech Gadget. All rights reserved.</div>
                 <div>Made with ❤️ in Lagos</div>
             </div>
         </div>
     </footer>
 
     <!-- JAVASCRIPT -->
+    <script src="catalog.js"></script>
     <script>
         // DATA CATALOG
-        const staticProducts = [
-            { id: 1, brand: 'Apple', model: 'iPhone 17 Pro Max', cond: 'Brand New', storage: ['256GB'], price: 1850000, img: 'iphone_17_pro_max.jpeg' },
-            { id: 2, brand: 'Apple', model: 'iPhone 17 Pro', cond: 'Brand New', storage: ['256GB'], price: 1650000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-17-pro.jpg' },
-            { id: 3, brand: 'Apple', model: 'iPhone 17 Plus', cond: 'Brand New', storage: ['256GB'], price: 1350000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-17-plus.jpg' },
-            { id: 4, brand: 'Apple', model: 'iPhone 17', cond: 'Brand New', storage: ['128GB'], price: 1150000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-17.jpg' },
-            { id: 5, brand: 'Apple', model: 'iPhone 16 Pro Max', cond: 'UK Used', storage: ['256GB'], price: 1250000, img: 'iphone_16_pro_max.jpeg' },
-            { id: 6, brand: 'Apple', model: 'iPhone 16 Pro', cond: 'UK Used', storage: ['128GB'], price: 1050000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-16-pro.jpg' },
-            { id: 7, brand: 'Apple', model: 'iPhone 16 Plus', cond: 'UK Used', storage: ['128GB'], price: 980000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-16-plus.jpg' },
-            { id: 8, brand: 'Apple', model: 'iPhone 16', cond: 'UK Used', storage: ['128GB'], price: 850000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-16.jpg' },
-            { id: 9, brand: 'Apple', model: 'iPhone 15 Pro Max', cond: 'UK Used', storage: ['256GB'], price: 950000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-15-pro-max.jpg' },
-            { id: 10, brand: 'Apple', model: 'iPhone 15 Pro', cond: 'UK Used', storage: ['128GB'], price: 820000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-15-pro.jpg' },
-            { id: 11, brand: 'Apple', model: 'iPhone 15 Plus', cond: 'UK Used', storage: ['128GB'], price: 720000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-15-plus.jpg' },
-            { id: 12, brand: 'Apple', model: 'iPhone 15', cond: 'UK Used', storage: ['128GB'], price: 600000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-15.jpg' },
-            { id: 13, brand: 'Apple', model: 'iPhone 14 Pro Max', cond: 'UK Used', storage: ['256GB'], price: 780000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-14-pro-max.jpg' },
-            { id: 14, brand: 'Apple', model: 'iPhone 14 Pro', cond: 'UK Used', storage: ['128GB'], price: 650000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-14-pro.jpg' },
-            { id: 15, brand: 'Apple', model: 'iPhone 13', cond: 'UK Used', storage: ['128GB'], price: 420000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-13.jpg' },
-            { id: 16, brand: 'Samsung', model: 'Galaxy S26 Ultra', cond: 'Brand New', storage: ['256GB'], price: 3400000, img: 'https://fdn2.gsmarena.com/vv/bigpic/samsung-galaxy-s26-ultra.jpg' },
-            { id: 17, brand: 'Samsung', model: 'Galaxy S26+', cond: 'Brand New', storage: ['256GB'], price: 2800000, img: 'https://fdn2.gsmarena.com/vv/bigpic/samsung-galaxy-s26-plus.jpg' },
-            { id: 18, brand: 'Samsung', model: 'Galaxy S26', cond: 'Brand New', storage: ['128GB'], price: 2100000, img: 'https://fdn2.gsmarena.com/vv/bigpic/samsung-galaxy-s26.jpg' },
-            { id: 19, brand: 'Samsung', model: 'Galaxy Z Fold 7', cond: 'Brand New', storage: ['512GB'], price: 3600000, img: 'https://fdn2.gsmarena.com/vv/bigpic/samsung-galaxy-z-fold7.jpg' },
-            { id: 20, brand: 'Samsung', model: 'Galaxy Z Flip 7', cond: 'Brand New', storage: ['256GB'], price: 2400000, img: 'https://fdn2.gsmarena.com/vv/bigpic/samsung-galaxy-z-flip7.jpg' },
-            { id: 21, brand: 'Samsung', model: 'Galaxy S25 Ultra', cond: 'UK Used', storage: ['256GB'], price: 2200000, img: 'https://fdn2.gsmarena.com/vv/bigpic/samsung-galaxy-s25-ultra.jpg' },
-            { id: 22, brand: 'Samsung', model: 'Galaxy S25+', cond: 'UK Used', storage: ['256GB'], price: 1700000, img: 'https://fdn2.gsmarena.com/vv/bigpic/samsung-galaxy-s25-plus.jpg' },
-            { id: 23, brand: 'Samsung', model: 'Galaxy S25', cond: 'UK Used', storage: ['128GB'], price: 1300000, img: 'https://fdn2.gsmarena.com/vv/bigpic/samsung-galaxy-s25.jpg' },
-            { id: 24, brand: 'Samsung', model: 'Galaxy A56 5G', cond: 'Brand New', storage: ['128GB'], price: 700000, img: 'https://fdn2.gsmarena.com/vv/bigpic/samsung-galaxy-a56.jpg' },
-            { id: 25, brand: 'Samsung', model: 'Galaxy A36 5G', cond: 'Brand New', storage: ['128GB'], price: 550000, img: 'https://fdn2.gsmarena.com/vv/bigpic/samsung-galaxy-a36.jpg' },
-            { id: 26, brand: 'Samsung', model: 'Galaxy S24 Ultra', cond: 'UK Used', storage: ['256GB'], price: 1450000, img: 'samsung_s24_ultra.png' },
-            { id: 27, brand: 'Samsung', model: 'Galaxy S24', cond: 'UK Used', storage: ['128GB'], price: 1100000, img: 'https://fdn2.gsmarena.com/vv/bigpic/samsung-galaxy-s24.jpg' },
-            { id: 28, brand: 'Samsung', model: 'Galaxy A55 5G', cond: 'Brand New', storage: ['128GB'], price: 580000, img: 'https://fdn2.gsmarena.com/vv/bigpic/samsung-galaxy-a55.jpg' },
-            { id: 29, brand: 'Samsung', model: 'Galaxy A35 5G', cond: 'Brand New', storage: ['128GB'], price: 480000, img: 'https://fdn2.gsmarena.com/vv/bigpic/samsung-galaxy-a35.jpg' },
-            { id: 30, brand: 'Samsung', model: 'Galaxy A15', cond: 'Brand New', storage: ['128GB'], price: 215000, img: 'https://fdn2.gsmarena.com/vv/bigpic/samsung-galaxy-a15.jpg' },
-            { id: 31, brand: 'Tecno', model: 'Phantom Ultimate 2', cond: 'Brand New', storage: ['512GB'], price: 1800000, img: 'https://fdn2.gsmarena.com/vv/bigpic/tecno-phantom-ultimate.jpg' },
-            { id: 32, brand: 'Tecno', model: 'Phantom V Fold 3', cond: 'Brand New', storage: ['512GB'], price: 1600000, img: 'https://fdn2.gsmarena.com/vv/bigpic/tecno-phantom-v-fold2.jpg' },
-            { id: 33, brand: 'Tecno', model: 'Camon 40 Premier', cond: 'Brand New', storage: ['512GB'], price: 1100000, img: 'https://fdn2.gsmarena.com/vv/bigpic/tecno-camon-40-premier.jpg' },
-            { id: 34, brand: 'Tecno', model: 'Camon 40 Pro', cond: 'Brand New', storage: ['256GB'], price: 800000, img: 'https://fdn2.gsmarena.com/vv/bigpic/tecno-camon-40-pro.jpg' },
-            { id: 35, brand: 'Tecno', model: 'Camon 40', cond: 'Brand New', storage: ['256GB'], price: 600000, img: 'https://fdn2.gsmarena.com/vv/bigpic/tecno-camon-40.jpg' },
-            { id: 36, brand: 'Tecno', model: 'Spark 40 Pro', cond: 'Brand New', storage: ['256GB'], price: 350000, img: 'https://fdn2.gsmarena.com/vv/bigpic/tecno-spark-40-pro.jpg' },
-            { id: 37, brand: 'Tecno', model: 'Spark 40', cond: 'Brand New', storage: ['128GB'], price: 250000, img: 'https://fdn2.gsmarena.com/vv/bigpic/tecno-spark-40.jpg' },
-            { id: 38, brand: 'Tecno', model: 'Pova 7 Pro', cond: 'Brand New', storage: ['256GB'], price: 450000, img: 'https://fdn2.gsmarena.com/vv/bigpic/tecno-pova-7-pro.jpg' },
-            { id: 39, brand: 'Tecno', model: 'Phantom X2 Pro', cond: 'Brand New', storage: ['256GB'], price: 750000, img: 'https://fdn2.gsmarena.com/vv/bigpic/tecno-phantom-x2-pro.jpg' },
-            { id: 40, brand: 'Tecno', model: 'Camon 30 Premier', cond: 'Brand New', storage: ['512GB'], price: 615000, img: 'tecno_camon_30.png' },
-            { id: 41, brand: 'Tecno', model: 'Camon 30 Pro', cond: 'Brand New', storage: ['256GB'], price: 480000, img: 'https://fdn2.gsmarena.com/vv/bigpic/tecno-camon-30-pro.jpg' },
-            { id: 42, brand: 'Tecno', model: 'Spark 30 Pro', cond: 'Brand New', storage: ['256GB'], price: 280000, img: 'https://fdn2.gsmarena.com/vv/bigpic/tecno-spark-30-pro.jpg' },
-            { id: 43, brand: 'Tecno', model: 'Spark 30C', cond: 'Brand New', storage: ['128GB'], price: 145000, img: 'https://fdn2.gsmarena.com/vv/bigpic/tecno-spark-20c.jpg' },
-            { id: 44, brand: 'Tecno', model: 'Pova 6 Pro', cond: 'Brand New', storage: ['256GB'], price: 320000, img: 'https://fdn2.gsmarena.com/vv/bigpic/tecno-pova-6-pro.jpg' },
-            { id: 45, brand: 'Tecno', model: 'Pop 12', cond: 'Brand New', storage: ['64GB'], price: 120000, img: 'https://fdn2.gsmarena.com/vv/bigpic/tecno-pop-11.jpg' },
-            { id: 46, brand: 'Infinix', model: 'Zero 50 Ultra', cond: 'Brand New', storage: ['512GB'], price: 1300000, img: 'https://fdn2.gsmarena.com/vv/bigpic/infinix-zero-50-ultra.jpg' },
-            { id: 47, brand: 'Infinix', model: 'Zero 50 Pro', cond: 'Brand New', storage: ['256GB'], price: 900000, img: 'https://fdn2.gsmarena.com/vv/bigpic/infinix-zero-50-pro.jpg' },
-            { id: 48, brand: 'Infinix', model: 'Note 60 Pro+', cond: 'Brand New', storage: ['256GB'], price: 650000, img: 'https://fdn2.gsmarena.com/vv/bigpic/infinix-note-60-pro-plus.jpg' },
-            { id: 49, brand: 'Infinix', model: 'Note 60 Pro', cond: 'Brand New', storage: ['256GB'], price: 500000, img: 'https://fdn2.gsmarena.com/vv/bigpic/infinix-note-60-pro.jpg' },
-            { id: 50, brand: 'Infinix', model: 'Note 60', cond: 'Brand New', storage: ['256GB'], price: 400000, img: 'https://fdn2.gsmarena.com/vv/bigpic/infinix-note-60.jpg' },
-            { id: 51, brand: 'Infinix', model: 'Hot 60 Pro', cond: 'Brand New', storage: ['256GB'], price: 300000, img: 'https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-60-pro.jpg' },
-            { id: 52, brand: 'Infinix', model: 'Hot 60', cond: 'Brand New', storage: ['128GB'], price: 220000, img: 'https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-60.jpg' },
-            { id: 53, brand: 'Infinix', model: 'Smart 10', cond: 'Brand New', storage: ['128GB'], price: 150000, img: 'https://fdn2.gsmarena.com/vv/bigpic/infinix-smart-10.jpg' },
-            { id: 54, brand: 'Infinix', model: 'Zero 40 Pro', cond: 'Brand New', storage: ['256GB'], price: 600000, img: 'https://fdn2.gsmarena.com/vv/bigpic/infinix-zero-40-pro.jpg' },
-            { id: 55, brand: 'Infinix', model: 'Note 50 Pro+', cond: 'Brand New', storage: ['256GB'], price: 520000, img: 'https://fdn2.gsmarena.com/vv/bigpic/infinix-note-40-pro-plus.jpg' },
-            { id: 56, brand: 'Infinix', model: 'Note 50 Pro', cond: 'Brand New', storage: ['256GB'], price: 380000, img: 'https://fdn2.gsmarena.com/vv/bigpic/infinix-note-30-pro.jpg' },
-            { id: 57, brand: 'Infinix', model: 'Note 50', cond: 'Brand New', storage: ['128GB'], price: 280000, img: 'https://fdn2.gsmarena.com/vv/bigpic/infinix-note-40.jpg' },
-            { id: 58, brand: 'Infinix', model: 'Hot 50 Pro', cond: 'Brand New', storage: ['128GB'], price: 230000, img: 'https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-50-pro.jpg' },
-            { id: 59, brand: 'Infinix', model: 'Hot 50', cond: 'Brand New', storage: ['128GB'], price: 180000, img: 'https://fdn2.gsmarena.com/vv/bigpic/infinix-hot-50.jpg' },
-            { id: 60, brand: 'Infinix', model: 'Smart 8', cond: 'Brand New', storage: ['64GB'], price: 118000, img: 'https://fdn2.gsmarena.com/vv/bigpic/infinix-smart-8.jpg' },
-            { id: 61, brand: 'Xiaomi', model: 'Xiaomi 16 Ultra', cond: 'Brand New', storage: ['512GB'], price: 2100000, img: 'https://fdn2.gsmarena.com/vv/bigpic/xiaomi-16-ultra.jpg' },
-            { id: 62, brand: 'Xiaomi', model: 'Xiaomi 16 Pro', cond: 'Brand New', storage: ['256GB'], price: 1600000, img: 'https://fdn2.gsmarena.com/vv/bigpic/xiaomi-16-pro.jpg' },
-            { id: 63, brand: 'Xiaomi', model: 'Xiaomi 16', cond: 'Brand New', storage: ['256GB'], price: 1200000, img: 'https://fdn2.gsmarena.com/vv/bigpic/xiaomi-16.jpg' },
-            { id: 64, brand: 'Xiaomi', model: 'Redmi Note 15 Pro+', cond: 'Brand New', storage: ['256GB'], price: 550000, img: 'https://fdn2.gsmarena.com/vv/bigpic/xiaomi-redmi-note-15-pro-plus.jpg' },
-            { id: 65, brand: 'Xiaomi', model: 'Redmi Note 15 Pro', cond: 'Brand New', storage: ['256GB'], price: 450000, img: 'https://fdn2.gsmarena.com/vv/bigpic/xiaomi-redmi-note-15-pro.jpg' },
-            { id: 66, brand: 'Xiaomi', model: 'Redmi Note 15', cond: 'Brand New', storage: ['128GB'], price: 300000, img: 'https://fdn2.gsmarena.com/vv/bigpic/xiaomi-redmi-note-15.jpg' },
-            { id: 67, brand: 'Xiaomi', model: 'Poco F7 Pro', cond: 'Brand New', storage: ['512GB'], price: 800000, img: 'https://fdn2.gsmarena.com/vv/bigpic/xiaomi-poco-f7-pro.jpg' },
-            { id: 68, brand: 'Xiaomi', model: 'Poco F7', cond: 'Brand New', storage: ['256GB'], price: 600000, img: 'https://fdn2.gsmarena.com/vv/bigpic/xiaomi-poco-f7.jpg' },
-            { id: 69, brand: 'Xiaomi', model: 'Poco X7 Pro', cond: 'Brand New', storage: ['256GB'], price: 450000, img: 'https://fdn2.gsmarena.com/vv/bigpic/xiaomi-poco-x7-pro.jpg' },
-            { id: 70, brand: 'Xiaomi', model: 'Xiaomi 15 Ultra', cond: 'UK Used', storage: ['512GB'], price: 1400000, img: 'https://fdn2.gsmarena.com/vv/bigpic/xiaomi-15-ultra.jpg' },
-            { id: 71, brand: 'Xiaomi', model: 'Xiaomi 15 Pro', cond: 'UK Used', storage: ['256GB'], price: 1100000, img: 'https://fdn2.gsmarena.com/vv/bigpic/xiaomi-15-pro.jpg' },
-            { id: 72, brand: 'Xiaomi', model: 'Xiaomi 15', cond: 'UK Used', storage: ['256GB'], price: 900000, img: 'https://fdn2.gsmarena.com/vv/bigpic/xiaomi-15.jpg' },
-            { id: 73, brand: 'Xiaomi', model: 'Redmi Note 13 Pro', cond: 'Brand New', storage: ['256GB'], price: 350000, img: 'https://fdn2.gsmarena.com/vv/bigpic/xiaomi-redmi-note-13-pro-4g.jpg' },
-            { id: 74, brand: 'Xiaomi', model: 'Redmi 14C', cond: 'Brand New', storage: ['128GB'], price: 160000, img: 'https://fdn2.gsmarena.com/vv/bigpic/xiaomi-redmi-14c.jpg' },
-            { id: 75, brand: 'Xiaomi', model: 'Redmi 13C', cond: 'Brand New', storage: ['128GB'], price: 155000, img: 'https://fdn2.gsmarena.com/vv/bigpic/xiaomi-redmi-13c.jpg' },
-            { id: 76, brand: 'Google Pixel', model: 'Pixel 10 Pro XL', cond: 'Brand New', storage: ['512GB'], price: 2500000, img: 'https://fdn2.gsmarena.com/vv/bigpic/google-pixel-10-pro-xl.jpg' },
-            { id: 77, brand: 'Google Pixel', model: 'Pixel 10 Pro', cond: 'Brand New', storage: ['256GB'], price: 2100000, img: 'https://fdn2.gsmarena.com/vv/bigpic/google-pixel-10-pro.jpg' },
-            { id: 78, brand: 'Google Pixel', model: 'Pixel 10', cond: 'Brand New', storage: ['128GB'], price: 1600000, img: 'https://fdn2.gsmarena.com/vv/bigpic/google-pixel-10.jpg' },
-            { id: 79, brand: 'Google Pixel', model: 'Pixel 10a', cond: 'Brand New', storage: ['128GB'], price: 900000, img: 'https://fdn2.gsmarena.com/vv/bigpic/google-pixel-10a.jpg' },
-            { id: 80, brand: 'Google Pixel', model: 'Pixel 9 Pro Fold', cond: 'Brand New', storage: ['512GB'], price: 3200000, img: 'https://fdn2.gsmarena.com/vv/bigpic/google-pixel-9-pro-fold.jpg' },
-            { id: 81, brand: 'Google Pixel', model: 'Pixel 9 Pro XL', cond: 'UK Used', storage: ['256GB'], price: 1600000, img: 'https://fdn2.gsmarena.com/vv/bigpic/google-pixel-9-pro-xl.jpg' },
-            { id: 82, brand: 'Google Pixel', model: 'Pixel 9 Pro', cond: 'UK Used', storage: ['256GB'], price: 1300000, img: 'https://fdn2.gsmarena.com/vv/bigpic/google-pixel-9-pro.jpg' },
-            { id: 83, brand: 'Google Pixel', model: 'Pixel 9', cond: 'UK Used', storage: ['128GB'], price: 1000000, img: 'https://fdn2.gsmarena.com/vv/bigpic/google-pixel-9.jpg' },
-            { id: 84, brand: 'Google Pixel', model: 'Pixel 8a', cond: 'Brand New', storage: ['128GB'], price: 600000, img: 'https://fdn2.gsmarena.com/vv/bigpic/google-pixel-8a.jpg' },
-            { id: 85, brand: 'Google Pixel', model: 'Pixel 8 Pro', cond: 'UK Used', storage: ['256GB'], price: 850000, img: 'https://fdn2.gsmarena.com/vv/bigpic/google-pixel-8-pro.jpg' },
-            { id: 86, brand: 'Google Pixel', model: 'Pixel 8', cond: 'UK Used', storage: ['128GB'], price: 650000, img: 'https://fdn2.gsmarena.com/vv/bigpic/google-pixel-8.jpg' },
-            { id: 87, brand: 'Google Pixel', model: 'Pixel Fold 2', cond: 'UK Used', storage: ['256GB'], price: 1500000, img: 'https://fdn2.gsmarena.com/vv/bigpic/google-pixel-fold-2.jpg' },
-            { id: 88, brand: 'Google Pixel', model: 'Pixel 7 Pro', cond: 'UK Used', storage: ['128GB'], price: 500000, img: 'https://fdn2.gsmarena.com/vv/bigpic/google-pixel-7-pro.jpg' },
-            { id: 89, brand: 'Google Pixel', model: 'Pixel 7', cond: 'UK Used', storage: ['128GB'], price: 400000, img: 'https://fdn2.gsmarena.com/vv/bigpic/google-pixel-7.jpg' },
-            { id: 90, brand: 'Google Pixel', model: 'Pixel 7a', cond: 'UK Used', storage: ['128GB'], price: 320000, img: 'https://fdn2.gsmarena.com/vv/bigpic/google-pixel-7a.jpg' },
-            { id: 91, brand: 'Oppo', model: 'Find X8 Ultra', cond: 'Brand New', storage: ['512GB'], price: 2200000, img: 'https://fdn2.gsmarena.com/vv/bigpic/oppo-find-x8-ultra.jpg' },
-            { id: 92, brand: 'Oppo', model: 'Find X8 Pro', cond: 'Brand New', storage: ['256GB'], price: 1700000, img: 'https://fdn2.gsmarena.com/vv/bigpic/oppo-find-x8-pro.jpg' },
-            { id: 93, brand: 'Oppo', model: 'Find X8', cond: 'Brand New', storage: ['256GB'], price: 1300000, img: 'https://fdn2.gsmarena.com/vv/bigpic/oppo-find-x8.jpg' },
-            { id: 94, brand: 'Oppo', model: 'Reno 13 Pro+', cond: 'Brand New', storage: ['256GB'], price: 900000, img: 'https://fdn2.gsmarena.com/vv/bigpic/oppo-reno13-pro-plus.jpg' },
-            { id: 95, brand: 'Oppo', model: 'Reno 13 Pro', cond: 'Brand New', storage: ['256GB'], price: 700000, img: 'https://fdn2.gsmarena.com/vv/bigpic/oppo-reno13-pro.jpg' },
-            { id: 96, brand: 'Oppo', model: 'Reno 13', cond: 'Brand New', storage: ['256GB'], price: 500000, img: 'https://fdn2.gsmarena.com/vv/bigpic/oppo-reno13.jpg' },
-            { id: 97, brand: 'Oppo', model: 'Find N4 Fold', cond: 'Brand New', storage: ['512GB'], price: 2400000, img: 'https://fdn2.gsmarena.com/vv/bigpic/oppo-find-n4.jpg' },
-            { id: 98, brand: 'Oppo', model: 'Find N4 Flip', cond: 'Brand New', storage: ['256GB'], price: 1400000, img: 'https://fdn2.gsmarena.com/vv/bigpic/oppo-find-n4-flip.jpg' },
-            { id: 99, brand: 'Oppo', model: 'Find X7 Ultra', cond: 'UK Used', storage: ['256GB'], price: 1400000, img: 'https://fdn2.gsmarena.com/vv/bigpic/oppo-find-x7-ultra.jpg' },
-            { id: 100, brand: 'Oppo', model: 'Find X7', cond: 'UK Used', storage: ['256GB'], price: 900000, img: 'https://fdn2.gsmarena.com/vv/bigpic/oppo-find-x7.jpg' },
-            { id: 101, brand: 'Oppo', model: 'Reno 12 Pro', cond: 'Brand New', storage: ['256GB'], price: 600000, img: 'https://fdn2.gsmarena.com/vv/bigpic/oppo-reno12-pro.jpg' },
-            { id: 102, brand: 'Oppo', model: 'Reno 12', cond: 'Brand New', storage: ['256GB'], price: 400000, img: 'https://fdn2.gsmarena.com/vv/bigpic/oppo-reno12.jpg' },
-            { id: 103, brand: 'Oppo', model: 'Reno 11', cond: 'UK Used', storage: ['256GB'], price: 300000, img: 'https://fdn2.gsmarena.com/vv/bigpic/oppo-reno11.jpg' },
-            { id: 104, brand: 'Oppo', model: 'Find X5 Pro', cond: 'UK Used', storage: ['256GB'], price: 550000, img: 'https://fdn2.gsmarena.com/vv/bigpic/oppo-find-x5-pro.jpg' },
-            { id: 105, brand: 'Oppo', model: 'A79', cond: 'Brand New', storage: ['128GB'], price: 280000, img: 'https://fdn2.gsmarena.com/vv/bigpic/oppo-a79.jpg' },
-            { id: 106, brand: 'Huawei', model: 'Mate 70 Pro+', cond: 'Brand New', storage: ['512GB'], price: 2600000, img: 'https://fdn2.gsmarena.com/vv/bigpic/huawei-mate-70-pro-plus.jpg' },
-            { id: 107, brand: 'Huawei', model: 'Mate 70 Pro', cond: 'Brand New', storage: ['256GB'], price: 2000000, img: 'https://fdn2.gsmarena.com/vv/bigpic/huawei-mate-70-pro.jpg' },
-            { id: 108, brand: 'Huawei', model: 'Mate 70', cond: 'Brand New', storage: ['256GB'], price: 1500000, img: 'https://fdn2.gsmarena.com/vv/bigpic/huawei-mate-70.jpg' },
-            { id: 109, brand: 'Huawei', model: 'Pura 80 Ultra', cond: 'Brand New', storage: ['512GB'], price: 2700000, img: 'https://fdn2.gsmarena.com/vv/bigpic/huawei-pura-80-ultra.jpg' },
-            { id: 110, brand: 'Huawei', model: 'Pura 80 Pro', cond: 'Brand New', storage: ['256GB'], price: 2100000, img: 'https://fdn2.gsmarena.com/vv/bigpic/huawei-pura-80-pro.jpg' },
-            { id: 111, brand: 'Huawei', model: 'Pura 80', cond: 'Brand New', storage: ['256GB'], price: 1600000, img: 'https://fdn2.gsmarena.com/vv/bigpic/huawei-pura-80.jpg' },
-            { id: 112, brand: 'Huawei', model: 'Nova 13 Pro', cond: 'Brand New', storage: ['256GB'], price: 800000, img: 'https://fdn2.gsmarena.com/vv/bigpic/huawei-nova-13-pro.jpg' },
-            { id: 113, brand: 'Huawei', model: 'Nova 13', cond: 'Brand New', storage: ['128GB'], price: 500000, img: 'https://fdn2.gsmarena.com/vv/bigpic/huawei-nova-13.jpg' },
-            { id: 114, brand: 'Huawei', model: 'Mate X4 Fold', cond: 'Brand New', storage: ['1TB'], price: 3800000, img: 'https://fdn2.gsmarena.com/vv/bigpic/huawei-mate-x4.jpg' },
-            { id: 115, brand: 'Huawei', model: 'Mate 60 Pro', cond: 'UK Used', storage: ['256GB'], price: 1300000, img: 'https://fdn2.gsmarena.com/vv/bigpic/huawei-mate-60-pro.jpg' },
-            { id: 116, brand: 'Huawei', model: 'Pura 70 Ultra', cond: 'UK Used', storage: ['512GB'], price: 1600000, img: 'https://fdn2.gsmarena.com/vv/bigpic/huawei-pura-70-ultra.jpg' },
-            { id: 117, brand: 'Huawei', model: 'Pura 70 Pro', cond: 'UK Used', storage: ['256GB'], price: 1200000, img: 'https://fdn2.gsmarena.com/vv/bigpic/huawei-pura-70-pro.jpg' },
-            { id: 118, brand: 'Huawei', model: 'Nova 12 Pro', cond: 'Brand New', storage: ['256GB'], price: 600000, img: 'https://fdn2.gsmarena.com/vv/bigpic/huawei-nova-12-pro.jpg' },
-            { id: 119, brand: 'Huawei', model: 'Nova 12', cond: 'Brand New', storage: ['128GB'], price: 400000, img: 'https://fdn2.gsmarena.com/vv/bigpic/huawei-nova-12.jpg' },
-            { id: 120, brand: 'Huawei', model: 'Mate 50 Pro', cond: 'Brand New', storage: ['256GB'], price: 820000, img: 'https://fdn2.gsmarena.com/vv/bigpic/huawei-mate-50-pro.jpg' },
-            { id: 201, brand: 'Apple', model: 'iPhone 17 Pro (Locked)', cond: 'Brand New', storage: ['256GB'], price: 1190000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-17-pro.jpg' },
-            { id: 202, brand: 'Apple', model: 'iPhone 16 Plus (eSIM)', cond: 'UK Used', storage: ['128GB'], price: 930000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-16-plus.jpg' },
-            { id: 203, brand: 'Apple', model: 'iPhone 15 (eSIM FU)', cond: 'UK Used', storage: ['256GB'], price: 660000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-15.jpg' },
-            { id: 204, brand: 'Apple', model: 'iPhone 17 Pro Max (eSIM Locked)', cond: 'Brand New', storage: ['256GB'], price: 1230000, img: 'iphone_17_pro_max_2.jpeg' },
-            { id: 205, brand: 'Apple', model: 'iPhone 16 Pro (eSIM)', cond: 'UK Used', storage: ['256GB'], price: 950000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-16-pro.jpg' },
-            { id: 206, brand: 'Apple', model: 'iPhone 15 Pro Max (eSIM)', cond: 'UK Used', storage: ['256GB'], battery: 'Good', price: 870000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-15-pro-max.jpg' }
-        ];
+        if (typeof staticProducts === 'undefined') {
+            window.staticProducts = []; // Fallback to avoid ReferenceError
+            console.error("catalog.js failed to load.");
+        }
 
         let products = [...staticProducts];
 
-        // Load Products from Admin Panel
         const loadProducts = () => {
             const stored = localStorage.getItem('hojay_products');
             if (stored) {
-                const adminProducts = JSON.parse(stored).filter(p => !p.hidden);
-                if (adminProducts.length > 0) {
-                    products = adminProducts;
-                } else {
-                    products = [...staticProducts];
-                }
+                products = JSON.parse(stored).filter(p => !p.hidden);
             } else {
                 products = [...staticProducts];
             }
@@ -1877,10 +1779,14 @@
 
         // Render Home Grids
         const renderHomeBestSellers = (filterBrand = 'All') => {
-            const bestSellerIds = [201, 204, 205, 202, 206, 203, 5, 7, 11, 10, 13, 15, 20, 21]; // Nigerian Market Best Sellers Mix
-            let bestProducts = products.filter(p => bestSellerIds.includes(p.id) || p.id > 1000); // include new admin products as potential best sellers
+            const bestSellerIds = [201, 204, 205, 202, 206, 203, 5, 7, 11, 10, 13, 15, 20, 21]; 
             
-            // If no products match the specific IDs (e.g. admin data cleared them), just show the first 12
+            // Priority: Newest uploaded products (ID > 1000) first, then curated best sellers
+            let bestProducts = products.filter(p => p.id > 1000 || bestSellerIds.includes(p.id));
+            
+            // Sort by newest first
+            bestProducts.sort((a, b) => b.id - a.id);
+
             if (bestProducts.length === 0) bestProducts = products.slice(0, 12);
 
             if (filterBrand !== 'All') {
@@ -1921,8 +1827,11 @@
             if (brandFilter !== 'All') filtered = filtered.filter(p => p.brand === brandFilter);
             if (condFilter !== 'All') filtered = filtered.filter(p => p.cond === condFilter);
 
-            if (sort === 'price-low') filtered.sort((a, b) => a.price - b.price);
-            if (sort === 'price-high') filtered.sort((a, b) => b.price - a.price);
+            // Default sort is Newest First (Highest ID first)
+            if (sort === 'newest') filtered.sort((a, b) => b.id - a.id);
+            else if (sort === 'price-low') filtered.sort((a, b) => a.price - b.price);
+            else if (sort === 'price-high') filtered.sort((a, b) => b.price - a.price);
+            else filtered.sort((a, b) => b.id - a.id); // Default fallback
 
             document.getElementById('shop-count').innerText = `Showing ${filtered.length} products`;
             document.getElementById('full-shop-grid').innerHTML = filtered.map(renderCard).join('');
@@ -1967,13 +1876,17 @@
         `).join('');
 
         // Preloader Logic
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                const preloader = document.getElementById('preloader');
+        const hidePreloader = () => {
+            const preloader = document.getElementById('preloader');
+            if (preloader) {
                 preloader.style.opacity = '0';
                 setTimeout(() => preloader.style.display = 'none', 500);
-            }, 1000); // reduced for demo sanity
-        });
+            }
+        };
+
+        window.addEventListener('load', hidePreloader);
+        // Safety timeout in case load event takes too long or errors occur
+        setTimeout(hidePreloader, 3000);
 
         // Sticky Header & Nav Active logic
         const header = document.getElementById('header');
@@ -2014,9 +1927,15 @@
 
         // Countdown Timer Logic
         setInterval(() => {
-            let s = parseInt(document.getElementById('seconds').innerText);
-            let m = parseInt(document.getElementById('minutes').innerText);
-            let h = parseInt(document.getElementById('hours').innerText);
+            const secEl = document.getElementById('seconds');
+            const minEl = document.getElementById('minutes');
+            const hrEl = document.getElementById('hours');
+            
+            if (!secEl || !minEl || !hrEl) return;
+
+            let s = parseInt(secEl.innerText) || 0;
+            let m = parseInt(minEl.innerText) || 0;
+            let h = parseInt(hrEl.innerText) || 0;
 
             if (s > 0) s--;
             else {
@@ -2029,9 +1948,9 @@
                 }
             }
 
-            document.getElementById('seconds').innerText = s < 10 ? '0' + s : s;
-            document.getElementById('minutes').innerText = m < 10 ? '0' + m : m;
-            document.getElementById('hours').innerText = h < 10 ? '0' + h : h;
+            secEl.innerText = s < 10 ? '0' + s : s;
+            minEl.innerText = m < 10 ? '0' + m : m;
+            hrEl.innerText = h < 10 ? '0' + h : h;
         }, 1000);
 
         // Scroll Animations & Reveal Transitions

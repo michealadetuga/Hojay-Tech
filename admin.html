@@ -133,6 +133,17 @@
             min-height: 100vh;
         }
 
+        /* Mobile Sidebar Overlay */
+        .sidebar-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px);
+            z-index: 100;
+            display: none;
+        }
+        .sidebar-overlay.active { display: block; }
+
         /* Sidebar */
         aside {
             background: var(--bg-surface);
@@ -562,21 +573,58 @@
         .hidden { display: none !important; }
         .v-hidden { opacity: 0.4; filter: grayscale(0.5); }
 
-        /* Responsive */
+        /* Responsive Overrides */
         @media (max-width: 1024px) {
-            .admin-layout { grid-template-columns: 80px 1fr; }
-            aside { padding: 30px 10px; align-items: center; }
-            .sidebar-logo, .nav-item span, .sidebar-footer span { display: none; }
-            .nav-item { padding: 14px; justify-content: center; }
-            .stats-row { grid-template-columns: repeat(2, 1fr); }
+            .admin-layout { grid-template-columns: 1fr; }
+            
+            aside {
+                position: fixed;
+                left: -280px;
+                z-index: 101;
+                transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+            aside.active { left: 0; }
+            
+            main { padding: 80px 20px 40px; }
+            
+            .mobile-header {
+                display: flex;
+                position: fixed;
+                top: 0; left: 0; right: 0;
+                background: var(--bg-surface);
+                padding: 15px 20px;
+                border-bottom: 1px solid var(--border);
+                z-index: 90;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .stats-row { grid-template-columns: repeat(2, 1fr); gap: 15px; }
+            .stat-box { padding: 15px; }
+            .stat-box .number { font-size: 1.4rem; }
         }
 
         @media (max-width: 640px) {
-            main { padding: 20px; }
-            .top-bar { flex-direction: column; gap: 20px; align-items: flex-start; }
+            .top-bar { flex-direction: column; align-items: flex-start; gap: 20px; }
+            .top-bar .btn-group { width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
             .stats-row { grid-template-columns: 1fr; }
-            .form-grid { grid-template-columns: 1fr; }
+            .card-header { flex-direction: column; gap: 15px; align-items: flex-start; }
             .search-box { width: 100%; }
+            
+            .hide-mobile { display: none; }
+            
+            .modal-content { padding: 25px; }
+            .form-grid { grid-template-columns: 1fr; }
+        }
+
+        .mobile-header { display: none; }
+        .menu-toggle {
+            width: 40px; height: 40px;
+            display: flex; align-items: center; justify-content: center;
+            background: var(--bg-input);
+            border-radius: 10px;
+            color: #fff;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -587,13 +635,21 @@
         <div class="login-card">
             <div class="logo">HOJAY<span>TECH</span></div>
             <h2>Management Console</h2>
-            <div class="input-wrapper">
+            <div class="input-wrapper" style="position: relative;">
                 <label>Administrator Password</label>
-                <input type="password" id="admin-pass" placeholder="Enter secure key">
+                <input type="password" id="admin-pass" placeholder="Enter secure key" onkeydown="if(event.key==='Enter') login()">
+                <i class="fas fa-eye" id="toggle-pass" style="position: absolute; right: 15px; top: 42px; cursor: pointer; color: var(--text-low);" onclick="togglePassVisibility()"></i>
             </div>
             <button class="btn btn-primary" onclick="login()" style="width: 100%; justify-content: center;">Authenticate</button>
             <p id="login-error" style="color:var(--danger); margin-top:20px; font-size:0.85rem; font-weight: 600;" class="hidden">Access Denied: Invalid Password</p>
         </div>
+    </div>
+
+    <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
+    
+    <div class="mobile-header">
+        <div class="sidebar-logo" style="margin-bottom: 0; padding-left: 0;">HOJAY<span>TECH</span></div>
+        <div class="menu-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></div>
     </div>
 
     <div class="admin-layout">
@@ -601,19 +657,19 @@
         <aside>
             <div class="sidebar-logo">HOJAY<span>TECH</span></div>
             <nav>
-                <div class="nav-item active">
+                <div class="nav-item active" onclick="switchTab('dashboard', this)">
                     <i class="fas fa-th-large"></i>
                     <span>Dashboard</span>
                 </div>
-                <div class="nav-item">
+                <div class="nav-item" onclick="switchTab('products', this)">
                     <i class="fas fa-box"></i>
                     <span>Products</span>
                 </div>
-                <div class="nav-item">
+                <div class="nav-item" onclick="switchTab('analytics', this)">
                     <i class="fas fa-chart-line"></i>
                     <span>Analytics</span>
                 </div>
-                <div class="nav-item">
+                <div class="nav-item" onclick="switchTab('settings', this)">
                     <i class="fas fa-cog"></i>
                     <span>Settings</span>
                 </div>
@@ -633,12 +689,15 @@
                     <h1 style="font-size: 1.8rem; margin-bottom: 4px;">Inventory Overview</h1>
                     <p style="color: var(--text-low); font-size: 0.9rem;">Manage your store's products and pricing</p>
                 </div>
-                <div style="display: flex; gap: 12px; align-items: center;">
+                <div class="btn-group" style="display: flex; gap: 12px; align-items: center;">
                     <button class="btn" style="background: var(--bg-surface); border: 1px solid var(--border);" onclick="exportJSON()">
-                        <i class="fas fa-file-export"></i> <span>Export Data</span>
+                        <i class="fas fa-file-export"></i> <span>Export</span>
+                    </button>
+                    <button class="btn" style="background: rgba(76, 175, 80, 0.1); color: #4CAF50; border: 1px solid rgba(76, 175, 80, 0.2);" onclick="restoreOriginals()">
+                        <i class="fas fa-sync-alt"></i> <span>Restore</span>
                     </button>
                     <button class="btn btn-primary" onclick="openModal()">
-                        <i class="fas fa-plus"></i> <span>New Product</span>
+                        <i class="fas fa-plus"></i> <span>New</span>
                     </button>
                     <button class="btn" style="background: rgba(239, 68, 68, 0.1); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.2);" onclick="clearAllInventory()">
                         <i class="fas fa-trash-sweep"></i> <span>Delete All</span>
@@ -697,8 +756,8 @@
                             <tr>
                                 <th class="checkbox-cell"><input type="checkbox" class="custom-checkbox" id="select-all" onclick="toggleSelectAll(this)"></th>
                                 <th>Product Details</th>
-                                <th>Category</th>
-                                <th>Condition</th>
+                                <th class="hide-mobile">Category</th>
+                                <th class="hide-mobile">Condition</th>
                                 <th>Price</th>
                                 <th style="text-align: right;">Actions</th>
                             </tr>
@@ -786,12 +845,52 @@
         </div>
     </div>
 
+    <script src="catalog.js"></script>
     <script>
-        // CORE CONFIG
-        const ACCESS_KEY = "hojay2025";
-        let inventory = JSON.parse(localStorage.getItem('hojay_products')) || [];
+        // Mobile Sidebar
+        function toggleSidebar() {
+            document.querySelector('aside').classList.toggle('active');
+            document.getElementById('sidebar-overlay').classList.toggle('active');
+        }
+
+        function switchTab(tab, el) {
+            // Update UI
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            el.classList.add('active');
+
+            // Handle switching (for now we keep the main dashboard as the primary view)
+            // But we can hide/show specific sections if needed
+            if (tab === 'analytics') {
+                alert('Analytics module is being prepared with real-time sales tracking!');
+            } else if (tab === 'settings') {
+                alert('Settings: Change password or theme coming soon.');
+            }
+            
+            if (window.innerWidth <= 1024) toggleSidebar();
+        }
+        let inventory = JSON.parse(localStorage.getItem('hojay_products'));
+        
+        // SEED INITIAL DATA: If empty, load from catalog.js
+        if (!inventory || inventory.length === 0) {
+            inventory = [...staticProducts];
+            localStorage.setItem('hojay_products', JSON.stringify(inventory));
+        }
 
         // Authentication Logic
+        const ACCESS_KEY = 'hojay2025';
+
+        function togglePassVisibility() {
+            const passInput = document.getElementById('admin-pass');
+            const icon = document.getElementById('toggle-pass');
+            if (passInput.type === 'password') {
+                passInput.type = 'text';
+                icon.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                passInput.type = 'password';
+                icon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        }
+
         function login() {
             const key = document.getElementById('admin-pass').value;
             if (key === ACCESS_KEY) {
@@ -825,9 +924,16 @@
 
         // Stats Engine
         function updateAnalytics() {
-            document.getElementById('stat-total').innerText = inventory.length;
+            const statTotal = document.getElementById('stat-total');
+            const statBrands = document.getElementById('stat-brands');
+            const statMin = document.getElementById('stat-min');
+            const statMax = document.getElementById('stat-max');
+
+            if (!statTotal) return;
+
+            statTotal.innerText = inventory.length;
             const brandsCount = [...new Set(inventory.map(p => p.brand))].length;
-            document.getElementById('stat-brands').innerText = brandsCount;
+            statBrands.innerText = brandsCount;
             
             if (inventory.length > 0) {
                 const prices = inventory.map(p => p.price);
@@ -865,12 +971,12 @@
                             <img src="${p.img}" class="product-img" alt="">
                             <div>
                                 <div class="product-name">${p.model}</div>
-                                <div class="product-meta">ID: #${p.id.toString().slice(-4)}</div>
+                                <div class="product-meta hide-mobile">ID: #${p.id.toString().slice(-4)}</div>
                             </div>
                         </div>
                     </td>
-                    <td><span style="color: var(--text-muted); font-weight: 600;">${p.brand}</span></td>
-                    <td>
+                    <td class="hide-mobile"><span style="color: var(--text-muted); font-weight: 600;">${p.brand}</span></td>
+                    <td class="hide-mobile">
                         <span class="badge ${p.cond === 'Brand New' ? 'badge-success' : 'badge-warning'}">
                             ${p.cond}
                         </span>
@@ -1082,6 +1188,25 @@
             a.href = url;
             a.download = `hojay_inventory_${new Date().toISOString().slice(0,10)}.json`;
             a.click();
+        }
+
+        function restoreOriginals() {
+            if (confirm('This will add any missing original products from the catalog back to your inventory. New products you added will stay. Continue?')) {
+                // Get IDs currently in inventory
+                const currentIds = new Set(inventory.map(p => p.id));
+                // Find products in staticProducts that are NOT in inventory
+                const missing = staticProducts.filter(p => !currentIds.has(p.id));
+                
+                if (missing.length === 0) {
+                    alert('All original products are already in your inventory!');
+                    return;
+                }
+                
+                inventory = [...inventory, ...missing];
+                localStorage.setItem('hojay_products', JSON.stringify(inventory));
+                renderTable();
+                alert(`Successfully restored ${missing.length} original products!`);
+            }
         }
 
         // Initial Boot
