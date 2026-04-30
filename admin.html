@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hojay Tech | Premium Admin Dashboard</title>
+    
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary: #FF8C00;
+            --primary-hover: #e07b00;
+            --bg-base: #1A3A2A;
+            --bg-surface: #0F2318;
+            --bg-card: #244A38;
+            --bg-input: #2D5A45;
+            --text-white: #F0EDE8;
+            --text-muted: #B8C5BC;
+            --text-low: #8C9E94;
+            --success: #22C55E;
+            --danger: #EF4444;
+            --warning: #F59E0B;
+            --accent: #8B6F47;
+            --border: rgba(255, 255, 255, 0.05);
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 24px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-white);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, h4, .logo {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Login Screen Overhaul */
+        #login-screen {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at top right, rgba(255, 140, 0, 0.1), transparent 40%),
+                        radial-gradient(circle at bottom left, rgba(139, 111, 71, 0.1), transparent 40%),
+                        var(--bg-base);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .login-card {
+            background: rgba(30, 38, 56, 0.7);
+            backdrop-filter: blur(16px);
+            padding: 50px 40px;
+            border-radius: var(--radius-xl);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 440px;
+            text-align: center;
+            border: 1px solid var(--border);
+            animation: slideUp 0.8s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .login-card .logo {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 8px;
+        }
+
+        .login-card .logo span { color: var(--primary); }
+        .login-card h2 { font-size: 1.5rem; margin-bottom: 30px; font-weight: 600; color: var(--text-muted); }
+
+        .input-wrapper {
+            margin-bottom: 24px;
+            position: relative;
+            text-align: left;
+        }
+
+        .input-wrapper label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-weight: 500;
+            padding-left: 4px;
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            padding: 14px 18px;
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            color: #fff;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .input-wrapper input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(255, 140, 0, 0.1);
+            outline: none;
+        }
+
+        /* Main Layout */
+        .admin-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        aside {
+            background: var(--bg-surface);
+            border-right: 1px solid var(--border);
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+        }
+
+        .sidebar-logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            margin-bottom: 40px;
+            padding-left: 10px;
+        }
+
+        .sidebar-logo span { color: var(--primary); }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            border-radius: var(--radius-md);
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            margin-bottom: 8px;
+            cursor: pointer;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background: rgba(255, 140, 0, 0.1);
+            color: var(--primary);
+        }
+
+        .nav-item.active i { color: var(--primary); }
+
+        .sidebar-footer {
+            margin-top: auto;
+            border-top: 1px solid var(--border);
+            padding-top: 20px;
+        }
+
+        /* Main Content */
+        main {
+            padding: 40px;
+            max-width: 1400px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--bg-surface);
+            padding: 8px 16px;
+            border-radius: 40px;
+            border: 1px solid var(--border);
+        }
+
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.8rem;
+        }
+
+        /* Stats Section */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .stat-box {
+            background: var(--bg-surface);
+            padding: 24px;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border);
+            transition: transform 0.3s, border-color 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-box:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 140, 0, 0.3);
+        }
+
+        .stat-box::after {
+            content: '';
+            position: absolute;
+            top: 0; right: 0;
+            width: 100px; height: 100px;
+            background: radial-gradient(circle at 100% 0%, rgba(255, 140, 0, 0.05), transparent 70%);
+        }
+
+        .stat-box i {
+            width: 44px;
+            height: 44px;
+            background: rgba(255, 140, 0, 0.1);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius-md);
+            margin-bottom: 16px;
+            font-size: 1.2rem;
+        }
+
+        .stat-box h4 {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-box .number {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: var(--text-white);
+        }
+
+        /* Table Design */
+        .card {
+            background: var(--bg-surface);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .search-box {
+            position: relative;
+            width: 300px;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-low);
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 10px 14px 10px 40px;
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            color: #fff;
+            transition: all 0.3s;
+        }
+
+        .search-box input:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: rgba(255, 255, 255, 0.02);
+            padding: 16px 24px;
+            text-align: left;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-low);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        td {
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.9rem;
+        }
+
+        tr:last-child td { border-bottom: none; }
+
+        tr:hover td {
+            background: rgba(255, 255, 255, 0.01);
+        }
+
+        .product-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .product-img {
+            width: 54px;
+            height: 54px;
+            border-radius: var(--radius-md);
+            background: #fff;
+            padding: 4px;
+            object-fit: contain;
+        }
+
+        .product-name { font-weight: 700; color: var(--text-white); margin-bottom: 2px; }
+        .product-meta { font-size: 0.8rem; color: var(--text-low); }
+
+        .badge {
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            display: inline-block;
+        }
+
+        .badge-success { background: rgba(16, 185, 129, 0.15); color: #34d399; }
+        .badge-warning { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
+
+        .price-text { font-weight: 800; color: var(--primary); }
+
+        .actions {
+            display: flex;
+            gap: 8px;
+            justify-content: flex-end;
+        }
+
+        /* Bulk Actions Bar */
+        .bulk-actions-bar {
+            display: none;
+            background: var(--bg-card);
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border);
+            align-items: center;
+            gap: 20px;
+            animation: slideDown 0.3s ease;
+        }
+
+        .bulk-actions-bar.active { display: flex; }
+
+        @keyframes slideDown {
+            from { transform: translateY(-10px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        tr.selected td {
+            background: rgba(255, 140, 0, 0.05) !important;
+        }
+
+        .checkbox-cell {
+            width: 50px;
+            text-align: center;
+        }
+
+        .custom-checkbox {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        .action-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-view:hover { background: rgba(56, 189, 248, 0.1); color: var(--accent); border-color: var(--accent); }
+        .btn-edit:hover { background: rgba(99, 102, 241, 0.1); color: var(--secondary); border-color: var(--secondary); }
+        .btn-delete:hover { background: rgba(239, 68, 68, 0.1); color: var(--danger); border-color: var(--danger); }
+
+        /* Buttons */
+        .btn {
+            padding: 10px 20px;
+            border-radius: var(--radius-md);
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #fff;
+            box-shadow: 0 4px 14px rgba(255, 140, 0, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 140, 0, 0.4);
+        }
+
+        /* Modal Overhaul */
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 20px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.active { display: flex; opacity: 1; }
+
+        .modal-content {
+            background: var(--bg-surface);
+            width: 100%;
+            max-width: 650px;
+            border-radius: var(--radius-xl);
+            padding: 40px;
+            border: 1px solid var(--border);
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+        }
+
+        .modal.active .modal-content { transform: scale(1); }
+
+        .close-modal {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            font-size: 1.25rem;
+            cursor: pointer;
+            color: var(--text-low);
+            transition: color 0.3s;
+        }
+
+        .close-modal:hover { color: var(--text-white); }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        /* Upload Zone */
+        .upload-zone {
+            width: 100%;
+            height: 180px;
+            border: 2px dashed var(--border);
+            border-radius: var(--radius-lg);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 24px;
+            position: relative;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.01);
+        }
+
+        .upload-zone:hover { border-color: var(--primary); background: rgba(255, 140, 0, 0.03); }
+
+        .upload-zone i { font-size: 2.5rem; color: var(--primary); margin-bottom: 12px; }
+        .upload-zone p { font-size: 0.9rem; color: var(--text-muted); font-weight: 500; }
+
+        .preview-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background: #fff;
+            position: absolute;
+            z-index: 5;
+        }
+
+        /* Utility */
+        .hidden { display: none !important; }
+        .v-hidden { opacity: 0.4; filter: grayscale(0.5); }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .admin-layout { grid-template-columns: 80px 1fr; }
+            aside { padding: 30px 10px; align-items: center; }
+            .sidebar-logo, .nav-item span, .sidebar-footer span { display: none; }
+            .nav-item { padding: 14px; justify-content: center; }
+            .stats-row { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 640px) {
+            main { padding: 20px; }
+            .top-bar { flex-direction: column; gap: 20px; align-items: flex-start; }
+            .stats-row { grid-template-columns: 1fr; }
+            .form-grid { grid-template-columns: 1fr; }
+            .search-box { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Login Section -->
+    <div id="login-screen">
+        <div class="login-card">
+            <div class="logo">HOJAY<span>TECH</span></div>
+            <h2>Management Console</h2>
+            <div class="input-wrapper">
+                <label>Administrator Password</label>
+                <input type="password" id="admin-pass" placeholder="Enter secure key">
+            </div>
+            <button class="btn btn-primary" onclick="login()" style="width: 100%; justify-content: center;">Authenticate</button>
+            <p id="login-error" style="color:var(--danger); margin-top:20px; font-size:0.85rem; font-weight: 600;" class="hidden">Access Denied: Invalid Password</p>
+        </div>
+    </div>
+
+    <div class="admin-layout">
+        <!-- Sidebar Navigation -->
+        <aside>
+            <div class="sidebar-logo">HOJAY<span>TECH</span></div>
+            <nav>
+                <div class="nav-item active">
+                    <i class="fas fa-th-large"></i>
+                    <span>Dashboard</span>
+                </div>
+                <div class="nav-item">
+                    <i class="fas fa-box"></i>
+                    <span>Products</span>
+                </div>
+                <div class="nav-item">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Analytics</span>
+                </div>
+                <div class="nav-item">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </div>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="nav-item" onclick="logout()" style="color: var(--danger);">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Workspace -->
+        <main>
+            <div class="top-bar">
+                <div>
+                    <h1 style="font-size: 1.8rem; margin-bottom: 4px;">Inventory Overview</h1>
+                    <p style="color: var(--text-low); font-size: 0.9rem;">Manage your store's products and pricing</p>
+                </div>
+                <div style="display: flex; gap: 12px; align-items: center;">
+                    <button class="btn" style="background: var(--bg-surface); border: 1px solid var(--border);" onclick="exportJSON()">
+                        <i class="fas fa-file-export"></i> <span>Export Data</span>
+                    </button>
+                    <button class="btn btn-primary" onclick="openModal()">
+                        <i class="fas fa-plus"></i> <span>New Product</span>
+                    </button>
+                    <button class="btn" style="background: rgba(239, 68, 68, 0.1); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.2);" onclick="clearAllInventory()">
+                        <i class="fas fa-trash-sweep"></i> <span>Delete All</span>
+                    </button>
+                    <div class="user-profile">
+                        <div class="user-avatar">H</div>
+                        <span style="font-size: 0.85rem; font-weight: 600;">Admin</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Stats -->
+            <div class="stats-row">
+                <div class="stat-box">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h4>Total Inventory</h4>
+                    <div class="number" id="stat-total">0</div>
+                </div>
+                <div class="stat-box">
+                    <i class="fas fa-tag"></i>
+                    <h4>Active Brands</h4>
+                    <div class="number" id="stat-brands">0</div>
+                </div>
+                <div class="stat-box">
+                    <i class="fas fa-eye"></i>
+                    <h4>Price Floor</h4>
+                    <div class="number" id="stat-min">₦0</div>
+                </div>
+                <div class="stat-box">
+                    <i class="fas fa-arrow-trend-up"></i>
+                    <h4>Highest Value</h4>
+                    <div class="number" id="stat-max">₦0</div>
+                </div>
+            </div>
+
+            <!-- Product Table -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Product Catalog</h3>
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="search-input" placeholder="Search by model or brand..." onkeyup="filterProducts()">
+                    </div>
+                </div>
+                
+                <div class="bulk-actions-bar" id="bulk-bar">
+                    <span style="font-size: 0.85rem; font-weight: 600; color: var(--primary);" id="selected-count">0 Selected</span>
+                    <button class="btn" style="padding: 6px 12px; font-size: 0.8rem; background: var(--danger);" onclick="deleteSelected()">
+                        <i class="fas fa-trash"></i> Delete Selected
+                    </button>
+                </div>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="checkbox-cell"><input type="checkbox" class="custom-checkbox" id="select-all" onclick="toggleSelectAll(this)"></th>
+                                <th>Product Details</th>
+                                <th>Category</th>
+                                <th>Condition</th>
+                                <th>Price</th>
+                                <th style="text-align: right;">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="product-list">
+                            <!-- Products injected here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Product Modal -->
+    <div class="modal" id="product-modal">
+        <div class="modal-content">
+            <i class="fas fa-times close-modal" onclick="closeModal()"></i>
+            <h2 id="modal-title" style="margin-bottom: 24px;">Manage Product</h2>
+            
+            <form id="product-form" onsubmit="saveProduct(event)">
+                <input type="hidden" id="edit-id">
+                
+                <div class="upload-zone" id="drop-zone">
+                    <div class="upload-placeholder">
+                        <i class="fas fa-cloud-arrow-up"></i>
+                        <p>Drop image here or click to browse</p>
+                        <span style="font-size: 0.75rem; color: var(--text-low); margin-top: 5px;">Supports: JPG, PNG, WEBP</span>
+                    </div>
+                    <input type="file" id="file-input" accept="image/*" class="hidden">
+                    <img id="preview-img" src="" class="preview-img hidden">
+                </div>
+
+                <div class="form-grid">
+                    <div class="input-wrapper">
+                        <label>Brand Name</label>
+                        <select id="p-brand" required style="width: 100%; padding: 14px 18px; background: var(--bg-input); border: 1px solid var(--border); border-radius: var(--radius-md); color: #fff;">
+                            <option value="Apple">Apple</option>
+                            <option value="Samsung">Samsung</option>
+                            <option value="Tecno">Tecno</option>
+                            <option value="Infinix">Infinix</option>
+                            <option value="Xiaomi">Xiaomi</option>
+                            <option value="Google Pixel">Google Pixel</option>
+                            <option value="Oppo">Oppo</option>
+                            <option value="Huawei">Huawei</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="input-wrapper">
+                        <label>Product Model</label>
+                        <input type="text" id="p-model" placeholder="e.g. iPhone 15 Pro Max" required>
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="input-wrapper">
+                        <label>Stock Condition</label>
+                        <select id="p-cond" required style="width: 100%; padding: 14px 18px; background: var(--bg-input); border: 1px solid var(--border); border-radius: var(--radius-md); color: #fff;">
+                            <option value="Brand New">Brand New</option>
+                            <option value="UK Used">UK Used</option>
+                            <option value="Refurbished">Refurbished</option>
+                        </select>
+                    </div>
+                    <div class="input-wrapper">
+                        <label>Storage Options</label>
+                        <input type="text" id="p-storage" placeholder="e.g. 128GB, 256GB" required>
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="input-wrapper">
+                        <label>Retail Price (₦)</label>
+                        <input type="number" id="p-price" placeholder="1250000" required>
+                    </div>
+                    <div class="input-wrapper">
+                        <label>Battery Capacity / Health</label>
+                        <input type="text" id="p-battery" placeholder="e.g. 5000mAh or 100%">
+                    </div>
+                </div>
+
+                <div style="margin-top: 10px; display: flex; gap: 12px;">
+                    <button type="submit" class="btn btn-primary" style="flex: 1; justify-content: center;">Save Product Details</button>
+                    <button type="button" class="btn" onclick="closeModal()" style="background: var(--bg-input); border: 1px solid var(--border);">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // CORE CONFIG
+        const ACCESS_KEY = "hojay2025";
+        let inventory = JSON.parse(localStorage.getItem('hojay_products')) || [];
+
+        // Authentication Logic
+        function login() {
+            const key = document.getElementById('admin-pass').value;
+            if (key === ACCESS_KEY) {
+                const screen = document.getElementById('login-screen');
+                screen.style.opacity = '0';
+                screen.style.pointerEvents = 'none';
+                setTimeout(() => {
+                    screen.classList.add('hidden');
+                    sessionStorage.setItem('is_auth', 'true');
+                }, 600);
+            } else {
+                const error = document.getElementById('login-error');
+                error.classList.remove('hidden');
+                error.classList.add('shake');
+                setTimeout(() => error.classList.remove('shake'), 500);
+            }
+        }
+
+        function checkAuth() {
+            if (sessionStorage.getItem('is_auth') === 'true') {
+                const screen = document.getElementById('login-screen');
+                screen.classList.add('hidden');
+            }
+        }
+        checkAuth();
+
+        function logout() {
+            sessionStorage.removeItem('is_auth');
+            location.reload();
+        }
+
+        // Stats Engine
+        function updateAnalytics() {
+            document.getElementById('stat-total').innerText = inventory.length;
+            const brandsCount = [...new Set(inventory.map(p => p.brand))].length;
+            document.getElementById('stat-brands').innerText = brandsCount;
+            
+            if (inventory.length > 0) {
+                const prices = inventory.map(p => p.price);
+                const minPrice = Math.min(...prices);
+                const maxPrice = Math.max(...prices);
+                document.getElementById('stat-min').innerText = `₦${minPrice.toLocaleString()}`;
+                document.getElementById('stat-max').innerText = `₦${maxPrice.toLocaleString()}`;
+            } else {
+                document.getElementById('stat-min').innerText = `₦0`;
+                document.getElementById('stat-max').innerText = `₦0`;
+            }
+        }
+
+        // Render Engine
+        function renderTable(data = null) {
+            const container = document.getElementById('product-list');
+            const targetData = data || inventory;
+            
+            // Reset bulk bar
+            document.getElementById('bulk-bar').classList.remove('active');
+            document.getElementById('select-all').checked = false;
+
+            if (targetData.length === 0) {
+                container.innerHTML = `<tr><td colspan="6" style="text-align: center; padding: 50px; color: var(--text-low);">No products found in catalog.</td></tr>`;
+                return;
+            }
+
+            container.innerHTML = targetData.map(p => `
+                <tr class="${p.hidden ? 'v-hidden' : ''}" data-id="${p.id}" onclick="handleRowClick(event, ${p.id})">
+                    <td class="checkbox-cell">
+                        <input type="checkbox" class="custom-checkbox row-checkbox" data-id="${p.id}" onclick="event.stopPropagation(); handleRowSelect()">
+                    </td>
+                    <td>
+                        <div class="product-info">
+                            <img src="${p.img}" class="product-img" alt="">
+                            <div>
+                                <div class="product-name">${p.model}</div>
+                                <div class="product-meta">ID: #${p.id.toString().slice(-4)}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td><span style="color: var(--text-muted); font-weight: 600;">${p.brand}</span></td>
+                    <td>
+                        <span class="badge ${p.cond === 'Brand New' ? 'badge-success' : 'badge-warning'}">
+                            ${p.cond}
+                        </span>
+                    </td>
+                    <td><div class="price-text">₦${p.price.toLocaleString()}</div></td>
+                    <td style="text-align: right;">
+                        <div class="actions">
+                            <button class="action-btn btn-view" onclick="toggleVisibility(${p.id})" title="Toggle Visibility">
+                                <i class="fas fa-eye${p.hidden ? '-slash' : ''}"></i>
+                            </button>
+                            <button class="action-btn btn-edit" onclick="editEntry(${p.id})" title="Edit Entry">
+                                <i class="fas fa-pen"></i>
+                            </button>
+                            <button class="action-btn btn-delete" onclick="removeEntry(${p.id})" title="Delete Permanent">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+            updateAnalytics();
+        }
+
+        // Bulk Actions Logic
+        function handleRowClick(e, id) {
+            // Don't trigger if clicking on actions or checkbox directly
+            if (e.target.closest('.actions') || e.target.closest('.custom-checkbox')) return;
+            
+            const row = e.currentTarget;
+            const cb = row.querySelector('.row-checkbox');
+            cb.checked = !cb.checked;
+            handleRowSelect();
+        }
+
+        function handleRowSelect() {
+            const master = document.getElementById('select-all');
+            const checkboxes = document.querySelectorAll('.row-checkbox');
+            const checked = document.querySelectorAll('.row-checkbox:checked');
+            
+            // Update row highlights
+            checkboxes.forEach(cb => {
+                const row = cb.closest('tr');
+                if (cb.checked) row.classList.add('selected');
+                else row.classList.remove('selected');
+            });
+
+            master.checked = checkboxes.length > 0 && checkboxes.length === checked.length;
+            updateBulkBar();
+        }
+
+        function toggleSelectAll(master) {
+            const checkboxes = document.querySelectorAll('.row-checkbox');
+            checkboxes.forEach(cb => {
+                cb.checked = master.checked;
+                const row = cb.closest('tr');
+                if (cb.checked) row.classList.add('selected');
+                else row.classList.remove('selected');
+            });
+            updateBulkBar();
+        }
+
+        function updateBulkBar() {
+            const checked = document.querySelectorAll('.row-checkbox:checked');
+            const bar = document.getElementById('bulk-bar');
+            const count = document.getElementById('selected-count');
+            
+            if (checked.length > 0) {
+                bar.classList.add('active');
+                count.innerText = `${checked.length} Selected`;
+            } else {
+                bar.classList.remove('active');
+            }
+        }
+
+        function deleteSelected() {
+            const checked = document.querySelectorAll('.row-checkbox:checked');
+            if (confirm(`Are you sure you want to delete ${checked.length} selected products?`)) {
+                const idsToDelete = Array.from(checked).map(cb => parseInt(cb.getAttribute('data-id')));
+                inventory = inventory.filter(p => !idsToDelete.includes(p.id));
+                localStorage.setItem('hojay_products', JSON.stringify(inventory));
+                renderTable();
+            }
+        }
+
+        function clearAllInventory() {
+            if (confirm('CRITICAL WARNING: This will delete EVERY product in your inventory. This action cannot be undone. Proceed?')) {
+                inventory = [];
+                localStorage.setItem('hojay_products', JSON.stringify(inventory));
+                renderTable();
+            }
+        }
+
+        // Image Handling
+        const dropZone = document.getElementById('drop-zone');
+        const fileInput = document.getElementById('file-input');
+        const preview = document.getElementById('preview-img');
+        const placeholder = dropZone.querySelector('.upload-placeholder');
+
+        dropZone.onclick = () => fileInput.click();
+        fileInput.onchange = (e) => processFile(e.target.files[0]);
+
+        function processFile(file) {
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                preview.src = e.target.result;
+                preview.classList.remove('hidden');
+                placeholder.classList.add('hidden');
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // CRUD Logic
+        function openModal(id = null) {
+            const modal = document.getElementById('product-modal');
+            const form = document.getElementById('product-form');
+            form.reset();
+            preview.src = '';
+            preview.classList.add('hidden');
+            placeholder.classList.remove('hidden');
+            document.getElementById('edit-id').value = '';
+            document.getElementById('modal-title').innerText = 'Add New Inventory';
+            
+            if (id) {
+                const p = inventory.find(i => i.id === id);
+                if (p) {
+                    document.getElementById('edit-id').value = p.id;
+                    document.getElementById('p-brand').value = p.brand;
+                    document.getElementById('p-model').value = p.model;
+                    document.getElementById('p-cond').value = p.cond;
+                    document.getElementById('p-storage').value = p.storage.join(', ');
+                    document.getElementById('p-price').value = p.price;
+                    document.getElementById('p-battery').value = p.battery || '';
+                    preview.src = p.img;
+                    preview.classList.remove('hidden');
+                    placeholder.classList.add('hidden');
+                    document.getElementById('modal-title').innerText = 'Edit Product Details';
+                }
+            }
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('product-modal').classList.remove('active');
+        }
+
+        function saveProduct(e) {
+            e.preventDefault();
+            const id = document.getElementById('edit-id').value;
+            const entry = {
+                id: id ? parseInt(id) : Date.now(),
+                brand: document.getElementById('p-brand').value,
+                model: document.getElementById('p-model').value,
+                cond: document.getElementById('p-cond').value,
+                storage: document.getElementById('p-storage').value.split(',').map(s => s.trim()),
+                price: parseInt(document.getElementById('p-price').value),
+                battery: document.getElementById('p-battery').value,
+                img: preview.src || 'https://via.placeholder.com/300?text=No+Image',
+                hidden: false
+            };
+
+            if (id) {
+                const idx = inventory.findIndex(p => p.id === parseInt(id));
+                entry.hidden = inventory[idx].hidden;
+                inventory[idx] = entry;
+            } else {
+                inventory.unshift(entry);
+            }
+
+            localStorage.setItem('hojay_products', JSON.stringify(inventory));
+            renderTable();
+            closeModal();
+        }
+
+        function removeEntry(id) {
+            if (confirm('Warning: This will permanently delete the product. Continue?')) {
+                inventory = inventory.filter(p => p.id !== id);
+                localStorage.setItem('hojay_products', JSON.stringify(inventory));
+                renderTable();
+            }
+        }
+
+        function toggleVisibility(id) {
+            const p = inventory.find(i => i.id === id);
+            if (p) {
+                p.hidden = !p.hidden;
+                localStorage.setItem('hojay_products', JSON.stringify(inventory));
+                renderTable();
+            }
+        }
+
+        function editEntry(id) {
+            openModal(id);
+        }
+
+        function filterProducts() {
+            const q = document.getElementById('search-input').value.toLowerCase();
+            const res = inventory.filter(p => 
+                p.model.toLowerCase().includes(q) || 
+                p.brand.toLowerCase().includes(q)
+            );
+            renderTable(res);
+        }
+
+        function exportJSON() {
+            const blob = new Blob([JSON.stringify(inventory, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `hojay_inventory_${new Date().toISOString().slice(0,10)}.json`;
+            a.click();
+        }
+
+        // Initial Boot
+        renderTable();
+
+    </script>
+</body>
+</html>

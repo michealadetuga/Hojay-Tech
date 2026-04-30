@@ -652,6 +652,13 @@
             border-radius: 8px;
             color: var(--primary);
             cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .compare-cb.active {
+            background: var(--primary);
+            color: #fff;
+            box-shadow: 0 0 15px rgba(255, 140, 0, 0.4);
         }
 
         /* FLASH DEAL */
@@ -1363,29 +1370,25 @@
                                 class="fas fa-calculator"></i> Value Calculator</h3>
                         <div class="form-group">
                             <label>Brand</label>
-                            <select class="form-control">
-                                <option>Apple</option>
-                                <option>Samsung</option>
+                            <select class="form-control" id="tradein-brand" onchange="updateTradeInModels()">
+                                <option value="">Select Brand</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label>Model</label>
-                            <select class="form-control">
-                                <option>iPhone 13</option>
-                                <option>iPhone 12</option>
+                            <select class="form-control" id="tradein-model" onchange="updateTradeInValue()">
+                                <option value="">Select Model</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label>Storage</label>
-                            <select class="form-control">
-                                <option>128GB</option>
-                                <option>256GB</option>
+                            <select class="form-control" id="tradein-storage" onchange="updateTradeInValue()">
+                                <option value="">Select Storage</option>
                             </select>
                         </div>
                         <div class="val-result">
-                            <p style="font-weight:600; margin-bottom:10px;">Estimated Value:</p>
-                            <h2 style="font-size:2.5rem; color:#fff; font-family:var(--font-display);">₦280,000 -
-                                ₦300,000</h2>
+                            <p style="font-weight:600; margin-bottom:10px;">Estimated Trade-In Value:</p>
+                            <h2 style="font-size:2.5rem; color:#fff; font-family:var(--font-display);" id="tradein-value">₦0</h2>
                         </div>
                         <button class="btn btn-primary" style="width:100%; margin-top:20px;">Confirm on
                             WhatsApp</button>
@@ -1446,41 +1449,18 @@
         <div id="page-compare" class="page bg-dark texture-dot">
             <div class="container section-padding">
                 <h2 class="section-title">Compare Phones</h2>
-                <div style="overflow-x:auto;">
+                <div id="compare-placeholder" class="text-center" style="padding: 40px; background: rgba(255,255,255,0.05); border-radius: 12px; display: block;">
+                    <i class="fas fa-balance-scale" style="font-size: 3rem; color: var(--primary); margin-bottom: 20px;"></i>
+                    <p>Select products from the shop to compare them here.</p>
+                    <button class="btn btn-primary" onclick="nav('shop')" style="margin-top: 20px;">Go to Shop</button>
+                </div>
+                <div id="compare-table-wrapper" style="overflow-x:auto; display: none;">
                     <table class="compare-table">
-                        <thead>
-                            <tr>
-                                <th>Feature</th>
-                                <th>iPhone 16 Pro Max</th>
-                                <th>Samsung S24 Ultra</th>
-                                <th>iPhone 13</th>
-                            </tr>
+                        <thead id="compare-thead">
+                            <!-- Injected -->
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td>Condition</td>
-                                <td>Brand New</td>
-                                <td>UK Used</td>
-                                <td>UK Used</td>
-                            </tr>
-                            <tr>
-                                <td>Storage</td>
-                                <td>256GB</td>
-                                <td>256GB</td>
-                                <td>128GB</td>
-                            </tr>
-                            <tr>
-                                <td>Price</td>
-                                <td class="highlight-cell">₦2,500,000</td>
-                                <td>₦1,450,000</td>
-                                <td class="highlight-cell">₦500,000</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td><button class="btn btn-primary" style="width:100%">Buy Now</button></td>
-                                <td><button class="btn btn-primary" style="width:100%">Buy Now</button></td>
-                                <td><button class="btn btn-primary" style="width:100%">Buy Now</button></td>
-                            </tr>
+                        <tbody id="compare-tbody">
+                            <!-- Injected -->
                         </tbody>
                     </table>
                 </div>
@@ -1588,7 +1568,7 @@
             </div>
             <div
                 style="border-top:1px solid rgba(255,255,255,0.05); padding-top:20px; display:flex; justify-content:space-between; color:#777; font-size:0.9rem; flex-wrap:wrap; gap:10px;">
-                <div>&copy; 2025 Hojay Tech Gadget. All rights reserved.</div>
+                <div>&copy; 2025 Hojay Tech Gadget. All rights reserved. | <a href="admin.html" style="color: inherit; opacity: 0.5;">Admin</a></div>
                 <div>Made with ❤️ in Lagos</div>
             </div>
         </div>
@@ -1597,7 +1577,7 @@
     <!-- JAVASCRIPT -->
     <script>
         // DATA CATALOG
-        const products = [
+        const staticProducts = [
             { id: 1, brand: 'Apple', model: 'iPhone 17 Pro Max', cond: 'Brand New', storage: ['256GB'], price: 1850000, img: 'iphone_17_pro_max.jpeg' },
             { id: 2, brand: 'Apple', model: 'iPhone 17 Pro', cond: 'Brand New', storage: ['256GB'], price: 1650000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-17-pro.jpg' },
             { id: 3, brand: 'Apple', model: 'iPhone 17 Plus', cond: 'Brand New', storage: ['256GB'], price: 1350000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-17-plus.jpg' },
@@ -1726,6 +1706,136 @@
             { id: 206, brand: 'Apple', model: 'iPhone 15 Pro Max (eSIM)', cond: 'UK Used', storage: ['256GB'], battery: 'Good', price: 870000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-15-pro-max.jpg' }
         ];
 
+        let products = [...staticProducts];
+
+        // Load Products from Admin Panel
+        const loadProducts = () => {
+            const stored = localStorage.getItem('hojay_products');
+            if (stored) {
+                const adminProducts = JSON.parse(stored).filter(p => !p.hidden);
+                if (adminProducts.length > 0) {
+                    products = adminProducts;
+                } else {
+                    products = [...staticProducts];
+                }
+            } else {
+                products = [...staticProducts];
+            }
+            refreshUI();
+        };
+
+        const refreshUI = () => {
+            renderHomeBestSellers();
+            renderShop();
+            renderBrandsPage();
+            renderFlash();
+            populateTradeIn();
+            renderCompare();
+        };
+
+        // TRADE-IN LOGIC
+        const populateTradeIn = () => {
+            const brandSelect = document.getElementById('tradein-brand');
+            if (!brandSelect) return;
+            const brands = [...new Set(products.map(p => p.brand))];
+            brandSelect.innerHTML = '<option value="">Select Brand</option>' + 
+                brands.map(b => `<option value="${b}">${b}</option>`).join('');
+        };
+
+        window.updateTradeInModels = () => {
+            const brand = document.getElementById('tradein-brand').value;
+            const modelSelect = document.getElementById('tradein-model');
+            const filtered = products.filter(p => p.brand === brand);
+            modelSelect.innerHTML = '<option value="">Select Model</option>' + 
+                filtered.map(p => `<option value="${p.id}">${p.model} (${p.cond})</option>`).join('');
+            updateTradeInValue();
+        };
+
+        window.updateTradeInValue = () => {
+            const modelId = document.getElementById('tradein-model').value;
+            const storageSelect = document.getElementById('tradein-storage');
+            const valDisplay = document.getElementById('tradein-value');
+            
+            if (!modelId) {
+                storageSelect.innerHTML = '<option value="">Select Storage</option>';
+                valDisplay.innerText = '₦0';
+                return;
+            }
+
+            const p = products.find(prod => prod.id == modelId);
+            storageSelect.innerHTML = p.storage.map(s => `<option value="${s}">${s}</option>`).join('');
+            
+            // Trade-in value logic: ~75% of market price for Brand New, ~65% for Used
+            const factor = p.cond === 'Brand New' ? 0.75 : 0.65;
+            const tradeValue = Math.floor(p.price * factor);
+            valDisplay.innerText = fmtMoney(tradeValue);
+        };
+
+        // COMPARE LOGIC
+        let compareList = [];
+
+        window.toggleCompare = (id) => {
+            if (compareList.includes(id)) {
+                compareList = compareList.filter(cid => cid !== id);
+            } else {
+                if (compareList.length >= 3) {
+                    alert("You can only compare up to 3 products at a time.");
+                    return;
+                }
+                compareList.push(id);
+            }
+            renderShop(); // Refresh buttons in shop
+            renderCompare();
+            if (compareList.length > 0) {
+                // visual indicator or toast could go here
+            }
+        };
+
+        const renderCompare = () => {
+            const placeholder = document.getElementById('compare-placeholder');
+            const wrapper = document.getElementById('compare-table-wrapper');
+            const thead = document.getElementById('compare-thead');
+            const tbody = document.getElementById('compare-tbody');
+
+            if (compareList.length === 0) {
+                placeholder.style.display = 'block';
+                wrapper.style.display = 'none';
+                return;
+            }
+
+            placeholder.style.display = 'none';
+            wrapper.style.display = 'block';
+
+            const items = compareList.map(id => products.find(p => p.id === id)).filter(Boolean);
+
+            thead.innerHTML = `
+                <tr>
+                    <th>Feature</th>
+                    ${items.map(item => `<th>${item.model}</th>`).join('')}
+                </tr>
+            `;
+
+            const rows = [
+                { label: 'Brand', key: 'brand' },
+                { label: 'Condition', key: 'cond' },
+                { label: 'Storage', key: 'storage', func: (v) => v.join(', ') },
+                { label: 'Price', key: 'price', func: (v) => fmtMoney(v), class: 'highlight-cell' },
+                { label: 'Battery', key: 'battery', func: (v) => v || 'N/A' }
+            ];
+
+            tbody.innerHTML = rows.map(row => `
+                <tr>
+                    <td>${row.label}</td>
+                    ${items.map(item => `<td class="${row.class || ''}">${row.func ? row.func(item[row.key]) : item[row.key]}</td>`).join('')}
+                </tr>
+            `).join('') + `
+                <tr>
+                    <td></td>
+                    ${items.map(item => `<td><button class="btn btn-primary" style="width:100%" onclick="window.open('https://wa.me/2347068620019', '_blank')">Buy Now</button></td>`).join('')}
+                </tr>
+            `;
+        };
+
         const bundles = [
             { title: "iPhone 11 Bundle", items: "iPhone 11 + Case + Glass", price: "₦215,000", save: "₦15,000" },
             { title: "Samsung A15 Bundle", items: "A15 + Oraimo Earbuds + Case", price: "₦230,000", save: "₦12,000" },
@@ -1756,7 +1866,9 @@
                         <div class="product-price">${fmtMoney(p.price)}</div>
                         <div class="card-actions">
                             <button class="btn btn-green" onclick="window.open('https://wa.me/2347068620019', '_blank')"><i class="fab fa-whatsapp"></i> Buy</button>
-                            <div class="compare-cb" title="Compare"><i class="fas fa-balance-scale"></i></div>
+                            <div class="compare-cb ${compareList.includes(p.id) ? 'active' : ''}" title="Compare" onclick="toggleCompare(${p.id})">
+                                <i class="fas fa-balance-scale"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1766,13 +1878,16 @@
         // Render Home Grids
         const renderHomeBestSellers = (filterBrand = 'All') => {
             const bestSellerIds = [201, 204, 205, 202, 206, 203, 5, 7, 11, 10, 13, 15, 20, 21]; // Nigerian Market Best Sellers Mix
-            let bestProducts = products.filter(p => bestSellerIds.includes(p.id));
+            let bestProducts = products.filter(p => bestSellerIds.includes(p.id) || p.id > 1000); // include new admin products as potential best sellers
+            
+            // If no products match the specific IDs (e.g. admin data cleared them), just show the first 12
+            if (bestProducts.length === 0) bestProducts = products.slice(0, 12);
+
             if (filterBrand !== 'All') {
                 bestProducts = bestProducts.filter(p => p.brand === filterBrand);
             }
             document.getElementById('home-best-sellers').innerHTML = bestProducts.map(renderCard).join('');
         };
-        renderHomeBestSellers();
 
         // Home Page Tab Logic
         document.querySelectorAll('.filter-tab').forEach(tab => {
@@ -1787,7 +1902,14 @@
         });
 
         // Render Flash
-        document.getElementById('flash-deals-container').innerHTML = [products[3], Object.assign({}, products[5], { price: 480000 }), products[7]].map(renderCard).join('');
+        const renderFlash = () => {
+            const flashContainer = document.getElementById('flash-deals-container');
+            if (flashContainer) {
+                // Pick 3 products for flash deals (either from products array or static fallback)
+                const flashItems = products.length >= 3 ? [products[0], products[1], products[2]] : products.slice(0, 3);
+                flashContainer.innerHTML = flashItems.map(renderCard).join('');
+            }
+        };
 
         // Render Shop
         const renderShop = () => {
@@ -1805,7 +1927,6 @@
             document.getElementById('shop-count').innerText = `Showing ${filtered.length} products`;
             document.getElementById('full-shop-grid').innerHTML = filtered.map(renderCard).join('');
         };
-        renderShop();
 
         // Render Brands
         const renderBrandsPage = () => {
@@ -1829,7 +1950,10 @@
             });
             document.getElementById('brands-full-container').innerHTML = html;
         };
-        renderBrandsPage();
+
+        // Initial Load and Auto-Refresh
+        loadProducts();
+        setInterval(loadProducts, 5000); // Sync with admin panel every 5 seconds
 
         // Render Bundles
         document.getElementById('bundles-grid').innerHTML = bundles.map(b => `
