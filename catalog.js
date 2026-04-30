@@ -1,9 +1,9 @@
 const staticProducts = [
-    { id: 1, brand: 'Apple', model: 'iPhone 17 Pro Max', cond: 'Brand New', storage: ['256GB'], price: 1850000, img: 'iphone_17_pro_max.jpeg' },
+    { id: 1, brand: 'Apple', model: 'iPhone 17 Pro Max', cond: 'Brand New', storage: ['256GB'], price: 1850000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-17-pro-max.jpg' },
     { id: 2, brand: 'Apple', model: 'iPhone 17 Pro', cond: 'Brand New', storage: ['256GB'], price: 1650000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-17-pro.jpg' },
     { id: 3, brand: 'Apple', model: 'iPhone 17 Plus', cond: 'Brand New', storage: ['256GB'], price: 1350000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-17-plus.jpg' },
     { id: 4, brand: 'Apple', model: 'iPhone 17', cond: 'Brand New', storage: ['128GB'], price: 1150000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-17.jpg' },
-    { id: 5, brand: 'Apple', model: 'iPhone 16 Pro Max', cond: 'UK Used', storage: ['256GB'], price: 1250000, img: 'iphone_16_pro_max.jpeg' },
+    { id: 5, brand: 'Apple', model: 'iPhone 16 Pro Max', cond: 'UK Used', storage: ['256GB'], price: 1250000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-16-pro-max.jpg' },
     { id: 6, brand: 'Apple', model: 'iPhone 16 Pro', cond: 'UK Used', storage: ['128GB'], price: 1050000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-16-pro.jpg' },
     { id: 7, brand: 'Apple', model: 'iPhone 16 Plus', cond: 'UK Used', storage: ['128GB'], price: 980000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-16-plus.jpg' },
     { id: 8, brand: 'Apple', model: 'iPhone 16', cond: 'UK Used', storage: ['128GB'], price: 850000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-16.jpg' },
@@ -24,7 +24,7 @@ const staticProducts = [
     { id: 23, brand: 'Samsung', model: 'Galaxy S25', cond: 'UK Used', storage: ['128GB'], price: 1300000, img: 'https://fdn2.gsmarena.com/vv/bigpic/samsung-galaxy-s25.jpg' },
     { id: 24, brand: 'Samsung', model: 'Galaxy A56 5G', cond: 'Brand New', storage: ['128GB'], price: 700000, img: 'https://fdn2.gsmarena.com/vv/bigpic/samsung-galaxy-a56.jpg' },
     { id: 25, brand: 'Samsung', model: 'Galaxy A36 5G', cond: 'Brand New', storage: ['128GB'], price: 550000, img: 'https://fdn2.gsmarena.com/vv/bigpic/samsung-galaxy-a36.jpg' },
-    { id: 26, brand: 'Samsung', model: 'Galaxy S24 Ultra', cond: 'UK Used', storage: ['256GB'], price: 1450000, img: 'samsung_s24_ultra.png' },
+    { id: 26, brand: 'Samsung', model: 'Galaxy S24 Ultra', cond: 'UK Used', storage: ['256GB'], price: 1450000, img: 'https://fdn2.gsmarena.com/vv/bigpic/samsung-galaxy-s24-ultra.jpg' },
     { id: 27, brand: 'Samsung', model: 'Galaxy S24', cond: 'UK Used', storage: ['128GB'], price: 1100000, img: 'https://fdn2.gsmarena.com/vv/bigpic/samsung-galaxy-s24.jpg' },
     { id: 28, brand: 'Samsung', model: 'Galaxy A55 5G', cond: 'Brand New', storage: ['128GB'], price: 580000, img: 'https://fdn2.gsmarena.com/vv/bigpic/samsung-galaxy-a55.jpg' },
     { id: 29, brand: 'Samsung', model: 'Galaxy A35 5G', cond: 'Brand New', storage: ['128GB'], price: 480000, img: 'https://fdn2.gsmarena.com/vv/bigpic/samsung-galaxy-a35.jpg' },
@@ -38,7 +38,7 @@ const staticProducts = [
     { id: 37, brand: 'Tecno', model: 'Spark 40', cond: 'Brand New', storage: ['128GB'], price: 250000, img: 'https://fdn2.gsmarena.com/vv/bigpic/tecno-spark-40.jpg' },
     { id: 38, brand: 'Tecno', model: 'Pova 7 Pro', cond: 'Brand New', storage: ['256GB'], price: 450000, img: 'https://fdn2.gsmarena.com/vv/bigpic/tecno-pova-7-pro.jpg' },
     { id: 39, brand: 'Tecno', model: 'Phantom X2 Pro', cond: 'Brand New', storage: ['256GB'], price: 750000, img: 'https://fdn2.gsmarena.com/vv/bigpic/tecno-phantom-x2-pro.jpg' },
-    { id: 40, brand: 'Tecno', model: 'Camon 30 Premier', cond: 'Brand New', storage: ['512GB'], price: 615000, img: 'tecno_camon_30.png' },
+    { id: 40, brand: 'Tecno', model: 'Camon 30 Premier', cond: 'Brand New', storage: ['512GB'], price: 615000, img: 'https://fdn2.gsmarena.com/vv/bigpic/tecno-camon-30-premier.jpg' },
     { id: 41, brand: 'Tecno', model: 'Camon 30 Pro', cond: 'Brand New', storage: ['256GB'], price: 480000, img: 'https://fdn2.gsmarena.com/vv/bigpic/tecno-camon-30-pro.jpg' },
     { id: 42, brand: 'Tecno', model: 'Spark 30 Pro', cond: 'Brand New', storage: ['256GB'], price: 280000, img: 'https://fdn2.gsmarena.com/vv/bigpic/tecno-spark-30-pro.jpg' },
     { id: 43, brand: 'Tecno', model: 'Spark 30C', cond: 'Brand New', storage: ['128GB'], price: 145000, img: 'https://fdn2.gsmarena.com/vv/bigpic/tecno-spark-20c.jpg' },
@@ -122,7 +122,7 @@ const staticProducts = [
     { id: 201, brand: 'Apple', model: 'iPhone 17 Pro (Locked)', cond: 'Brand New', storage: ['256GB'], price: 1190000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-17-pro.jpg' },
     { id: 202, brand: 'Apple', model: 'iPhone 16 Plus (eSIM)', cond: 'UK Used', storage: ['128GB'], price: 930000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-16-plus.jpg' },
     { id: 203, brand: 'Apple', model: 'iPhone 15 (eSIM FU)', cond: 'UK Used', storage: ['256GB'], price: 660000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-15.jpg' },
-    { id: 204, brand: 'Apple', model: 'iPhone 17 Pro Max (eSIM Locked)', cond: 'Brand New', storage: ['256GB'], price: 1230000, img: 'iphone_17_pro_max_2.jpeg' },
+    { id: 204, brand: 'Apple', model: 'iPhone 17 Pro Max (eSIM Locked)', cond: 'Brand New', storage: ['256GB'], price: 1230000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-17-pro-max.jpg' },
     { id: 205, brand: 'Apple', model: 'iPhone 16 Pro (eSIM)', cond: 'UK Used', storage: ['256GB'], price: 950000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-16-pro.jpg' },
     { id: 206, brand: 'Apple', model: 'iPhone 15 Pro Max (eSIM)', cond: 'UK Used', storage: ['256GB'], battery: 'Good', price: 870000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-15-pro-max.jpg' }
 ];
