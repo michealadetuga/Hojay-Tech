@@ -1,8 +1,8 @@
 const staticProducts = [
-    { id: 1, brand: 'Apple', model: 'iPhone 17 Pro Max', cond: 'Brand New', storage: ['256GB'], price: 1850000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-17-pro-max.jpg' },
-    { id: 2, brand: 'Apple', model: 'iPhone 17 Pro', cond: 'Brand New', storage: ['256GB'], price: 1650000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-17-pro.jpg' },
-    { id: 3, brand: 'Apple', model: 'iPhone 17 Plus', cond: 'Brand New', storage: ['256GB'], price: 1350000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-17-plus.jpg' },
-    { id: 4, brand: 'Apple', model: 'iPhone 17', cond: 'Brand New', storage: ['128GB'], price: 1150000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-17.jpg' },
+    { id: 1, brand: 'Apple', model: 'iPhone 17 Pro Max', cond: 'Brand New', storage: ['256GB'], price: 1850000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-16-pro-max.jpg' },
+    { id: 2, brand: 'Apple', model: 'iPhone 17 Pro', cond: 'Brand New', storage: ['256GB'], price: 1650000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-16-pro.jpg' },
+    { id: 3, brand: 'Apple', model: 'iPhone 17 Plus', cond: 'Brand New', storage: ['256GB'], price: 1350000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-16-plus.jpg' },
+    { id: 4, brand: 'Apple', model: 'iPhone 17', cond: 'Brand New', storage: ['128GB'], price: 1150000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-16.jpg' },
     { id: 5, brand: 'Apple', model: 'iPhone 16 Pro Max', cond: 'UK Used', storage: ['256GB'], price: 1250000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-16-pro-max.jpg' },
     { id: 6, brand: 'Apple', model: 'iPhone 16 Pro', cond: 'UK Used', storage: ['128GB'], price: 1050000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-16-pro.jpg' },
     { id: 7, brand: 'Apple', model: 'iPhone 16 Plus', cond: 'UK Used', storage: ['128GB'], price: 980000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-16-plus.jpg' },
@@ -122,7 +122,7 @@ const staticProducts = [
     { id: 201, brand: 'Apple', model: 'iPhone 17 Pro (Locked)', cond: 'Brand New', storage: ['256GB'], price: 1190000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-17-pro.jpg' },
     { id: 202, brand: 'Apple', model: 'iPhone 16 Plus (eSIM)', cond: 'UK Used', storage: ['128GB'], price: 930000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-16-plus.jpg' },
     { id: 203, brand: 'Apple', model: 'iPhone 15 (eSIM FU)', cond: 'UK Used', storage: ['256GB'], price: 660000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-15.jpg' },
-    { id: 204, brand: 'Apple', model: 'iPhone 17 Pro Max (eSIM Locked)', cond: 'Brand New', storage: ['256GB'], price: 1230000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-17-pro-max.jpg' },
+    { id: 204, brand: 'Apple', model: 'iPhone 17 Pro Max (eSIM Locked)', cond: 'Brand New', storage: ['256GB'], price: 1230000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-16-pro-max.jpg' },
     { id: 205, brand: 'Apple', model: 'iPhone 16 Pro (eSIM)', cond: 'UK Used', storage: ['256GB'], price: 950000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-16-pro.jpg' },
     { id: 206, brand: 'Apple', model: 'iPhone 15 Pro Max (eSIM)', cond: 'UK Used', storage: ['256GB'], battery: 'Good', price: 870000, img: 'https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-15-pro-max.jpg' }
 ];
