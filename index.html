@@ -977,6 +977,7 @@
                 padding: 8px 12px;
                 font-size: 0.8rem;
             }
+
             .admin-link-top {
                 display: none;
             }
@@ -1182,7 +1183,8 @@
                 <li class="nav-link" onclick="nav('tradein')">Trade-In</li>
                 <li class="nav-link" onclick="nav('compare')">Compare</li>
                 <li class="nav-link" onclick="nav('contact')">Contact</li>
-                <li class="nav-link" onclick="location.href='admin.html'" style="color:var(--primary); margin-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; width: 100%; text-align: center;">
+                <li class="nav-link" onclick="location.href='admin.html'"
+                    style="color:var(--primary); margin-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; width: 100%; text-align: center;">
                     <i class="fas fa-lock"></i> Admin Panel
                 </li>
             </ul>
@@ -1221,7 +1223,7 @@
                         </div>
                     </div>
                     <div class="hero-img-wrapper">
-                        <img src="https://images.unsplash.com/photo-1556656793-062ff98782ee?auto=format&fit=crop&q=80&w=1000" alt="Hojay Tech Gadgets Stock" class="hero-img"
+                        <img src="iphone_17_pro_max_2.jpeg" alt="Hojay Tech Gadgets Stock" class="hero-img"
                             style="width: 100%; max-width: 450px; border-radius: 30px; border: 4px solid rgba(255,140,0,0.3); box-shadow: 0 30px 60px rgba(0,0,0,0.6); object-fit: cover; height: 400px;">
                     </div>
                 </div>
@@ -1356,7 +1358,8 @@
                         <div
                             style="display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px; margin-bottom:20px;">
                             <div id="shop-count">Showing 0 products</div>
-                            <select class="form-control" style="padding:10px; border-radius:8px; max-width: 200px; background: white; color: black;"
+                            <select class="form-control"
+                                style="padding:10px; border-radius:8px; max-width: 200px; background: white; color: black;"
                                 id="sort-select" onchange="renderShop()">
                                 <option value="newest" selected>Newest First</option>
                                 <option value="price-low">Price: Low to High</option>
@@ -1419,7 +1422,8 @@
                         </div>
                         <div class="val-result">
                             <p style="font-weight:600; margin-bottom:10px;">Estimated Trade-In Value:</p>
-                            <h2 style="font-size:2.5rem; color:#fff; font-family:var(--font-display);" id="tradein-value">₦0</h2>
+                            <h2 style="font-size:2.5rem; color:#fff; font-family:var(--font-display);"
+                                id="tradein-value">₦0</h2>
                         </div>
                         <button class="btn btn-primary" style="width:100%; margin-top:20px;">Confirm on
                             WhatsApp</button>
@@ -1480,8 +1484,10 @@
         <div id="page-compare" class="page bg-dark texture-dot">
             <div class="container section-padding">
                 <h2 class="section-title">Compare Phones</h2>
-                <div id="compare-placeholder" class="text-center" style="padding: 40px; background: rgba(255,255,255,0.05); border-radius: 12px; display: block;">
-                    <i class="fas fa-balance-scale" style="font-size: 3rem; color: var(--primary); margin-bottom: 20px;"></i>
+                <div id="compare-placeholder" class="text-center"
+                    style="padding: 40px; background: rgba(255,255,255,0.05); border-radius: 12px; display: block;">
+                    <i class="fas fa-balance-scale"
+                        style="font-size: 3rem; color: var(--primary); margin-bottom: 20px;"></i>
                     <p>Select products from the shop to compare them here.</p>
                     <button class="btn btn-primary" onclick="nav('shop')" style="margin-top: 20px;">Go to Shop</button>
                 </div>
@@ -1640,7 +1646,7 @@
             const brandSelect = document.getElementById('tradein-brand');
             if (!brandSelect) return;
             const brands = [...new Set(products.map(p => p.brand))];
-            brandSelect.innerHTML = '<option value="">Select Brand</option>' + 
+            brandSelect.innerHTML = '<option value="">Select Brand</option>' +
                 brands.map(b => `<option value="${b}">${b}</option>`).join('');
         };
 
@@ -1648,7 +1654,7 @@
             const brand = document.getElementById('tradein-brand').value;
             const modelSelect = document.getElementById('tradein-model');
             const filtered = products.filter(p => p.brand === brand);
-            modelSelect.innerHTML = '<option value="">Select Model</option>' + 
+            modelSelect.innerHTML = '<option value="">Select Model</option>' +
                 filtered.map(p => `<option value="${p.id}">${p.model} (${p.cond})</option>`).join('');
             updateTradeInValue();
         };
@@ -1657,7 +1663,7 @@
             const modelId = document.getElementById('tradein-model').value;
             const storageSelect = document.getElementById('tradein-storage');
             const valDisplay = document.getElementById('tradein-value');
-            
+
             if (!modelId) {
                 storageSelect.innerHTML = '<option value="">Select Storage</option>';
                 valDisplay.innerText = '₦0';
@@ -1666,7 +1672,7 @@
 
             const p = products.find(prod => prod.id == modelId);
             storageSelect.innerHTML = p.storage.map(s => `<option value="${s}">${s}</option>`).join('');
-            
+
             // Trade-in value logic: ~75% of market price for Brand New, ~65% for Used
             const factor = p.cond === 'Brand New' ? 0.75 : 0.65;
             const tradeValue = Math.floor(p.price * factor);
@@ -1779,11 +1785,11 @@
 
         // Render Home Grids
         const renderHomeBestSellers = (filterBrand = 'All') => {
-            const bestSellerIds = [201, 204, 205, 202, 206, 203, 5, 7, 11, 10, 13, 15, 20, 21]; 
-            
+            const bestSellerIds = [201, 204, 205, 202, 206, 203, 5, 7, 11, 10, 13, 15, 20, 21];
+
             // Priority: Newest uploaded products (ID > 1000) first, then curated best sellers
             let bestProducts = products.filter(p => p.id > 1000 || bestSellerIds.includes(p.id));
-            
+
             // Sort by newest first
             bestProducts.sort((a, b) => b.id - a.id);
 
@@ -1930,7 +1936,7 @@
             const secEl = document.getElementById('seconds');
             const minEl = document.getElementById('minutes');
             const hrEl = document.getElementById('hours');
-            
+
             if (!secEl || !minEl || !hrEl) return;
 
             let s = parseInt(secEl.innerText) || 0;
